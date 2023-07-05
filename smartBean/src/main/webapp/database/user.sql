@@ -10,7 +10,7 @@ INSERT INTO `user` VALUES ("qortmdals120@gmail.com", "123", "승민");
 INSERT INTO `user` VALUES ("juntu09@gmail.com", "234", "희수");
 INSERT INTO `user` VALUES ("lokcdown@gmail.com", "345", "재원");
 
-UPDATE `user` SET user_name='민승' WHERE user_email='qortmdals120@gmail.com';
+UPDATE `user` SET user_name='민승', user_password='new123' WHERE user_email='qortmdals120@gmail.com';
 
 DELETE FROM `user` WHERE user_email='qortmdals120@gmail.com';
 

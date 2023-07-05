@@ -1,11 +1,17 @@
 package model.user;
 
-public class UserVo {
+public class UserRequestDto {
 	private String user_email;
     private String user_password;
     private String user_name;
     
-	public UserVo(String user_email, String user_password, String user_name) {
+    public UserRequestDto(String user_email, String user_name) {
+		super();
+		this.user_email = user_email;
+		this.user_name = user_name;
+	}
+    
+	public UserRequestDto(String user_email, String user_password, String user_name) {
 		super();
 		this.user_email = user_email;
 		this.user_password = user_password;
@@ -23,5 +29,9 @@ public class UserVo {
 	public String getUser_name() {
 		return user_name;
 	}
-	
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+    
 }
