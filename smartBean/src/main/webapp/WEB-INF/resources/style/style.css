@@ -1,0 +1,202 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+}
+
+/* default */
+html {
+    height: 100%;
+}
+  
+body {
+    display: grid;
+    grid-template:
+      "header header header" 100px
+      ". main ." auto
+      "footer footer footer" 100px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    text-align: center;
+}
+  
+h1 {
+    font-family: 'Pretendard-Regular', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+}
+  
+p {
+    font-family: 'Pretendard-Regular', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+  
+a {
+    font-family: 'Pretendard-Regular', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    text-decoration: none;
+    color: rgb(29, 29, 29);
+}
+
+
+/* header */
+header {
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+}
+
+header .title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+header .sub-title {
+    margin-right: 10px;
+}
+
+header .main-title {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+
+/* main */
+main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+main .div-calendar, main .div-todoList {
+    font-family: 'Kalam', cursive;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 100px;
+    margin-bottom: 30px;
+    border-radius: 40px 80px / 80px 40px;
+}
+
+/* 폰트 안묵는다~! */
+@import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
+main .div-calendar a, main .div-todoList a{
+    font-family: 'Kalam', cursive;
+}
+  
+main .div-calendar {
+    background-color: #FFDEE9;
+}
+  
+main .div-todoList {
+    background-color: #DEFFD2;
+}
+  
+.login-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+  
+.login-nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+  
+.login-nav li {
+    margin: 0 10px;
+    list-style: none;
+}
+  
+.login-nav li:first-child {
+    margin-right: 50px;
+}
+  
+.login-nav li:last-child {
+    margin-left: 50px;
+}
+
+
+
+/* footer */
+footer {
+    grid-area: footer;
+    background: #dcdcdc;
+    
+}
+footer>ul{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+footer>ul>li{
+    /* 각 리스트 inline-block(줄바꿈하지 않고, 각 크기(너비,높이)는 가지게 함) */
+    display: inline-block;
+    padding: 0 2%;
+}
+footer>ul>li>a{
+    font-size: 13px;
+}
+div>p{
+    font-size: 15px;
+}
+footer>ul>li:nth-child(2){
+    /* 리스트 양 옆에 테두리로 | 표시 주기 */
+    border-left: 2px solid rgb(0, 0, 0);
+    border-right: 2px solid rgb(0, 0, 0);
+}
+
+
+
+/* 약관 - 0704 희수 수정 */
+.div-userTerm{
+    padding: 40px;
+    text-align: left;
+}
+
+.text_title h2{
+    font-size: 1.5rem;
+}
+
+.text_content p{
+    font-size: 0.8rem;
+}
+  
+/* 미디어 쿼리 */
+@media (min-width: 768px) {
+    body {
+      grid-template:
+        "header header header" 100px
+        "main main main" auto
+        "footer footer footer" 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    main .div-calendar, main .div-todoList {
+      width: 90%;
+    }
+}
+  
+  
