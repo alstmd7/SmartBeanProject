@@ -4,12 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>똑똑빈</title>
+<title>일잘러의 업무관리 | 똑똑빈</title>
 </head>
 <body>
 <%
 DBManager.getConnection();
 %>
+
+	<jsp:include page="/header"></jsp:include>
 	
 	<main>
 		<div class="div-calendar">
@@ -25,6 +27,8 @@ DBManager.getConnection();
 			</ul>
 		</div>
 	</main>
+	
+	<jsp:include page="/footer"></jsp:include>
 	
 </body>
 </html>
