@@ -55,51 +55,6 @@ public class TodoDao {
 	
 	
 	
-	public boolean createTodo(TodoRequestDto todoDto) {
-		TodoVo result = getUserById(todoDto.getNo());
-		
-		if(result != null)
-			return false;
-		
-		String email = todoDto.getNo();
-		String password = todoDto.getContent();
-		String name = todoDto.getCheck();
-		
-		boolean check = true;
-		
-		if(email != null && password != null && name != null) {
-			this.conn = DBManager.getConnection();
-			
-			if(this.conn != null) {
-				String sql = "INSERT INTO `user` VALUES (?, ?, ?);";
-
-				try {
-					this.pstmt = this.conn.prepareStatement(sql);
-					this.pstmt.setString(1, email);
-					this.pstmt.setString(2, password);
-					this.pstmt.setString(3, name);
-
-					this.pstmt.execute();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					check = false;
-				} finally {
-					DBManager.close(this.conn, this.pstmt);
-				}
-			} else {
-				check = false;
-			}
-		} else {
-			check = false;
-		}
-		
-		return check;
-	}
-	
-	
-	
-	
 	
 	
 	
