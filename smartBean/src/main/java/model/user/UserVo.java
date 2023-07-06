@@ -11,6 +11,6 @@ public class UserVo {
 		this.user_password = user_password;
 		this.user_name = user_name;
 	}
-	
+
 	
 }
