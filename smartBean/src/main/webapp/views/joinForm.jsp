@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <title>회원가입</title>
 </head>
 <body>
-	<form method="POST" action="Join">
+	<form action="Join" method="POST">
 		<p>이메일</p>
 		<input type="text" id="email" name="email">
 		<p>비밀번호</p>
@@ -15,9 +16,9 @@
 		<p>이름</p>
 		<input type="text" id="name" name="name">
 		
-		<input type="button" id="submit" value="회원가입" onclick="checkForm(form)">
+		<input type="button" value="회원가입" onclick="checkValue(form)">
 	</form>
 	
-	<script src="resources/script/validation-join.js"></script>
+	<script src="../resources/script/vaildation_join.js"></script>
 </body>
 </html>

@@ -5,10 +5,10 @@ content VARCHAR(50) NOT NULL,
 );
  
 -- #4. 테이블 만들어졌는지 확인하기
-select * from todo;
+SELECT * FROM todo WHERE `no`=1;
 
 -- #5. 테이블에 데이터 삽입하기(insert)
-insert into todo(content) values ('내용1');
+INSERT INTO todo(content) VALUES ('내용1');
 
 UPDATE todo SET content='내용2', `check`= 1 WHERE `no` = 1;
 

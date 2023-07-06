@@ -63,14 +63,14 @@ public class UserDao {
 			this.conn = DBManager.getConnection();
 			
 			if(this.conn != null) {
-				String sql = "INSERT INTO `user` VALUES (?, ?, ?);";
+				String sql = "INSERT INTO `user` VALUES (?, ?, ?)";
 
 				try {
 					this.pstmt = this.conn.prepareStatement(sql);
 					this.pstmt.setString(1, email);
 					this.pstmt.setString(2, password);
 					this.pstmt.setString(3, name);
-
+					
 					this.pstmt.execute();
 
 				} catch (Exception e) {
