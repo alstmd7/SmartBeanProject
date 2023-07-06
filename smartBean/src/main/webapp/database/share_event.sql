@@ -1,11 +1,11 @@
 CREATE TABLE share_event (
-	cal_no INT,
-	FOREIGN KEY (cal_no) REFERENCES calender(cal_no),
-    event_no INT,
-    FOREIGN KEY (event_no) REFERENCES `event`(event_no)
+	event_no INT,
+    FOREIGN KEY (event_no) REFERENCES `event`(`no`),
+	calender_no INT,
+	FOREIGN KEY (calender_no) REFERENCES calender(`no`)
 );
 
-INSERT INTO share_event VALUES (2, 1);
+INSERT INTO share_event VALUES (1, 2);
 
 SELECT * FROM share_event;
 SELECT * FROM share_event WHERE event_no=1;

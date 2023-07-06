@@ -13,6 +13,14 @@
 		<welcome-file>default.htm</welcome-file>
 	</welcome-file-list>
 	<!-- 1. 서블릿 페이지 맵핑 -->
+	<servlet>
+		<servlet-name>JoinFormAction</servlet-name>
+		<servlet-class>controller.JoinFormAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JoinFormAction</servlet-name>
+		<url-pattern>/Join</url-pattern>
+	</servlet-mapping>
 
 	<!-- 2. JSP 페이지 맵핑 -->
 	<servlet>
@@ -23,6 +31,7 @@
 		<servlet-name>header</servlet-name>
 		<url-pattern>/header</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>footer</servlet-name>
 		<jsp-file>/footer.jsp</jsp-file>
@@ -31,4 +40,24 @@
 		<servlet-name>footer</servlet-name>
 		<url-pattern>/footer</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>index</servlet-name>
+		<jsp-file>/views/index.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>index</servlet-name>
+		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>joinForm</servlet-name>
+		<jsp-file>/views/joinForm.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>joinForm</servlet-name>
+		<url-pattern>/join</url-pattern>
+	</servlet-mapping>
+	
+	
 </web-app>

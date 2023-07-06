@@ -19,24 +19,24 @@ public class UserDao {
 		return instance;
 	}
 	
-	public UserVo getUserById(String user_email) {
+	public UserVo getUserById(String email) {
 		UserVo user = null;
 		
 		this.conn = DBManager.getConnection();
 		
-		String sql = "SELECT * FROM `user` WHERE user_email=?";
+		String sql = "SELECT * FROM `user` WHERE email=?";
 		
 		try {
 			this.pstmt = this.conn.prepareStatement(sql);
-			this.pstmt.setString(1, user_email);
+			this.pstmt.setString(1, email);
 			
 			this.rs = this.pstmt.executeQuery();
 			
 			if(this.rs.next()) {
-				String user_password = this.rs.getString(2);
-				String user_name = this.rs.getString(3);
+				String password = this.rs.getString(2);
+				String name = this.rs.getString(3);
 				
-				user = new UserVo(user_email, user_password, user_name);
+				user = new UserVo(email, password, name);
 			}
 
 		} catch (Exception e) {
@@ -48,28 +48,28 @@ public class UserDao {
 	}
 	
 	public boolean createUser(UserRequestDto userDto) {
-		UserVo result = getUserById(userDto.getUser_email());
+		UserVo result = getUserById(userDto.getEmail());
 		
 		if(result != null)
 			return false;
 		
-		String user_email = userDto.getUser_email();
-		String password = userDto.getUser_password();
-		String user_name = userDto.getUser_name();
+		String email = userDto.getEmail();
+		String password = userDto.getPassword();
+		String name = userDto.getName();
 		
 		boolean check = true;
 		
-		if(user_email != null && password != null && user_name != null) {
+		if(email != null && password != null && name != null) {
 			this.conn = DBManager.getConnection();
 			
 			if(this.conn != null) {
-				String sql = "INSERT INTO `user` VALUES (?, ?, ?)";
+				String sql = "INSERT INTO `user` VALUES (?, ?, ?);";
 
 				try {
 					this.pstmt = this.conn.prepareStatement(sql);
-					this.pstmt.setString(1, user_email);
+					this.pstmt.setString(1, email);
 					this.pstmt.setString(2, password);
-					this.pstmt.setString(3, user_name);
+					this.pstmt.setString(3, name);
 
 					this.pstmt.execute();
 
@@ -89,18 +89,18 @@ public class UserDao {
 		return check;
 	}
 	
-	public void updateUser(UserRequestDto userDto, String name, String password) {
+	public void updateUser(UserRequestDto userDto, String password, String name) {
 		this.conn = DBManager.getConnection();
 		
-		if(this.conn != null && userDto.getUser_email() != null && userDto.getUser_password() != null && userDto.getUser_name() != null) {
+		if(this.conn != null && userDto.getEmail() != null && userDto.getPassword() != null && userDto.getName() != null) {
 			
-			String sql = "UPDATE `user` SET user_name=?, user_password=? WHERE user_email=?";
+			String sql = "UPDATE `user` SET `password`=?, `name`=? WHERE email=?";
 
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);
-				this.pstmt.setString(1, name);
-				this.pstmt.setString(2, password);
-				this.pstmt.setString(3, userDto.getUser_email());
+				this.pstmt.setString(1, password);
+				this.pstmt.setString(2, name);
+				this.pstmt.setString(3, userDto.getEmail());
 
 				this.pstmt.execute();
 
@@ -111,4 +111,35 @@ public class UserDao {
 			}
 		}
 	}
+	
+	public boolean deleteUserById(String email, String password) {
+		this.conn = DBManager.getConnection();
+		
+		boolean check = true;
+		// 삭제 시 외래키 연결 문제
+		if(this.conn != null) {
+			String sql = "DELETE FROM `user` WHERE email=? AND `password`=?";
+			
+			try {
+				this.pstmt = this.conn.prepareStatement(sql);
+				this.pstmt.setString(1, email);
+				this.pstmt.setString(2, password);
+				
+				this.pstmt.execute();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				check = false;
+			} finally {
+				DBManager.close(this.conn, this.pstmt);
+			}
+			
+		} else {
+			check = false;
+		}
+		
+		return check;
+	}
+	
+	
 }

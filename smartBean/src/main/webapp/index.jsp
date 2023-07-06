@@ -21,7 +21,7 @@ DBManager.getConnection();
 		<div class="login-nav">
 			<ul>
 				<li><a href="#">LOGIN&nbsp;&nbsp;&nbsp;></a></li>
-				<li><a href="#">JOIN&nbsp;&nbsp;&nbsp;></a></li>
+				<li><a href="join">JOIN&nbsp;&nbsp;&nbsp;></a></li>
 			</ul>
 		</div>
 	</main>

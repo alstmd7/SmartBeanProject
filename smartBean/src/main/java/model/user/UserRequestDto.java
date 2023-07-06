@@ -1,37 +1,40 @@
 package model.user;
 
 public class UserRequestDto {
-	private String user_email;
-    private String user_password;
-    private String user_name;
+	private String email;
+    private String password;
+    private String name;
     
-    public UserRequestDto(String user_email, String user_name) {
+    public UserRequestDto(String email, String name) {
 		super();
-		this.user_email = user_email;
-		this.user_name = user_name;
+		this.email = email;
+		this.name = name;
 	}
     
-	public UserRequestDto(String user_email, String user_password, String user_name) {
+	public UserRequestDto(String email, String password, String name) {
 		super();
-		this.user_email = user_email;
-		this.user_password = user_password;
-		this.user_name = user_name;
+		this.email = email;
+		this.password = password;
+		this.name = name;
 	}
 
-	public String getUser_email() {
-		return user_email;
+	public String getEmail() {
+		return email;
 	}
 
-	public String getUser_password() {
-		return user_password;
+	public String getPassword() {
+		return password;
 	}
 
-	public String getUser_name() {
-		return user_name;
+	public String getName() {
+		return name;
 	}
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void SetPassword(String password) {
+		this.password = password;
 	}
     
+	public void setName(String name) {
+		this.name = name;
+	}
 }
