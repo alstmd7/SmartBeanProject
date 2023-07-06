@@ -5,11 +5,7 @@ public class UserRequestDto {
     private String password;
     private String name;
     
-    public UserRequestDto(String email, String name) {
-		super();
-		this.email = email;
-		this.name = name;
-	}
+    
     
 	public UserRequestDto(String email, String password, String name) {
 		super();
