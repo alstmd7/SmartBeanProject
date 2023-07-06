@@ -14,10 +14,6 @@ public class Event {
 		this.event_start = event_start;
 		this.event_end = event_end;
 		this.event_check = event_check;
-<<<<<<< HEAD
-		this.event = event;
-=======
->>>>>>> refs/remotes/origin/#3-JangJaeWon
 	}
 
 	public String getEvent_title() {
