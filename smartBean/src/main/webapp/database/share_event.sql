@@ -1,8 +1,8 @@
 CREATE TABLE share_event (
 	event_no INT,
     FOREIGN KEY (event_no) REFERENCES `event`(`no`),
-	calender_no INT,
-	FOREIGN KEY (calender_no) REFERENCES calender(`no`)
+	calendar_no INT,
+	FOREIGN KEY (calendar_no) REFERENCES calendar(`no`)
 );
 
 INSERT INTO share_event VALUES (1, 2);

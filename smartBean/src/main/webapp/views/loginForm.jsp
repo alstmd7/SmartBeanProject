@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -13,8 +14,9 @@
 		<p>비밀번호</p>
 		<input type=text id="password" name="password">
 		
-		<!-- 함수연결필요 -->
-		<input type="submit" value="로그인">
+		<input type="button" value="로그인" onclick="checkValue(form)">
 	</form>
+	
+	<script src="../resources/script/vaildation_login.js"></script>
 </body>
 </html>

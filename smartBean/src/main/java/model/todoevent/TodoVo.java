@@ -1,4 +1,4 @@
-package todoevent;
+package model.todoevent;
 
 public class TodoVo {
 
