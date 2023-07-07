@@ -77,4 +77,22 @@
 		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>calendar</servlet-name>
+		<jsp-file>/views/calendar-main.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>calendar</servlet-name>
+		<url-pattern>/calendar</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>todoList</servlet-name>
+		<jsp-file>/views/todoList.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>todoList</servlet-name>
+		<url-pattern>/todoList</url-pattern>
+	</servlet-mapping>
+	
 </web-app>

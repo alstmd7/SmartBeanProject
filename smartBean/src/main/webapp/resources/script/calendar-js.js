@@ -168,5 +168,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	});
 
+	/* var testChk = true;
+	
+	if(testChk == true)
+		console.log(testChk); */
 
 });

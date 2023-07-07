@@ -7,14 +7,16 @@
 
 <title>일잘러의 업무관리 | 똑똑빈</title>
 <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.css' rel='stylesheet' />
-<link href='calendar-style.css' rel='stylesheet' />
+<link href='../resources/style/calendar-style.css' rel='stylesheet' />
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src='calendar-js.js'></script>
+<script src='../resources/script/calendar-js.js'></script>
 <!-- <script src="/WEB-INF/resources/script/ko.js"></script> -->
 
 </head>
 <body>
+	<jsp:include page="header"></jsp:include>
+
 	<div id='external-events'>
 		<p><strong>Create calendar</strong></p>
 		<div id='create-calendar'>
@@ -23,8 +25,8 @@
 
 		<!-- create-calendar 추가 팝업  -->
 		<div id="create-calendar-popup" style="display: none;">
-			<input type="text" id="newCalendar-name-input" placeholder="new calendar title">
-			<input type="text" id="newCalendar-owner-input" placeholder="calendar owner">
+			<input type="text" id="newCalendar-name-input" name="newCalendarName" placeholder="new calendar title">
+			<input type="text" id="newCalendar-owner-input" name="newCalendarOwner" placeholder="calendar owner">
 <!-- 			<input type="text" id="newCalendar-share-input" placeholder="공유자 입력(다중공유: , 입))"> -->
 			<button id="save-newCalendar-button">만들기</button>
 		</div>
@@ -85,6 +87,7 @@
 	<div id='calendar-container'>
 		<div id='calendar'></div>
 	</div>
-
+	
+	<jsp:include page="footer"></jsp:include>
 </body>
 </html>
