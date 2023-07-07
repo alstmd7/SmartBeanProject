@@ -11,10 +11,14 @@ CREATE TABLE `event` (
     all_day CHAR(1) NOT NULL DEFAULT 0
 );
 
--- ALTER TABLE `event` RENAME COLUMN event_name TO event_title;
-
 INSERT INTO `event` (`name`, email, title, content, `start`, `end`) 
 VALUES ("회의", "qortmdals120@gmail.com", "회의제목", "회의내용", DATE('2023-07-05 10:55:00'), DATE('2023-07-06 12:00:00'));
+
+INSERT INTO `event` (`name`, email, title, content, `start`, `end`) 
+VALUES ("회의", "lokcdown@gmail.com", "회의제목", "회의내용", DATE('2023-07-05 10:55:00'), DATE('2023-07-06 12:00:00'));
+
+INSERT INTO `event` (`name`, email, title, content, `start`, `end`) 
+VALUES ("휴가", "qortmdals120@gmail.com", "회의제목", "회의내용", DATE('2023-07-05 10:55:00'), DATE('2023-07-06 12:00:00'));
 
 SELECT * FROM `event`;
 SELECT * FROM `event` WHERE email='qortmdals120@gmail.com';
