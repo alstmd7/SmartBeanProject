@@ -7,18 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.user.UserDao;
+import model.task.TaskDao;
+import model.task.TaskRequestDto;
 
 /**
- * Servlet implementation class DropUserAction
+ * Servlet implementation class CreateTaskFormAction
  */
-public class DeleteUserAction extends HttpServlet {
+public class CreateTaskFormAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteUserAction() {
+    public CreateTaskFormAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,18 +28,21 @@ public class DeleteUserAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = (String) request.getSession().getAttribute("log");
+		request.setCharacterEncoding("UTF-8");
 		
-		UserDao userDao = UserDao.getInstance();
-		boolean result = userDao.deleteUserByEmail(email);
+		int calendar_no = Integer.parseInt(request.getParameter("calendar_no"));
+	    String name = request.getParameter("name");
+	    
+	    TaskRequestDto task = new TaskRequestDto(calendar_no, name);
+
+		TaskDao taskDao = TaskDao.getInstance();
+		boolean result = taskDao.createTask(calendar_no, name);
 		
-		String url = "deleteUser";
-				
-		if(result) {
-			request.getSession().removeAttribute("log");
-			url = "index.jsp";
-		}
-		
+		String url = "createTask";
+
+		if(result) 
+			url = "home";
+
 		response.sendRedirect(url);
 	}
 

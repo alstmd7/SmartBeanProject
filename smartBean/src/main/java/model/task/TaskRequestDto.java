@@ -1,31 +1,39 @@
 package model.task;
 
 public class TaskRequestDto {
-	private int task_no;
+	private int no;
+	private int calendar_no;
 	private String name;
-    private int no;
-    
-	public TaskRequestDto(int task_no, String name, int no) {
+	
+	public TaskRequestDto(int no, int calendar_no, String name) {
 		super();
-		this.task_no = task_no;
-		this.name = name;
 		this.no = no;
+		this.calendar_no = calendar_no;
+		this.name = name;
 	}
-
-	public int getTask_no() {
-		return task_no;
-	}
-
-	public String getName() {
-		return name;
+    
+	public TaskRequestDto(int calendar_no, String name) {
+		super();
+		this.calendar_no = calendar_no;
+		this.name = name;
 	}
 
 	public int getNo() {
 		return no;
 	}
 
+	public int getCalendar_no() {
+		return calendar_no;
+	}
+
+	public String getName() {
+		return name;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
 
 }

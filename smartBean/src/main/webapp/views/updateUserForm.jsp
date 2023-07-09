@@ -13,7 +13,7 @@
 		<c:redirect url="login"></c:redirect>
 	</c:if>
 	
-	<form action="UpdateUserForm" method="POST">
+	<form action="UpdateUser" method="POST">
 		<p>이메일</p>
 		<input type="text" id="email" name="email" value="${sessionScope.log }" readonly>
 		<p>비밀번호</p>

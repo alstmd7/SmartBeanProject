@@ -1,11 +1,17 @@
 package model.user;
 
 public class UserRequestDto {
+	private int code;
 	private String email;
     private String password;
     private String name;
     
-    
+    public UserRequestDto(int code, String email, String password, String name) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.name = name;
+	}
     
 	public UserRequestDto(String email, String password, String name) {
 		super();

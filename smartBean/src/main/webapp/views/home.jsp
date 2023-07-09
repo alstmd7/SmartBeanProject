@@ -12,8 +12,9 @@
 		<c:redirect url="login"></c:redirect>
 	</c:if>
 
-	<h3>${requestScope.name }님 환영합니다.</h3>
+	<h3>${sessionScope.name }님 환영합니다.</h3>
 	<button onclick="location.href='UpdateUserRequest'">회원정보 수정</button>
-	<button onclick="location.href='deleteUser'">회원탈퇴</button>
+	<button onclick="location.href='Logout'">로그아웃</button>
+	<button onclick="location.href='DeleteUserRequest'">회원탈퇴</button>
 </body>
 </html>

@@ -41,11 +41,15 @@ public class LoginFormAction extends HttpServlet {
 		String url = "login";
 
 		if(user != null && user.getPassword().equals(password)) {
-			url = "home";
-			
 			// session log에 로그인한 email 값 넣기
 			HttpSession session = request.getSession();
 			session.setAttribute("log", email);
+			session.setAttribute("name", user.getName());
+			
+			url = "home";
+			
+		} else {
+			// 비밀번호 실패 알림 추가
 		}
 
 		response.sendRedirect(url);

@@ -3,6 +3,7 @@ package model.task;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import util.DBManager;
 
@@ -19,24 +20,52 @@ public class TaskDao {
 		return instance;
 	}
 	
-	public TaskVo getTaskByName(String name) {
-		TaskVo user = null;
+	public TaskVo getTaskByName(int calendar_no, String name) {
+		TaskVo task = null;
 		
 		this.conn = DBManager.getConnection();
 		
-		String sql = "SELECT * FROM task WHERE `name`=?";
+		if(this.conn != null) {
+			String sql = "SELECT * FROM task WHERE calendar_no=? AND `name`=?";
+			
+			try {
+				this.pstmt = this.conn.prepareStatement(sql);
+				this.pstmt.setInt(1, calendar_no);
+				this.pstmt.setString(2, name);
+				
+				this.rs = this.pstmt.executeQuery();
+				
+				if(this.rs.next()) {
+					int no = this.rs.getInt(1);
+					
+					task = new TaskVo(no, calendar_no, name);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(this.conn, this.pstmt, this.rs);
+			}
+		}
+		
+		return task;
+	}
+	
+	public ArrayList<String> getTaskAll(int calendar_no) {
+		ArrayList<String> task = new ArrayList<String>();
+		
+		this.conn = DBManager.getConnection();
+		
+		String sql = "SELECT `name` FROM task WHERE calendar_no=?";
 		
 		try {
 			this.pstmt = this.conn.prepareStatement(sql);
-			this.pstmt.setString(1, name);
-			
+			this.pstmt.setInt(1, calendar_no);
 			this.rs = this.pstmt.executeQuery();
 			
 			if(this.rs.next()) {
-				int task_no = this.rs.getInt(1);
-				int no = this.rs.getInt(3);
+				String name = this.rs.getString(1);
 				
-				user = new TaskVo(task_no, name, no);
+				task.add(name);
 			}
 
 		} catch (Exception e) {
@@ -44,30 +73,29 @@ public class TaskDao {
 		} finally {
 			DBManager.close(this.conn, this.pstmt, this.rs);
 		}
-		return user;
+		
+		return task;
 	}
 	
-	public boolean createTask(TaskRequestDto taskDto) {
-		TaskVo result = getTaskByName(taskDto.getName());
+	public boolean createTask(int calendar_no, String name) {
+		
+		TaskVo result = getTaskByName(calendar_no, name);
 		
 		if(result != null)
 			return false;
 		
-		String name = taskDto.getName();
-		int no = taskDto.getNo();
-		
 		boolean check = true;
 		
-		if(name != null && no != 0) {
+		if(calendar_no != 0 && name != null) {
 			this.conn = DBManager.getConnection();
 			
 			if(this.conn != null) {
-				String sql = "INSERT INTO task (`name`, `no`) VALUES (?, ?)";
+				String sql = "INSERT INTO task (calendar_no, `name`) VALUES (?, ?)";
 
 				try {
 					this.pstmt = this.conn.prepareStatement(sql);
-					this.pstmt.setString(1, name);
-					this.pstmt.setInt(2, no);
+					this.pstmt.setInt(1, calendar_no);
+					this.pstmt.setString(2, name);
 					
 					this.pstmt.execute();
 
@@ -87,42 +115,21 @@ public class TaskDao {
 		return check;
 	}
 	
-	public void updateTask(TaskRequestDto taskDto, String name) {
-		this.conn = DBManager.getConnection();
-		
-		if(this.conn != null && taskDto.getName() != null && taskDto.getTask_no() != 0) {
-			
-			String sql = "UPDATE task SET `name`=? WHERE task_no=?";
-
-			try {
-				this.pstmt = this.conn.prepareStatement(sql);
-				this.pstmt.setString(1, name);
-				this.pstmt.setInt(2, taskDto.getTask_no());
-
-				this.pstmt.execute();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				DBManager.close(this.conn, this.pstmt);
-			}
-		}
-	}
-	
-	public boolean deleteTaskByName(String name) {
+	public boolean updateTask(TaskRequestDto taskDto, String name) {
 		this.conn = DBManager.getConnection();
 		
 		boolean check = true;
 		
-		if(this.conn != null) {
-			String sql = "DELETE FROM task WHERE name=?";
-			
+		if(this.conn != null && taskDto.getNo() != 0) {
+			String sql = "UPDATE task SET `name`=? WHERE `no`=?";
+
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);
 				this.pstmt.setString(1, name);
-				
+				this.pstmt.setInt(2, taskDto.getNo());
+
 				this.pstmt.execute();
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				check = false;
@@ -134,6 +141,36 @@ public class TaskDao {
 			check = false;
 		}
 		
+		return check;
+	}
+	
+	public boolean deleteTaskByName(int calendar_no, String name) {
+		
+		this.conn = DBManager.getConnection();
+
+		boolean check = true;
+
+		if (this.conn != null) {
+			String sql = "DELETE FROM task WHERE calendar_no=? AND name=?";
+
+			try {
+				this.pstmt = this.conn.prepareStatement(sql);
+				this.pstmt.setInt(1, calendar_no);
+				this.pstmt.setString(2, name);
+
+				this.pstmt.execute();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				check = false;
+			} finally {
+				DBManager.close(this.conn, this.pstmt);
+			}
+			
+		} else {
+			check = false;
+		}
+
 		return check;
 	}
 }

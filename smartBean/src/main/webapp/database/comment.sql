@@ -1,16 +1,17 @@
 CREATE TABLE `comment` (
-	no INT PRIMARY KEY AUTO_INCREMENT,
-	email VARCHAR(50),
-    FOREIGN KEY (email) REFERENCES `user`(email),
+	`no` INT PRIMARY KEY AUTO_INCREMENT,
+    `code` INT,
+    FOREIGN KEY (`code`) REFERENCES `user`(`code`) ON DELETE CASCADE,
+    `name` VARCHAR(20) NOT NULL,
     event_no INT,
-    FOREIGN KEY (event_no) REFERENCES `event`(`no`),
+    FOREIGN KEY (event_no) REFERENCES `event`(`no`) ON DELETE CASCADE,
     content VARCHAR(1000) NOT NULL,
     create_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     reg_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    p_no INT default 0
+    p_no INT
 );
 
-INSERT INTO `comment` (email, event_no, content) VALUES ("qortmdals120@gmail.com", 1, "댓글내용");
+INSERT INTO `comment` (`code`, `name`, event_no, content) VALUES (1, "승민", 1, "댓글내용");
 
 SELECT * FROM `comment`;
 SELECT * FROM `comment` WHERE event_no=1;

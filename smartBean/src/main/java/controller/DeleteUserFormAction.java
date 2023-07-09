@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,15 +12,15 @@ import model.user.UserRequestDto;
 import model.user.UserVo;
 
 /**
- * Servlet implementation class UpdateUserFormAction
+ * Servlet implementation class DropUserAction
  */
-public class UpdateUserFormAction extends HttpServlet {
+public class DeleteUserFormAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateUserFormAction() {
+    public DeleteUserFormAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,28 +32,22 @@ public class UpdateUserFormAction extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		UserRequestDto userDto = null;
-
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String new_password = request.getParameter("new_password");
-		String name = request.getParameter("name");
-
-		userDto = new UserRequestDto(email, password, name);
-
+		
 		UserDao userDao = UserDao.getInstance();
-		boolean result = userDao.updateUser(userDto, new_password);
+		boolean result = userDao.deleteUserByEmail(email);
 		
-		String url = "updateUser";
-		
-		if(result) {
-			// 업데이트 성공 시
+		String url = "deleteUser";
+
+		if (result) {
 			HttpSession session = request.getSession();
-			session.setAttribute("name", name);
-			
-			url = "home";
-		}
-		
+	    	session.setAttribute("log", null);
+	    	session.setAttribute("name", null);
+
+			url = "login";
+		}			
+
 		response.sendRedirect(url);
 	}
 
