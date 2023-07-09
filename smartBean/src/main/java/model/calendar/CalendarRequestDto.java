@@ -1,59 +1,37 @@
 package model.calendar;
 
 public class CalendarRequestDto {
-	private int no;
-	private String email;
-	private String name;
-	
-	
-	public CalendarRequestDto(int no, String email, String name) {
-		super();
-		this.no = no;		// auto
-		this.email = email;
-		this.name = name;
-	}
+    private int code;
+    private String email;
+    private String name;
 
-	public CalendarRequestDto(String email, String name) {
-		super();
-		this.email = email;
-		this.name = name;
-	}
-	
-	public CalendarRequestDto(int no, String name) {
-		super();
-		this.no = no;
-		this.name = name;
-	}
+    public CalendarRequestDto(int code, String email, String name) {
+        this.code = code;
+        this.email = email;
+        this.name = name;
+    }
 
+    public int getCode() {
+        return code;
+    }
 
+    public void setCode(int code) {
+        this.code = code;
+    }
 
-	public int getNo() {
-		return no;
-	}
+    public String getEmail() {
+        return email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setNo(int no) {
-		this.no = no;
-	}
+    public String getName() {
+        return name;
+    }
 
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -1,35 +1,53 @@
 package model.calendar;
 
-//Java Bean 정의 (VO)
+// Java Bean 정의 (VO)
 public class CalendarVo {
-	private int no;
-	private String email;
-	private String name;
-	
-	
-	public CalendarVo(int no, String email, String name) {
-		super();
-		this.no = no;
-		this.email = email;
-		this.name = name;
-	}
-	
+    private int no;
+    private int code;
+    private String email;
+    private String name;
+    
+    public CalendarVo(int no, int code, String email, String name) {
+        this.no = no;
+        this.code = code;
+        this.email = email;
+        this.name = name;
+    }
 
-	public int getNo() {
-		return no;
-	}
+    public int getNo() {
+        return no;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setNo(int no) {
+        this.no = no;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public int getCode() {
+        return code;
+    }
 
-	@Override
-	public String toString() {
-		return String.format("No: %d\nEmail: %s\nName: %s", this.no, this.email, this.name);
-	}
-	
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("No: %d\nCode: %d\nEmail: %s\nName: %s", this.no, this.code, this.email, this.name);
+    }
 }

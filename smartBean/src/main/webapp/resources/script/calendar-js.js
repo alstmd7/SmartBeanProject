@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
 
@@ -27,10 +27,23 @@ document.addEventListener('DOMContentLoaded', function() {
 		},
 		editable: true,
 		droppable: true,
+		// 캘린더에 task 끌어오고 색상 저장
+		eventRender: function(info) {
+			var eventTitle = info.event.title;
+			var eventElement = info.el;
+
+			if (eventTitle === '휴가') {
+				eventElement.style.backgroundColor = '#FF6A89';
+			} else if (eventTitle === '재택근무') {
+				eventElement.style.backgroundColor = '#329632';
+			} else if (eventTitle === '출장') {
+				eventElement.style.backgroundColor = '#FF8200';
+			}
+		}
 	});
 
 	calendar.render();
-	
+
 	// -----------------------------------------------------------------
 
 	// 캘린더 추가 버튼 클릭 이벤트
@@ -49,9 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			var newCalendar = document.createElement("div");
 			newCalendar.className = "calendar-checkbox";
 			newCalendar.innerHTML = `
-					<input type="checkbox" id="${newCalendarName}" class="calendar-checkbox-input" data-owner="${newCalendarOwner}">
-					<label for="calendar-checkbox-${newCalendarName}">${newCalendarName} (${newCalendarOwner})</label>
-				`;
+          <input type="checkbox" id="${newCalendarName}" class="calendar-checkbox-input" data-owner="${newCalendarOwner}">
+          <label for="calendar-checkbox-${newCalendarName}">${newCalendarName} (${newCalendarOwner})</label>
+        `;
 
 			$("#calendar-list").append(newCalendar);
 			$("#create-calendar-popup").fadeOut();
@@ -95,30 +108,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Task 저장 버튼 클릭 이벤트
 	$("#save-task-button").on("click", function() {
-	    var taskName = $("#task-name-input").val();
-	    if (taskName.trim() !== "") {
-	        if (taskNameDupl(taskName)) {
-	            alert("이미 존재하는 Task입니다.");
-	        } else {
-	            var newEvent = document.createElement("div");
-	            newEvent.className = "fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event";
-	            newEvent.innerHTML = "<div class='fc-event-main'>" + taskName + "</div>";
-	            containerEl.insertBefore(newEvent, containerEl.lastChild);
-	            $("#add-task-popup").fadeOut();
-	            $("#task-name-input").val("");
-	        }
-	    }
+		var taskName = $("#task-name-input").val();
+		if (taskName.trim() !== "") {
+			if (taskNameDupl(taskName)) {
+				alert("이미 존재하는 Task입니다.");
+			} else {
+				var newEvent = document.createElement("div");
+				newEvent.className = "fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event";
+				newEvent.innerHTML = "<div class='fc-event-main'>" + taskName + "</div>";
+				containerEl.insertBefore(newEvent, containerEl.lastChild);
+				$("#add-task-popup").fadeOut();
+				$("#task-name-input").val("");
+			}
+		}
 	});
-	
+
 	// taskName이 이미 존재하는지 확인하는 함수
 	function taskNameDupl(taskName) {
-	    var taskNames = $(".fc-event-main").map(function() {
-	        return $(this).text();
-	    }).get();
-	    return taskNames.includes(taskName);
+		var taskNames = $(".fc-event-main").map(function() {
+			return $(this).text();
+		}).get();
+		return taskNames.includes(taskName);
 	}
-
-
 
 	// calendar에 등록된 task click event
 	$('#calendar').on('click', '.fc-daygrid-event', function() {
@@ -163,14 +174,18 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 
 		// Save event button click event
-		$('#save-event-button').on('click').on('click', function() {
+		$('#save-event-button').on('click', function() {
+			var allDay = $('#all-day-checkbox').prop('checked');
+			var startDate = allDay ? moment($('#start-date').val()) : moment($('#start-date').val() + 'T' + event.start.format('HH:mm:ss'));
+			var endDate = allDay ? moment($('#end-date').val()).add(1, 'day') : moment($('#end-date').val() + 'T' + event.end.format('HH:mm:ss'));
+			var description = $('#event-description').val();
+
+			event.setDates(startDate, endDate, { allDay: allDay });
+			event.setExtendedProp('description', description);
+
+			calendar.updateEvent(event);
+
 			eventPopup.fadeOut();
 		});
 	});
-
-	/* var testChk = true;
-	
-	if(testChk == true)
-		console.log(testChk); */
-
 });
