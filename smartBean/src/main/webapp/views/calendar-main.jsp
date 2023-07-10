@@ -16,6 +16,9 @@
 <script src='../resources/script/calendar-js.js'></script>
 <!-- <script src="/WEB-INF/resources/script/ko.js"></script> -->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+
 </head>
 <body>
 	<jsp:include page="header"></jsp:include>
@@ -51,18 +54,16 @@
 
 		<!-- Event 수정 Popup 팝업 -->
 		<div id="event-popup" style="display: none;">
-			<h2 id="event-title"></h2>
 			<button id="close-event-button">닫기</button>
-			<button id="delete-event-button">삭제</button>
-			<br> <label> <input type="checkbox"
-				id="all-day-checkbox" checked>하루종일
-			</label> <br> <label for="start-date">시작일:</label> <input type="date"
-				id="start-date"> <br> <label for="end-date">종료일:</label>
-			<input type="date" id="end-date"> <br>
+			<button id="delete-event-button">삭제</button><br>
+			<!-- 이벤트 타이틀 입력 -->
+			<input type="text" id="event-title-input" name="이벤트 타이틀" placeholder="이벤트 타이틀 입력"><br>
+			<label> <input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br>
+			<label for="start-date">시작일:</label> <input type="date" id="start-date"> <br>
+			<label for="end-date">종료일:</label> <input type="date" id="end-date"> <br>
 
 			<p>세부내용:</p>
-			<textarea id="event-description"></textarea>
-			<br>
+			<textarea id="event-description"></textarea><br>
 
 			<button id="save-event-button">저장</button>
 		</div>
