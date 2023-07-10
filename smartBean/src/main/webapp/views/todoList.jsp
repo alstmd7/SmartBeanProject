@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <link href="../resources/style/todo_style.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <title>To-do list</title>
@@ -13,19 +14,9 @@
 	<c:if test="${empty sessionScope.log }">
 		<c:redirect url="login"></c:redirect>
 	</c:if>
-    <div class="To-do-list">
-        <h1>To-do list</h1>
-        <ul>
-            <li>이름 : 장재원</li>
-        </ul>
-    </div>
-    <div class="check">
-        <label for="inputDate">날짜 선택:</label>
-        <input type="date" id="inputDate" required>
-    </div>
-    <button onclick="printWeek()">조회</button>
-    <div id="output"></div>
+    
 	<div class="To-do-list">
+		
 		<h1>To-do list</h1>
 		<p>${sessionScope.name } 님</p>
 
@@ -49,6 +40,9 @@
 			<button type="submit" id="button2" onclick="ValueCheck()">삭제하기</button>
 		</form>
 	</div>
+	
+	<input type="text" id="todo" value="${requestScope.todo }">
+	<input type="text" id="print">
 
 	<div class="check">
 		<label for="inputDate">날짜 선택:</label> <input type="date" id="inputDate" required>
