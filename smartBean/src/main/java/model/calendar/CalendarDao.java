@@ -24,31 +24,32 @@ public class CalendarDao {
 
     public ArrayList<CalendarVo> getAllCalendars() {
         ArrayList<CalendarVo> calendarList = new ArrayList<>();
-        this.conn = null;
-        this.pstmt = null;
-        this.rs = null;
+        conn = null;
+        pstmt = null;
+        rs = null;
 
         try {
-            this.conn = DBManager.getConnection();
+            conn = DBManager.getConnection();
 
             String sql = "SELECT * FROM calendar";
-            this.pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
 
-            this.rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 int no = rs.getInt("no");
+                int code = rs.getInt("code");
                 String email = rs.getString("email");
                 String name = rs.getString("name");
 
-                CalendarVo calendar = new CalendarVo(no, email, name);
+                CalendarVo calendar = new CalendarVo(no, code, email, name);
                 calendarList.add(calendar);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	DBManager.close(this.conn, this.pstmt);
+            DBManager.close(conn, pstmt, rs);
         }
 
         return calendarList;
@@ -58,32 +59,64 @@ public class CalendarDao {
         CalendarVo calendar = null;
 
         try {
-            this.conn = DBManager.getConnection();
+            conn = DBManager.getConnection();
 
             String sql = "SELECT * FROM calendar WHERE no = ?";
-            
-            this.pstmt = conn.prepareStatement(sql);
-            this.pstmt.setInt(1, no);
 
-            this.rs = this.pstmt.executeQuery();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, no);
+
+            rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                String email = this.rs.getString("email");
+                int code = rs.getInt("code");
+                String email = rs.getString("email");
                 String name = rs.getString("name");
 
-                calendar = new CalendarVo(no, email, name);
+                calendar = new CalendarVo(no, code, email, name);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	DBManager.close(this.conn, this.pstmt);
+            DBManager.close(conn, pstmt, rs);
         }
 
         return calendar;
     }
     
+    private int getUserCodeByEmail(String email) {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        int userCode = -1;
+
+        try {
+            conn = DBManager.getConnection();
+
+            if (conn != null) {
+                String sql = "SELECT code FROM user WHERE email = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, email);
+
+                rs = pstmt.executeQuery();
+
+                if (rs.next()) {
+                    userCode = rs.getInt("code");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt, rs);
+        }
+
+        return userCode;
+    }
+
+
     public boolean createCalendar(CalendarRequestDto calendarDto) {
+    	// 이메일에 해당하는 user의 code 찾기 -> 이메일 유저가 없으면 -1 반환 
         Connection conn = null;
         PreparedStatement pstmt = null;
         boolean result = false;
@@ -92,10 +125,14 @@ public class CalendarDao {
             conn = DBManager.getConnection();
 
             if (conn != null) {
-                String sql = "INSERT INTO calendar (email, name) VALUES (?, ?)";
+                // 사용자의 code 값을 가져온다
+                int userCode = getUserCodeByEmail(calendarDto.getEmail());
+
+                String sql = "INSERT INTO calendar (code, email, name) VALUES (?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, calendarDto.getEmail());
-                pstmt.setString(2, calendarDto.getName());
+                pstmt.setInt(1, userCode);
+                pstmt.setString(2, calendarDto.getEmail());
+                pstmt.setString(3, calendarDto.getName());
 
                 int rowCount = pstmt.executeUpdate();
                 result = rowCount > 0;
@@ -109,48 +146,47 @@ public class CalendarDao {
         return result;
     }
 
-
-    public void updateCalendarName(int no, String name) {
-        this.conn = null;
-        this.pstmt = null;
+	public void updateCalendarName(int no, String name) {
+        conn = null;
+        pstmt = null;
 
         try {
-            this.conn = DBManager.getConnection();
+            conn = DBManager.getConnection();
 
             String sql = "UPDATE calendar SET name = ? WHERE no = ?";
-            this.pstmt = conn.prepareStatement(sql);
-            this.pstmt.setString(1, name);
-            this.pstmt.setInt(2, no);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setInt(2, no);
 
-			this.pstmt.execute();
+            pstmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	DBManager.close(this.conn, this.pstmt);
+            DBManager.close(conn, pstmt);
         }
     }
 
-    public boolean deleteCalendarByEmail(int no) {
-        this.conn = null;
-        this.pstmt = null;
+    public boolean deleteCalendarByNo(int no) {
+        conn = null;
+        pstmt = null;
+        boolean result = false;
 
-        boolean check = true;
         try {
-            this.conn = DBManager.getConnection();
+            conn = DBManager.getConnection();
 
-            String sql = "DELETE FROM calendar WHERE no = ?";
-            this.pstmt = conn.prepareStatement(sql);
-            this.pstmt.setInt(1, no);
-            
+            String sql = "DELETE FROM calendar WHERE no = 1"; // 나중에 no =? 바꾸기
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, no);
+
             int rowCount = pstmt.executeUpdate();
-            check = rowCount > 0;
+            result = rowCount > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            check = false;
         } finally {
-        	DBManager.close(this.conn, this.pstmt);
+            DBManager.close(conn, pstmt);
         }
-        return check;
+
+        return result;
     }
 }

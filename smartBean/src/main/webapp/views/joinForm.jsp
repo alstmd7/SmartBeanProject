@@ -75,24 +75,31 @@
 </style>
 
 <body>
+	<section>
+		<div class="join-the-membership">
 
-    <div class="join-the-membership">
-
-        <!-- 제목 -->
-        <h1>join-the-membership</h1>
-
-	<form action="Join" method="POST" id="Join">
-		<p>이메일</p>
-		<input type="text" id="email" name="email">
-		<p>비밀번호</p>
-		<input type="password" id="password" name="password">
-		<p>이름</p>
-		<input type="text" id="name" name="name">
-		
-		<input type="button" value="회원가입" onclick="checkValue(form)">
-	</form>
-
-    </div>
+	        <!-- 제목 -->
+	        <h1>join-the-membership</h1>
+	
+			<form action="JoinUser" method="POST" id="Join">
+				<p>이메일</p>
+				<input type="text" id="email" name="email" value="${requestScope.email }">
+				<p>비밀번호</p>
+				<input type="password" id="password" name="password" value="${requestScope.password }">
+				<p>이름</p>
+				<input type="text" id="name" name="name" value="${requestScope.name }">
+				
+				<ul>
+					<li class="error" id="error-email">이메일을 입력해주세요.</li>
+					<li class="error" id="error-password">비밀번호를 입력해주세요.</li>
+					<li class="error" id="error-name">이름을 입력해주세요.</li>
+				</ul>
+				
+				<input type="button" value="회원가입" onclick="checkValue(form)">
+			</form>
+			
+	    </div>
+	</section>
 	
 	<script src="../resources/script/vaildation_join.js"></script>
 </body>

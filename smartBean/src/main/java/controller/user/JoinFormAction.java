@@ -1,26 +1,27 @@
-package controller;
+package controller.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import model.user.UserDao;
-import model.user.UserVo;
+import model.user.UserRequestDto;
 
 /**
- * Servlet implementation class LoginFormAction
+ * Servlet implementation class joinAction
  */
-public class LoginFormAction extends HttpServlet {
+public class JoinFormAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginFormAction() {
+    public JoinFormAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,26 +34,28 @@ public class LoginFormAction extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+	    String password = request.getParameter("password");
+	    String name = request.getParameter("name");
+	    
+	    UserRequestDto user = new UserRequestDto(email, password, name);
 
 		UserDao userDao = UserDao.getInstance();
-		UserVo user = userDao.getUserByEmail(email);
-
-		String url = "login";
-
-		if(user != null && user.getPassword().equals(password)) {
-			// session log에 로그인한 email 값 넣기
-			HttpSession session = request.getSession();
-			session.setAttribute("log", email);
-			session.setAttribute("name", user.getName());
-			
+		boolean result = userDao.createUser(user);
+		
+		String url = "JoinRequest";
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		if(result) {
 			url = "home";
-			
+			out.println("<script> alert('회원가입이 완료되었습니다.'); </script>");
 		} else {
-			// 비밀번호 실패 알림 추가
+			out.println("<script> alert('이미 가입된 이메일입니다.'); </script>");
 		}
-
-		response.sendRedirect(url);
+		out.print("<script>location.href='"+url+"';</script>");
+		
+		out.close();
 	}
 
 }

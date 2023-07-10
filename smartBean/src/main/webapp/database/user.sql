@@ -9,6 +9,7 @@ INSERT INTO `user`(email, `password`, `name`) VALUES ("qortmdals120@gmail.com", 
 
 SELECT * FROM `user`;
 SELECT * FROM `user` WHERE email='qortmdals120@gmail.com';
+SELECT email FROM `user`;
 
 UPDATE `user` SET `password`='new123', `name`='new승민' WHERE email='qortmdals120@gmail.com';
 

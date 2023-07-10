@@ -20,7 +20,7 @@ html, body {
 #calendar-container {
 	position: relative;
 	z-index: 1;
-	margin-left: 200px;
+	margin-left: 50px;
 }
 
 #calendar {
@@ -30,21 +30,23 @@ html, body {
 
 /* external-events 스타일 */
 #external-events {
-	position: fixed;
-	z-index: 2;
-	top: 60px; /* 저장하기 버튼이 있으므로 아래로 이동 */
+	/* position: fixed; */
+	/* z-index: 2; */
+	/* top: 60px; 저장하기 버튼이 있으므로 아래로 이동
 	left: 20px;
-	width: 200px;
+	width: 200px; */
 	padding: 10px;
 	border: 1px solid #ccc;
 	background: #eee;
 }
 
 #create-calendar-btn {
-	width: 90%;
-	height: 20px;
-	/* 	border: solid 1px grey; 
-	border-radius: 20px 40px 60px 80px;  */
+	width: 50%;
+	height: 30px;
+    border-radius: 20px;
+    background: #323232;
+    color: white;
+    border: none;
 }
 
 /* Task 추가 팝업 스타일 */
@@ -80,12 +82,38 @@ html, body {
 	left: 15%;
 	transform: translate(-50%, -50%);
 	padding: 20px;
-	background: #ccc;
+	background: #fff;
+	border: 1px solid black;
 	width: 200px;
 	height: 330px;
+	text-align: left;
+}
+
+#event-popup button{
+	float: right;
 }
 
 #event-description {
 	width: 90%;
 	height: 120px;
 }
+
+/* 일정 저장 버튼 */
+#save-button {
+    position: absolute;
+    right: 0;
+    border-radius: 20px;
+    height: 30px;
+    width: 80px;
+    background: #323232;
+    color: white;
+    border: none;
+    font-weight: 600;
+}
+
+
+/* lib css 수정 */
+.fc .fc-toolbar.fc-header-toolbar{
+	margin-top: 1.5em;
+}
+

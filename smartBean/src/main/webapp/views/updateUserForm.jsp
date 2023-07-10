@@ -91,13 +91,13 @@
             <p>이메일</p>
             <input type="text" id="email" name="email" value="${sessionScope.log }" readonly>
             <p>비밀번호</p>
-            <input type="password" id="password" name="password" value="${sessionScope.password }">
+            <input type="password" id="password" name="password">
             <p>새로운 비밀번호</p>
             <input type="password" id="new_password" name="new_password">
             <p>닉네임</p>
             <input type="text" id="name" name="name" value="${requestScope.name }">
 
-            <input type="button" id="submit-btn" value="회원정보 수정" onclick="checkValue(form)">
+            <input type="submit" value="회원정보 수정">
 
         </form>
 

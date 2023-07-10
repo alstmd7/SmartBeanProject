@@ -15,16 +15,25 @@
 	<!-- 1. 서블릿 페이지 맵핑 -->
 	<servlet>
 		<servlet-name>JoinFormAction</servlet-name>
-		<servlet-class>controller.JoinFormAction</servlet-class>
+		<servlet-class>controller.user.JoinFormAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>JoinFormAction</servlet-name>
-		<url-pattern>/Join</url-pattern>
+		<url-pattern>/JoinUser</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>JoinRequestAction</servlet-name>
+		<servlet-class>controller.user.JoinRequestAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JoinRequestAction</servlet-name>
+		<url-pattern>/JoinRequest</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>LoginFormAction</servlet-name>
-		<servlet-class>controller.LoginFormAction</servlet-class>
+		<servlet-class>controller.user.LoginFormAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginFormAction</servlet-name>
@@ -33,7 +42,7 @@
 	
 	<servlet>
 		<servlet-name>UpdateUserFormAction</servlet-name>
-		<servlet-class>controller.UpdateUserFormAction</servlet-class>
+		<servlet-class>controller.user.UpdateUserFormAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UpdateUserFormAction</servlet-name>
@@ -42,7 +51,7 @@
 	
 	<servlet>
 		<servlet-name>UpdateUserRequestAction</servlet-name>
-		<servlet-class>controller.UpdateUserRequestAction</servlet-class>
+		<servlet-class>controller.user.UpdateUserRequestAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UpdateUserRequestAction</servlet-name>
@@ -51,7 +60,7 @@
 	
 	<servlet>
 		<servlet-name>DeleteUserFormAction</servlet-name>
-		<servlet-class>controller.DeleteUserFormAction</servlet-class>
+		<servlet-class>controller.user.DeleteUserFormAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DeleteUserFormAction</servlet-name>
@@ -60,7 +69,7 @@
 	
 	<servlet>
 		<servlet-name>DeleteUserRequestAction</servlet-name>
-		<servlet-class>controller.DeleteUserRequestAction</servlet-class>
+		<servlet-class>controller.user.DeleteUserRequestAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DeleteUserRequestAction</servlet-name>
@@ -69,7 +78,7 @@
 	
 	<servlet>
 		<servlet-name>LogoutAction</servlet-name>
-		<servlet-class>controller.LogoutAction</servlet-class>
+		<servlet-class>controller.user.LogoutAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LogoutAction</servlet-name>
