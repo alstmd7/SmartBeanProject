@@ -60,22 +60,24 @@ public class TodoDao {
 		return list;
 	}
 	
-	public boolean createTodo(TodoRequestDto todoDto) {
+	public boolean createTodo(TodoRequestDto todo) {
 		
-		String email = todoDto.getEmail();
-		String content = todoDto.getContent();
+		String email = todo.getEmail();
+		String content = todo.getContent();
+		int target_at = todo.getTarget_at();
 		
 		boolean check = false;
 		
-		if(email != null && content != null) {
+		if(email != null && content != null && target_at != 0) {
 			this.conn = DBManager.getConnection();
 			if(this.conn != null) {
-					String sql = "INSERT INTO todo(`email`, content) VALUES (?, ?)";
+					String sql = "INSERT INTO todo(`email`, content, target_at) VALUES (?, ?, Date(?))";
 					
 					try {
 						this.pstmt = this.conn.prepareStatement(sql);
 						this.pstmt.setString(1, email);
 						this.pstmt.setString(2, content);
+						this.pstmt.setInt(3, target_at);
 						
 						this.pstmt.execute();
 						

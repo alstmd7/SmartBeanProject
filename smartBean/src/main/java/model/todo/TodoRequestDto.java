@@ -16,6 +16,13 @@ public class TodoRequestDto {
 		this.check = check;
 	}
 	
+	public TodoRequestDto(String email, String content, int target_at) {
+		super();
+		this.email = email;
+		this.content = content;
+		this.target_at = target_at;
+	}
+	
 	public int getNo() {
 		return no;
 	}

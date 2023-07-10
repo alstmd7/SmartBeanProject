@@ -8,7 +8,7 @@ target_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 );
  
 -- #5. 테이블에 데이터 삽입하기(insert)
-INSERT INTO todo(`email`, content) VALUES ("qortmdals120@gmail.com", 'todo1');
+INSERT INTO todo(`email`, content, target_at) VALUES ("qortmdals120@gmail.com", 'todo2', Date('2023-07-10'));
 
 -- #4. 테이블 만들어졌는지 확인하기
 SELECT * FROM todo;
