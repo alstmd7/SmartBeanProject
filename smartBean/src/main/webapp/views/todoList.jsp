@@ -2,195 +2,82 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>To-do list</title>
     <link href="./JJWresete.css" rel="stylesheet">
+    <link href="./To-do css.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    <style>
 
-        @font-face {
-            font-family: 'LeferiPoint-WhiteObliqueA';
-            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
-        div {
-            font-family: "LeferiPoint-WhiteObliqueA";
-        }
-
-        header {
-            font-family: "WandohopeR";
-        }
-
-       
-        body{
-            background-color: #f1ecec;
-            
-        }
-
-        .To-do-list {
-            width: 14%;
-            height: 1000px;
-            background-color: #d73434; 
-            border: 2px solid black;
-            float: left;
-            margin-right: 3%;
-        }
-
-        .To-do-list > h1 {
-            text-align: center;
-        font-family: 'Lobster', cursive;
-        font-size: 3rem;
-        color: #fff;
-            padding-bottom: 30%;
-            padding-top: 10%;
-        }
-
-        .To-do-list li {
-            text-align: center;
-            font-size: 2rem;
-        }
-
-        .check {
-            width: 380px;
-            height: 45px;
-            margin-top: 3%;
-            margin-left: 7%;
-            display: inline-block;
-            border: 2px solid black;
-            border-radius: 10px;
-            padding: 15px 20px;
-            background-color: #fff;
-        }
-
-        label,input {
-            font-size: 30px;
-        }
-
-        button {
-            font-size: 30px;
-            margin-left: 50px;
-            border-radius: 10px;
-            padding: 10px;
-            background-color: #fff;
-        }
-
-        #output {
-            font-size: 20px;
-            width: 100%;
-            height: 300px;
-            margin-top: 50px;
-        }
-
-        /*체크박스 색상변경*/
-        :root {
-        accent-color: red;
-        }
-
-        table {
-            width: 80%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            border: 2px solid black;
-            text-align: center;
-        }
-        th{
-            background-color: #d73434;
-            height: 60px;
-            padding: 8px;
-        }
-        td{
-            height: 400px;
-            background-color: #fff;
-        }
-        .Annual{
-            background-color: darkgray;
-            padding: 8px;
-        }
-
-        .progress{
-            padding-top: 300px;
-        }
-
-        
-    </style>
     <script>
+        
 
-        function updateProgress(progressId) {
-            var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
-            var progress = document.getElementById('progress' + progressId);
-            var total = checkboxes.length;
-            var checkedCount = 0;
+        function showList(listId) {
+            var list1 = document.getElementById('list1');
+            var list2 = document.getElementById('list2');
 
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    checkedCount++;
-                }
-            }
-
-            var percentage = (checkedCount / total) * 100;
-            progress.innerHTML = '진행률: ' + percentage.toFixed(1) + '%';
-
-            if (percentage === 100) {
-                for (var i = 0; i < checkboxes.length; i++) {
-                    checkboxes[i].disabled = true;
-                }
+            if (listId === 1) {
+                list1.style.display = 'block';
+                list2.style.display = 'none';
+            } else if (listId === 2) {
+                list1.style.display = 'none';
+                list2.style.display = 'block';
             }
         }
 
-        function printWeek() {
-            var inputDate = document.getElementById("inputDate").value; // 입력한 날짜 가져오기
-            var date = new Date(inputDate); // 입력한 날짜로부터 Date 객체 생성
-            var firstDay = new Date(date); // 주의 첫 번째 날짜를 저장할 변수
-            firstDay.setDate(date.getDate() - date.getDay()); // 입력한 날짜의 요일을 기준으로 주의 첫 번째 날짜 계산
-            var days = ["일", "월", "화", "수", "목", "금", "토"]; // 요일을 저장할 배열
-            var datesAndWeekdays = []; // 주의 날짜와 요일을 저장할 배열
-            for (var i = 0; i < 7; i++) {
-                var currentDate = new Date(firstDay);
-                currentDate.setDate(firstDay.getDate() + i); // 주의 첫 번째 날짜에 i일을 추가하여 주의 각 날짜 계산
-                var dayOfWeek = days[currentDate.getDay()]; // 요일 계산
-                var options = { day: 'numeric' };
-                var dateStr = currentDate.toLocaleDateString('ko-KR', options); // 한글로 날짜 문자열 생성
-                var dateAndWeekdayStr = dateStr + " (" + dayOfWeek + ")"; // 날짜와 요일 문자열 생성
-                datesAndWeekdays.push(dateAndWeekdayStr); // 날짜와 요일을 배열에 추가
-            }
+        function addTask() {
+            var dateInput = document.getElementById('dateInput');
+            var taskInput = document.getElementById('text');
 
-            var table = "<br><table><tr>";
-            for (var i = 0; i < datesAndWeekdays.length; i++) {
-                table += "<th>" + datesAndWeekdays[i] + "</th>"; // 날짜와 요일을 테이블 헤더로 추가
-            }
-            table += "</tr><tr>";
-            for (var i = 0; i < datesAndWeekdays.length; i++) {
+            var date = dateInput.value;
+            var task = taskInput.value;
 
-                if(i == 3){ //예시로 
-                    table += "<td class='Annual'>" + "<li>연차</li>" + "</td>"; 
-                }else{
-                    table += "<td>"+
-                        "<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1<br>"+
-                        "<input type='checkbox' name='hobby' value='h2' onclick='updateProgress(" + (i + 1) + ")'> 일정2<br>"+
-                        "<input type='checkbox' name='hobby' value='h3' onclick='updateProgress(" + (i + 1) + ")'> 일정3<br>"+
-                        "<span id='progress" + (i + 1) + "'>진행률: 0%</span>"+"</td>";
-                }
+            // 여기에 일정 추가하는 로직을 구현합니다.
+            // 예를 들어, 데이터베이스에 저장하거나 다른 곳에 기록하는 등의 작업을 수행할 수 있습니다.
 
-            }
-            table += "</tr></table>";
+            // 일정을 추가한 후에 입력 필드를 초기화합니다.
+            dateInput.value = '';
+            taskInput.value = '';
 
-            document.getElementById("output").innerHTML = table; // 결과 출력
-            updateProgress(); // Update progress on checkboxes
+            alert('일정이 추가되었습니다.');
         }
-
     </script>
+
+    <style>
+       
+    </style>
 </head>
+
 <body>
     <div class="To-do-list">
         <h1>To-do list</h1>
         <ul>
-            <li>이름 : 장재원</li>
+            <li>이름: 장재원</li>
         </ul>
+
+        <button type="submit" id="button1" onclick="showList(1)">To-do list 추가</button>
+
+        <ol id="list1">
+            <p>날짜선택</p>
+            <input type="date" id="dateInput" name="date" value="">
+            <p>일정 추가</p>
+            <input type="text" id="text" name="task" value="">
+            <button type="submit" id="button2" onclick="addTask()">추가 하기</button>
+        </ol>
+        
+        <button type="submit" id="button2" onclick="showList(2)">To-do list 삭제</button>
+
+        <ol id="list2">
+            <p>날짜선택</p>
+            <input type="date" id="dateInput" name="date" value="">
+            <p>삭제할 일정 </p>
+            <input type="text" id="text" name="task" value="">
+            <button type="submit" id="button2" onclick="deleteTask()">삭제 하기</button>
+        </ol>
+
     </div>
+
     <div class="check">
         <label for="inputDate">날짜 선택:</label>
         <input type="date" id="inputDate" required>
@@ -198,6 +85,24 @@
     <button onclick="printWeek()">조회</button>
     <div id="output"></div>
 
+    <script>
+        function deleteTask() {
+            var dateInput = document.getElementById('dateInput');
+            var taskInput = document.getElementById('text');
 
+            var date = dateInput.value;
+            var task = taskInput.value;
+
+            // 여기에 일정 삭제하는 로직을 구현합니다.
+            // 예를 들어, 데이터베이스에서 해당 일정을 삭제하거나 기록을 업데이트하는 등의 작업을 수행할 수 있습니다.
+
+            // 일정을 삭제한 후에 입력 필드를 초기화합니다.
+            dateInput.value = '';
+            taskInput.value = '';
+
+            alert('일정이 삭제되었습니다.');
+        }
+    </script>
 </body>
+
 </html>
