@@ -62,48 +62,48 @@ function printWeek() {
 }
 
 function showList(listId) {
-	var list1 = document.getElementById('list1');
-	var list2 = document.getElementById('list2');
+    var list1 = document.getElementById('list1');
+    var list2 = document.getElementById('list2');
 
-	if (listId === 1) {
-		list1.style.display = 'block';
-		list2.style.display = 'none';
-	} else if (listId === 2) {
-		list1.style.display = 'none';
-		list2.style.display = 'block';
-	}
+    if (listId === 1) {
+        list1.style.display = 'block';
+        list2.style.display = 'none';
+    } else if (listId === 2) {
+        list1.style.display = 'none';
+        list2.style.display = 'block';
+    }
 }
 
 function addTask() {
-	var dateInput = document.getElementById('dateInput');
-	var taskInput = document.getElementById('text');
+    var dateInput = document.getElementById('dateInput');
+    var taskInput = document.getElementById('text');
 
-	var date = dateInput.value;
-	var task = taskInput.value;
+    var date = dateInput.value;
+    var task = taskInput.value;
 
-	// 여기에 일정 추가하는 로직을 구현합니다.
-	// 예를 들어, 데이터베이스에 저장하거나 다른 곳에 기록하는 등의 작업을 수행할 수 있습니다.
+    // 여기에 일정 추가하는 로직을 구현합니다.
+    // 예를 들어, 데이터베이스에 저장하거나 다른 곳에 기록하는 등의 작업을 수행할 수 있습니다.
 
-	// 일정을 추가한 후에 입력 필드를 초기화합니다.
-	dateInput.value = '';
-	taskInput.value = '';
+    // 일정을 추가한 후에 입력 필드를 초기화합니다.
+    dateInput.value = '';
+    taskInput.value = '';
 
-	alert('일정이 추가되었습니다.');
+    alert('일정이 추가되었습니다.');
 }
 
 function deleteTask() {
-	var dateInput = document.getElementById('dateInput');
-	var taskInput = document.getElementById('text');
+    var dateInput = document.getElementById('dateInput');
+    var taskInput = document.getElementById('text');
 
-	var date = dateInput.value;
-	var task = taskInput.value;
+    var date = dateInput.value;
+    var task = taskInput.value;
 
-	// 여기에 일정 삭제하는 로직을 구현합니다.
-	// 예를 들어, 데이터베이스에서 해당 일정을 삭제하거나 기록을 업데이트하는 등의 작업을 수행할 수 있습니다.
+    // 여기에 일정 삭제하는 로직을 구현합니다.
+    // 예를 들어, 데이터베이스에서 해당 일정을 삭제하거나 기록을 업데이트하는 등의 작업을 수행할 수 있습니다.
 
-	// 일정을 삭제한 후에 입력 필드를 초기화합니다.
-	dateInput.value = '';
-	taskInput.value = '';
+    // 일정을 삭제한 후에 입력 필드를 초기화합니다.
+    dateInput.value = '';
+    taskInput.value = '';
 
-	alert('일정이 삭제되었습니다.');
+    alert('일정이 삭제되었습니다.');
 }

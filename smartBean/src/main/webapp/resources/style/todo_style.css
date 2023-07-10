@@ -13,6 +13,35 @@ header {
     font-family: "WandohopeR";
 }
 
+*{
+    margin: 0px ; /* 전체의 값은 0으로 맞춰줌 */
+    padding: 0px;/* 전체의 값을 0으로 맞춰줌 */
+    }
+    html{
+        font-size: 12px;
+    }
+    body{
+        /* width: 960px; */ /*width: 90%;*/
+        margin: 0px auto; /* 상하좌우 0 px */
+        /* margin: 10px 5px; 상하 10px 좌우 5px */
+        /* margin-top: 0px; 위에만 0px */
+        /* margin: 0px auto; 자동으로 가운데로 맞춰준디 */
+    }
+    ul,ol,li{
+        list-style: none; /* 목록 앞 없애줌 */
+        margin: 0px;/* 목록 앞이 없어지더라도 공간을 안만들게 붙여줌 */
+        padding: 0px;/* 목록 앞이 없어지더라도 공간을 안만들게 붙여줌 */
+    }
+    a{
+        text-decoration: none; /* 및에 줄 없애줌 */
+        color: black; /* 기본 글자 색깔을 검정으로 */
+    }
+    img{
+        border: none;/* 그림의 테두리를 없애줌 */
+        padding: 0px;
+        margin: 0px;
+    }
+
 
 body{
     background-color: #f1ecec;
