@@ -1,6 +1,8 @@
-package controller;
+package controller.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,14 +41,21 @@ public class DeleteUserFormAction extends HttpServlet {
 		boolean result = userDao.deleteUserByEmail(email);
 		
 		String url = "deleteUser";
-
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
 		if (result) {
 			HttpSession session = request.getSession();
 	    	session.setAttribute("log", null);
 	    	session.setAttribute("name", null);
 
 			url = "login";
-		}			
+			out.println("<script> alert('회원탈퇴가 완료되었습니다.');</script>");
+		} else {
+			out.println("<script> alert('회원탈퇴에 실패했습니다.'); </script>");
+		}
+		out.print("<script>location.href='"+url+"';</script>");
 
 		response.sendRedirect(url);
 	}

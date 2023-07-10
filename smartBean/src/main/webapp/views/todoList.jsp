@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -185,6 +186,9 @@
     </script>
 </head>
 <body>
+	<c:if test="${empty sessionScope.log }">
+		<c:redirect url="login"></c:redirect>
+	</c:if>
     <div class="To-do-list">
         <h1>To-do list</h1>
         <ul>

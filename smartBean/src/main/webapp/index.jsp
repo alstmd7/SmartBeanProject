@@ -11,7 +11,7 @@
 DBManager.getConnection();
 %>
 
-<jsp:include page="header"></jsp:include>
+<jsp:include page="/header"></jsp:include>
 	
 	<main>
 		<div class="div-calendar">
@@ -28,7 +28,7 @@ DBManager.getConnection();
 		</div>
 	</main>
 	
-<jsp:include page="footer"></jsp:include>
+<jsp:include page="/footer"></jsp:include>
 	
 </body>
 </html>

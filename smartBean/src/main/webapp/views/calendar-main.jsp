@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,10 @@
 
 </head>
 <body>
-	<jsp:include page="header"></jsp:include>
+	<c:if test="${empty sessionScope.log }">
+		<c:redirect url="login"></c:redirect>
+	</c:if>
+	<jsp:include page="/header"></jsp:include>
 
 	<!-- 테스트 -->
 	<!-- 	<form method="post" action="CalendarAction">
@@ -109,6 +113,6 @@
 		<div id='calendar'></div>
 	</div>
 
-	<jsp:include page="footer"></jsp:include>
+	<jsp:include page="/footer"></jsp:include>
 </body>
 </html>
