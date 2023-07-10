@@ -13,45 +13,32 @@ import model.calendar.CalendarDao;
 import model.calendar.CalendarRequestDto;
 import model.calendar.CalendarVo;
 
-/**
- * Servlet implementation class CalendarAction
- */
 @WebServlet("/CalendarAction")
 public class CalendarAction extends HttpServlet {
+	
     private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public CalendarAction() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    	
-		request.setCharacterEncoding("UTF-8");
-		
+        request.setCharacterEncoding("UTF-8");
+
         CalendarDao dao = CalendarDao.getInstance();
 
         // Create
         System.out.println("----- Create -----");
-        String email = request.getParameter("newCalendarName");
-        String name = request.getParameter("newCalendarOwner");
-        
-        CalendarRequestDto calendarDto = new CalendarRequestDto(email, name);
+        String email = request.getParameter("newCalendarEmail");
+        String name = request.getParameter("newCalendarName");
+
+        CalendarRequestDto calendarDto = new CalendarRequestDto(0, email, name);
 
         boolean isSuccess1 = dao.createCalendar(calendarDto);
         if (isSuccess1) {
@@ -88,7 +75,7 @@ public class CalendarAction extends HttpServlet {
         // Delete
         System.out.println("----- Delete -----");
         int deleteCalendarNo = 2;
-        boolean deleteResult = dao.deleteCalendarByEmail(deleteCalendarNo);
+        boolean deleteResult = dao.deleteCalendarByNo(deleteCalendarNo);
         if (deleteResult) {
             System.out.println("Delete 성공: " + deleteResult);
         } else {
@@ -102,5 +89,4 @@ public class CalendarAction extends HttpServlet {
             System.out.println(calendar);
         }
     }
-
 }
