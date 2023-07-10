@@ -8,6 +8,7 @@
     <title>To-do list</title>
     <link href="./JJWresete.css" rel="stylesheet">
     <link href="./To-do css.css" rel="stylesheet">
+    <script src="./To-do JS.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
     <script>
