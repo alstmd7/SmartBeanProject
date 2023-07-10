@@ -18,8 +18,9 @@ INSERT INTO `event` (calendar_no, task_no, `name`, email, title, content, `start
 VALUES (3, 2, "휴가", "qortmdals120@gmail.com", "제목", "내용", DATE('2023-07-05 09:00'), DATE('2023-07-06 12:00'));
 
 SELECT * FROM `event` WHERE calendar_no=3;
+SELECT * FROM `event` WHERE `no`=1;
 
-UPDATE `event` SET title='NEW제목', content="NEW내용", 
+UPDATE `event` SET `name`="회의", title='NEW제목', content="NEW내용", 
 `start`=DATE('2023-07-05 10:00'), `end`= DATE('2023-07-06 13:00'), all_day=1 WHERE `no`=1;
 
 DELETE FROM `event` WHERE `no`=1;

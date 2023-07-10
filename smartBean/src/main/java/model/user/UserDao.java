@@ -1,4 +1,3 @@
-
 package model.user;
 
 import java.sql.Connection;
