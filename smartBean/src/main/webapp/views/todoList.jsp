@@ -13,10 +13,10 @@
 	<c:if test="${empty sessionScope.log }">
 		<c:redirect url="login"></c:redirect>
 	</c:if>
+	
 	<div class="To-do-list">
 		<h1>To-do list</h1>
 		<p>${sessionScope.name } 님</p>
-
 		<button type="submit" id="button1" onclick="showList(1)">To-do list 추가</button>
 		
 		<form action="" method="POST">
