@@ -94,6 +94,15 @@
 		<url-pattern>/CreateTask</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>SearchTodoRequestAction</servlet-name>
+		<servlet-class>controller.todo.SearchTodoRequestAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SearchTodoRequestAction</servlet-name>
+		<url-pattern>/SearchTodoRequest</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 2. JSP 페이지 맵핑 -->
 	<servlet>
 		<servlet-name>header</servlet-name>

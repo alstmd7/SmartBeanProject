@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <link href="../resources/style/todo_style.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 <title>To-do list</title>
@@ -13,10 +14,19 @@
 	<c:if test="${empty sessionScope.log }">
 		<c:redirect url="login"></c:redirect>
 	</c:if>
+<<<<<<< HEAD
 	
+=======
+    
+>>>>>>> branch '#1-BackSeungMin' of https://github.com/alstmd7/SmartBeanProject.git
 	<div class="To-do-list">
+		
 		<h1>To-do list</h1>
 		<p>${sessionScope.name } 님</p>
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch '#1-BackSeungMin' of https://github.com/alstmd7/SmartBeanProject.git
 		<button type="submit" id="button1" onclick="showList(1)">To-do list 추가</button>
 		
 		<form action="" method="POST">
@@ -37,6 +47,9 @@
 			<button type="submit" id="button2" onclick="ValueCheck()">삭제하기</button>
 		</form>
 	</div>
+	
+	<input type="text" id="todo" value="${requestScope.todo }">
+	<input type="text" id="print">
 
 	<div class="check">
 		<label for="inputDate">날짜 선택:</label> <input type="date" id="inputDate" required>
