@@ -30,37 +30,30 @@ html, body {
 
 /* external-events 스타일 */
 #external-events {
-	/* position: fixed; */
-	/* z-index: 2; */
-	/* top: 60px; 저장하기 버튼이 있으므로 아래로 이동
-	left: 20px;
-	width: 200px; */
 	padding: 10px;
 	border: 1px solid #ccc;
 	background: #eee;
+    width: 50%;
+    margin-left: 10%;
 }
 
-#create-calendar-btn {
+/* #create-calendar-btn {
 	width: 50%;
 	height: 30px;
     border-radius: 20px;
     background: #323232;
     color: white;
     border: none;
+} */
+
+#add-task-button{
+	margin-top: 20px;
 }
 
 /* Task 추가 팝업 스타일 */
  #add-task-popup {
 	display: none;
  }
- 	/*position: fixed; 
-	top: 50%;
-	left: 15%; 
-	transform: translate(-50%, -50%);
-	width: 450px;
-	padding: 20px;
-	background: #ccc;
-} */
 
 #add-task-popup input[type="text"] {
 	width: 60%;
@@ -84,9 +77,33 @@ html, body {
 	padding: 20px;
 	background: #fff;
 	border: 1px solid black;
-	width: 200px;
-	height: 330px;
+/* 	width: 200px;
+	height: 330px; */
 	text-align: left;
+}
+
+#admin-newCalendar-popup{
+	position: fixed;
+    z-index: 99;
+    top: 30%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: #fff;
+    border: 1px solid black;
+    text-align: left;
+}
+
+#admin-task-popup{
+	position: fixed;
+    z-index: 99;
+    top: 30%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: #fff;
+    border: 1px solid black;
+    text-align: left;
 }
 
 #event-popup button{
