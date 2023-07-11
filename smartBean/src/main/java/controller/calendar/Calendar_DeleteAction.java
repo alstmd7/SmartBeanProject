@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.calendar.CalendarDao;
+import model.calendar.CalendarVo;
+
 /**
  * Servlet implementation class Calendar_DeleteAction
  */
@@ -34,8 +37,19 @@ public class Calendar_DeleteAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+
+        CalendarDao dao = CalendarDao.getInstance();
+        
+		System.out.println("----- Delete -----");
+        int deleteCalendarNo = 2;
+        boolean deleteResult = dao.deleteCalendarByNo(deleteCalendarNo);
+        if (deleteResult) {
+            System.out.println("Delete 성공: " + deleteResult);
+        } else {
+            System.out.println("Delete 실패");
+        }
+
 	}
 
 }
