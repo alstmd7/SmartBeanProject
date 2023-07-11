@@ -3,17 +3,22 @@ package model.event;
 public class EventVo {
 	
 	private int no;
-	private String name;
+    private int calendar_no;
+    private int task_no;
+    private String name;
 	private String email;
-	private String title ;
-	private String content; 
-	private String start ;
-	private String end; 
-	private char all_day; 
-	
-	public EventVo(int no,String name, String email, String title,String content,String start,String end,char all_day) {
+    private String title;
+    private String content;
+    private int start;
+    private int end;
+    private String all_day;
+    
+	public EventVo(int no, int calendar_no, int task_no, String name, String email, String title, String content,
+			int start, int end, String all_day) {
 		super();
 		this.no = no;
+		this.calendar_no = calendar_no;
+		this.task_no = task_no;
 		this.name = name;
 		this.email = email;
 		this.title = title;
@@ -25,6 +30,14 @@ public class EventVo {
 
 	public int getNo() {
 		return no;
+	}
+
+	public int getCalendar_no() {
+		return calendar_no;
+	}
+
+	public int getTask_no() {
+		return task_no;
 	}
 
 	public String getName() {
@@ -43,18 +56,16 @@ public class EventVo {
 		return content;
 	}
 
-	public String getStart() {
+	public int getStart() {
 		return start;
 	}
 
-	public String getEnd() {
+	public int getEnd() {
 		return end;
 	}
 
-	public char getAll_day() {
+	public String getAll_day() {
 		return all_day;
 	}
-
-	
 	
 }

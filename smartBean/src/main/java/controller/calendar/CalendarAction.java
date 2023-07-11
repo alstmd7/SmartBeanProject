@@ -1,4 +1,4 @@
-package controller;
+package controller.calendar;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class CalendarAction extends HttpServlet {
 
         // Create
         System.out.println("----- Create -----");
-        String email = request.getParameter("newCalendarEmail");
+        String email = (String) request.getSession().getAttribute("log");;
         String name = request.getParameter("newCalendarName");
 
         CalendarRequestDto calendarDto = new CalendarRequestDto(0, email, name);
@@ -48,7 +48,7 @@ public class CalendarAction extends HttpServlet {
         }
 
         // Read
-        ArrayList<CalendarVo> allCalendars = dao.getAllCalendars();
+        ArrayList<CalendarVo> allCalendars = dao.getAllCalendars(email);
         if (!allCalendars.isEmpty()) {
             System.out.println("----- Read All Calendars -----");
             for (CalendarVo calendar : allCalendars) {
@@ -67,7 +67,7 @@ public class CalendarAction extends HttpServlet {
 
         // Read after update
         System.out.println("----- Read All Calendars -----");
-        allCalendars = dao.getAllCalendars();
+        allCalendars = dao.getAllCalendars(email);
         for (CalendarVo calendar : allCalendars) {
             System.out.println(calendar);
         }
@@ -84,7 +84,7 @@ public class CalendarAction extends HttpServlet {
 
         // Read after delete
         System.out.println("----- Read All Calendars -----");
-        allCalendars = dao.getAllCalendars();
+        allCalendars = dao.getAllCalendars(email);
         for (CalendarVo calendar : allCalendars) {
             System.out.println(calendar);
         }

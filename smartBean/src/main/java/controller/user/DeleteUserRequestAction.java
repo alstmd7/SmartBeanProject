@@ -1,4 +1,4 @@
-package controller;
+package controller.user;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,15 +11,16 @@ import model.user.UserDao;
 import model.user.UserVo;
 
 /**
- * Servlet implementation class UpdateUserRequestAction
+ * Servlet implementation class DeleteUserRequestAction
  */
-public class UpdateUserRequestAction extends HttpServlet {
+
+public class DeleteUserRequestAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateUserRequestAction() {
+    public DeleteUserRequestAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,24 +35,17 @@ public class UpdateUserRequestAction extends HttpServlet {
 		UserDao userDao = UserDao.getInstance();
 
 		String email = (String) request.getSession().getAttribute("log");
-
+		
 		UserVo user = userDao.getUserByEmail(email);
 		
-		String password = "";
-		String name = "";
+		String url = "/login"; 
 
-		String url = "home";
-		
 		if(user != null) {
-			password = user.getPassword();
-			name = user.getName();
+			request.setAttribute("email", email);
 			
-			request.setAttribute("password", password);
-			request.setAttribute("name", name);
-			
-			url = "updateUser";
+			url = "/deleteUser";
 		}
-		
+
 		request.getRequestDispatcher(url).forward(request, response);
 	}
 

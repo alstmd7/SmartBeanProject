@@ -1,20 +1,18 @@
 CREATE TABLE `user`(
-	email VARCHAR(50) PRIMARY KEY,
+	`code` INT PRIMARY KEY AUTO_INCREMENT,
+	email VARCHAR(50) UNIQUE NOT NULL,
     `password` VARCHAR(20) NOT NULL,
     `name` VARCHAR(20) NOT NULL
 );
 
--- ALTER TABLE `user` MODIFY COLUMN user_email varchar(50);
-
-INSERT INTO `user` VALUES ("qortmdals120@gmail.com", "123", "승민");
-INSERT INTO `user` VALUES ("juntu09@gmail.com", "234", "희수");
-INSERT INTO `user` VALUES ("lokcdown@gmail.com", "345", "재원");
-
-UPDATE `user` SET `password`='new123', `name`='new승민' WHERE email='qortmdals120@gmail.com';
-
-DELETE FROM `user` WHERE email='qortmdals120@gmail.com' AND `password`='new123';
+INSERT INTO `user`(email, `password`, `name`) VALUES ("qortmdals120@gmail.com", "123", "승민");
 
 SELECT * FROM `user`;
 SELECT * FROM `user` WHERE email='qortmdals120@gmail.com';
+SELECT email FROM `user`;
+
+UPDATE `user` SET `password`='new123', `name`='new승민' WHERE email='qortmdals120@gmail.com';
+
+DELETE FROM `user` WHERE email='qortmdals120@gmail.com';
 
 DROP TABLE `user`;

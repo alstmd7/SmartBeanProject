@@ -15,16 +15,25 @@
 	<!-- 1. 서블릿 페이지 맵핑 -->
 	<servlet>
 		<servlet-name>JoinFormAction</servlet-name>
-		<servlet-class>controller.JoinFormAction</servlet-class>
+		<servlet-class>controller.user.JoinFormAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>JoinFormAction</servlet-name>
-		<url-pattern>/Join</url-pattern>
+		<url-pattern>/JoinUser</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>JoinRequestAction</servlet-name>
+		<servlet-class>controller.user.JoinRequestAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JoinRequestAction</servlet-name>
+		<url-pattern>/JoinRequest</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>LoginFormAction</servlet-name>
-		<servlet-class>controller.LoginFormAction</servlet-class>
+		<servlet-class>controller.user.LoginFormAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LoginFormAction</servlet-name>
@@ -33,16 +42,16 @@
 	
 	<servlet>
 		<servlet-name>UpdateUserFormAction</servlet-name>
-		<servlet-class>controller.UpdateUserFormAction</servlet-class>
+		<servlet-class>controller.user.UpdateUserFormAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UpdateUserFormAction</servlet-name>
-		<url-pattern>/UpdateUserForm</url-pattern>
+		<url-pattern>/UpdateUser</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>UpdateUserRequestAction</servlet-name>
-		<servlet-class>controller.UpdateUserRequestAction</servlet-class>
+		<servlet-class>controller.user.UpdateUserRequestAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UpdateUserRequestAction</servlet-name>
@@ -51,11 +60,38 @@
 	
 	<servlet>
 		<servlet-name>DeleteUserFormAction</servlet-name>
-		<servlet-class>controller.DeleteUserFormAction</servlet-class>
+		<servlet-class>controller.user.DeleteUserFormAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DeleteUserFormAction</servlet-name>
-		<url-pattern>/DeleteUserForm</url-pattern>
+		<url-pattern>/DeleteUser</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DeleteUserRequestAction</servlet-name>
+		<servlet-class>controller.user.DeleteUserRequestAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteUserRequestAction</servlet-name>
+		<url-pattern>/DeleteUserRequest</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LogoutAction</servlet-name>
+		<servlet-class>controller.user.LogoutAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutAction</servlet-name>
+		<url-pattern>/Logout</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CreateTaskFormAction</servlet-name>
+		<servlet-class>controller.CreateTaskFormAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateTaskFormAction</servlet-name>
+		<url-pattern>/CreateTask</url-pattern>
 	</servlet-mapping>
 	
 	<!-- 2. JSP 페이지 맵핑 -->
@@ -131,13 +167,22 @@
 		<url-pattern>/calendar</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	<servlet>
 		<servlet-name>todoList</servlet-name>
 		<jsp-file>/views/todoList.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>todoList</servlet-name>
 		<url-pattern>/todoList</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>createTaskForm</servlet-name>
+		<jsp-file>/views/createTaskForm.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>createTaskForm</servlet-name>
+		<url-pattern>/createTask</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

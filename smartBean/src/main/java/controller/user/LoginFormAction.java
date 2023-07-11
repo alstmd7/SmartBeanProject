@@ -1,6 +1,8 @@
-package controller;
+package controller.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,16 +41,23 @@ public class LoginFormAction extends HttpServlet {
 		UserVo user = userDao.getUserByEmail(email);
 
 		String url = "login";
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 
 		if(user != null && user.getPassword().equals(password)) {
-			url = "home";
-			
 			// session log에 로그인한 email 값 넣기
 			HttpSession session = request.getSession();
 			session.setAttribute("log", email);
+			session.setAttribute("name", user.getName());
+			
+			url = "home";
+		} else {
+			out.println("<script> alert('아이디/비밀번호를 확인해주세요.'); </script>");
 		}
-
-		response.sendRedirect(url);
+		out.print("<script>location.href='"+url+"';</script>");
+		
+		out.close();
 	}
 
 }

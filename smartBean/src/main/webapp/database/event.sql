@@ -1,30 +1,27 @@
 CREATE TABLE `event` (
 	`no` INT PRIMARY KEY AUTO_INCREMENT,
-	`name` VARCHAR(20),
-    FOREIGN KEY (`name`) REFERENCES task(`name`),
+    calendar_no INT,
+    FOREIGN KEY (calendar_no) REFERENCES calendar(`no`) ON DELETE CASCADE,
+    task_no INT,
+    FOREIGN KEY (task_no) REFERENCES task(`no`) ON DELETE SET NULL,
+	`name` VARCHAR(20) NOT NULL,
 	email VARCHAR(50),
-    FOREIGN KEY (email) REFERENCES `user`(email),
-    title VARCHAR(20),
+    FOREIGN KEY (email) REFERENCES `user`(email) ON DELETE SET NULL,
+    title VARCHAR(20) NOT NULL,
     content VARCHAR(400),
     `start` DATE NOT NULL,
     `end` DATE NOT NULL,
     all_day CHAR(1) NOT NULL DEFAULT 0
 );
 
-INSERT INTO `event` (`name`, email, title, content, `start`, `end`) 
-VALUES ("회의", "qortmdals120@gmail.com", "회의제목", "회의내용", DATE('2023-07-05 10:55:00'), DATE('2023-07-06 12:00:00'));
+INSERT INTO `event` (calendar_no, task_no, `name`, email, title, content, `start`, `end`) 
+VALUES (3, 2, "휴가", "qortmdals120@gmail.com", "제목", "내용", DATE('2023-07-05 09:00'), DATE('2023-07-06 12:00'));
 
-INSERT INTO `event` (`name`, email, title, content, `start`, `end`) 
-VALUES ("회의", "lokcdown@gmail.com", "회의제목", "회의내용", DATE('2023-07-05 10:55:00'), DATE('2023-07-06 12:00:00'));
+SELECT * FROM `event` WHERE calendar_no=3;
+SELECT * FROM `event` WHERE `no`=1;
 
-INSERT INTO `event` (`name`, email, title, content, `start`, `end`) 
-VALUES ("휴가", "qortmdals120@gmail.com", "회의제목", "회의내용", DATE('2023-07-05 10:55:00'), DATE('2023-07-06 12:00:00'));
-
-SELECT * FROM `event`;
-SELECT * FROM `event` WHERE email='qortmdals120@gmail.com';
-
-UPDATE `event` SET title='NEW회의제목', content="NEW회의내용", 
-`start`=DATE('2023-07-05 15:55:00'), `end`= DATE('2023-07-07 12:00:00'), all_day=1 WHERE `no`=1;
+UPDATE `event` SET `name`="회의", title='NEW제목', content="NEW내용", 
+`start`=DATE('2023-07-05 10:00'), `end`= DATE('2023-07-06 13:00'), all_day=1 WHERE `no`=1;
 
 DELETE FROM `event` WHERE `no`=1;
 

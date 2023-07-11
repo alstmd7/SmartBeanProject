@@ -1,4 +1,4 @@
-package controller;
+package controller.user;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,45 +8,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.user.UserDao;
-import model.user.UserRequestDto;
+import model.user.UserVo;
 
 /**
- * Servlet implementation class joinAction
+ * Servlet implementation class JoinFormRequestAction
  */
-public class JoinFormAction extends HttpServlet {
+public class JoinRequestAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public JoinFormAction() {
+    public JoinRequestAction() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
+
 		String email = request.getParameter("email");
 	    String password = request.getParameter("password");
 	    String name = request.getParameter("name");
-	    
-	    UserRequestDto user = new UserRequestDto(email, password, name);
+			
+		request.setAttribute("email", password);
+		request.setAttribute("password", password);
+		request.setAttribute("name", name);
 
-		UserDao userDao = UserDao.getInstance();
-		boolean result = userDao.createUser(user);
-		
-		// 페이지 맵핑 필요
-		String url = "join";
-
-		if(result) 
-			url = "home";
-
-		response.sendRedirect(url);
+		request.getRequestDispatcher("join").forward(request, response);
 	}
 
 }

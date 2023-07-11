@@ -1,6 +1,8 @@
-package controller;
+package controller.user;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,18 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.user.UserDao;
 import model.user.UserRequestDto;
-import model.user.UserVo;
 
 /**
- * Servlet implementation class UpdateUserFormAction
+ * Servlet implementation class joinAction
  */
-public class UpdateUserFormAction extends HttpServlet {
+public class JoinFormAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateUserFormAction() {
+    public JoinFormAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,20 +33,29 @@ public class UpdateUserFormAction extends HttpServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		UserRequestDto userDto = null;
-
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		String new_password = request.getParameter("new_password");
-		String name = request.getParameter("name");
-
-		userDto = new UserRequestDto(email, password, name);
+	    String password = request.getParameter("password");
+	    String name = request.getParameter("name");
+	    
+	    UserRequestDto user = new UserRequestDto(email, password, name);
 
 		UserDao userDao = UserDao.getInstance();
-		userDao.updateUser(userDto, new_password);
-
-		String url = "home";
-		response.sendRedirect(url);
+		boolean result = userDao.createUser(user);
+		
+		String url = "JoinRequest";
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		if(result) {
+			url = "home";
+			out.println("<script> alert('회원가입이 완료되었습니다.'); </script>");
+		} else {
+			out.println("<script> alert('이미 가입된 이메일입니다.'); </script>");
+		}
+		out.print("<script>location.href='"+url+"';</script>");
+		
+		out.close();
 	}
 
 }

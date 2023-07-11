@@ -1,4 +1,3 @@
-
 package model.user;
 
 import java.sql.Connection;
@@ -34,10 +33,11 @@ public class UserDao {
 			this.rs = this.pstmt.executeQuery();
 			
 			if(this.rs.next()) {
-				String password = this.rs.getString(2);
-				String name = this.rs.getString(3);
+				int code = this.rs.getInt(1);
+				String password = this.rs.getString(3);
+				String name = this.rs.getString(4);
 				
-				user = new UserVo(email, password, name);
+				user = new UserVo(code, email, password, name);
 			}
 
 		} catch (Exception e) {
@@ -64,7 +64,7 @@ public class UserDao {
 			this.conn = DBManager.getConnection();
 			
 			if(this.conn != null) {
-				String sql = "INSERT INTO `user` VALUES (?, ?, ?)";
+				String sql = "INSERT INTO `user`(email, `password`, `name`) VALUES (?, ?, ?)";
 
 				try {
 					this.pstmt = this.conn.prepareStatement(sql);
@@ -141,7 +141,7 @@ public class UserDao {
 		this.conn = DBManager.getConnection();
 		
 		boolean check = true;
-		// 삭제 시 외래키 연결 문제
+		
 		if(this.conn != null) {
 			String sql = "DELETE FROM `user` WHERE email=?";
 			

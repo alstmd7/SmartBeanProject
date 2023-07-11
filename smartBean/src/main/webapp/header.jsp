@@ -10,7 +10,7 @@
 
 <body>
 	<header>
-        <div class="logo"><a href="index.html">LOGO</a></div> <!-- 링크 설정 필요 -->
+        <img src="/resources/img/logo.png"><!-- <a href="index.html"></a> -->
         <div class="title"><span class="sub-title">스마트한 업무관리,</span><span class="main-title">똑똑빈</span></div>
     </header>
 </body>
