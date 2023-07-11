@@ -5,6 +5,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 div {
     font-family: "LeferiPoint-WhiteObliqueA";
 }
@@ -14,69 +15,71 @@ header {
 }
 
 * {
-	margin: 0px;
-	/* 전체의 값은 0으로 맞춰줌 */
-	padding: 0px;
-	/* 전체의 값을 0으로 맞춰줌 */
+    margin: 0px;
+    /* 전체의 값은 0으로 맞춰줌 */
+    padding: 0px;
+    /* 전체의 값을 0으로 맞춰줌 */
 }
 
 html {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 body {
-	/* width: 960px; */
-	/*width: 90%;*/
-	margin: 0px auto;
-	/* 상하좌우 0 px */
-	/* margin: 10px 5px; 상하 10px 좌우 5px */
-	/* margin-top: 0px; 위에만 0px */
-	/* margin: 0px auto; 자동으로 가운데로 맞춰준디 */
+    /* width: 960px; */
+    /*width: 90%;*/
+    margin: 0px auto;
+    /* 상하좌우 0 px */
+    /* margin: 10px 5px; 상하 10px 좌우 5px */
+    /* margin-top: 0px; 위에만 0px */
+    /* margin: 0px auto; 자동으로 가운데로 맞춰준디 */
 }
 
-ul, ol, li {
-	list-style: none;
-	/* 목록 앞 없애줌 */
-	margin: 0px;
-	/* 목록 앞이 없어지더라도 공간을 안만들게 붙여줌 */
-	padding: 0px;
-	/* 목록 앞이 없어지더라도 공간을 안만들게 붙여줌 */
+ul,
+ol,
+li {
+    list-style: none;
+    /* 목록 앞 없애줌 */
+    margin: 0px;
+    /* 목록 앞이 없어지더라도 공간을 안만들게 붙여줌 */
+    padding: 0px;
+    /* 목록 앞이 없어지더라도 공간을 안만들게 붙여줌 */
 }
 
 a {
-	text-decoration: none;
-	/* 및에 줄 없애줌 */
-	color: black;
-	/* 기본 글자 색깔을 검정으로 */
+    text-decoration: none;
+    /* 및에 줄 없애줌 */
+    color: black;
+    /* 기본 글자 색깔을 검정으로 */
 }
 
 img {
-	border: none;
-	/* 그림의 테두리를 없애줌 */
-	padding: 0px;
-	margin: 0px;
+    border: none;
+    /* 그림의 테두리를 없애줌 */
+    padding: 0px;
+    margin: 0px;
 }
 
 
-body{
+body {
     background-color: #f1ecec;
-    
+
 }
 
 .To-do-list {
     width: 14%;
     height: 1000px;
-    background-color: #d73434; 
+    background-color: #d73434;
     border: 2px solid black;
     float: left;
     margin-right: 3%;
 }
 
-.To-do-list > h1 {
+.To-do-list>h1 {
     text-align: center;
-font-family: 'Lobster', cursive;
-font-size: 3rem;
-color: #fff;
+    font-family: 'Lobster', cursive;
+    font-size: 3rem;
+    color: #fff;
     padding-bottom: 30%;
     padding-top: 10%;
 }
@@ -98,7 +101,8 @@ color: #fff;
     background-color: #fff;
 }
 
-label,input {
+label,
+input {
     font-size: 30px;
 }
 
@@ -110,6 +114,22 @@ button {
     background-color: #fff;
 }
 
+#button1,#button2,#button3,#button33,#button4,#button44 {
+    width: 70%;
+    margin-left: 15%;
+    font-size: 2rem;
+    margin-top: 40px;
+}
+
+#button33,#button44{
+    width: 75%;
+    font-size: 1.7rem;
+}
+
+#dateInput{
+    font-size: 1.8rem;
+}
+
 #output {
     font-size: 20px;
     width: 100%;
@@ -119,7 +139,7 @@ button {
 
 /*체크박스 색상변경*/
 :root {
-accent-color: red;
+    accent-color: red;
 }
 
 table {
@@ -127,39 +147,38 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     border: 2px solid black;
     text-align: center;
 }
-th{
+
+th {
     background-color: #d73434;
     height: 60px;
     padding: 8px;
 }
-td{
+
+td {
     height: 400px;
     background-color: #fff;
 }
-.Annual{
+
+.Annual {
     background-color: darkgray;
     padding: 8px;
 }
 
-.progress{
+.progress {
     padding-top: 300px;
 }
 
-#button1,
-#button2 {
-    width: 70%;
-    margin-left: 15%;
-    font-size: 2rem;
-    margin-top: 40px;
-}
+
 
 ol {
     margin-top: 40px;
-    display: none; /* 기본적으로 ol 요소 숨김 */
+    display: none;
+    /* 기본적으로 ol 요소 숨김 */
 }
 
 p {
@@ -167,7 +186,8 @@ p {
     font-size: 1.9rem;
 }
 
-#text,#dateInput {
+#text,
+#dateInput,#editText {
     margin-left: 10%;
     width: 80%;
 }
