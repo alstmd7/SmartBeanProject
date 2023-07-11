@@ -14,22 +14,15 @@
 	<c:if test="${empty sessionScope.log }">
 		<c:redirect url="login"></c:redirect>
 	</c:if>
-<<<<<<< HEAD
-	
-=======
     
->>>>>>> branch '#1-BackSeungMin' of https://github.com/alstmd7/SmartBeanProject.git
 	<div class="To-do-list">
 		
 		<h1>To-do list</h1>
 		<p>${sessionScope.name } 님</p>
-<<<<<<< HEAD
-=======
 
->>>>>>> branch '#1-BackSeungMin' of https://github.com/alstmd7/SmartBeanProject.git
 		<button type="submit" id="button1" onclick="showList(1)">To-do list 추가</button>
 		
-		<form action="" method="POST">
+		<form action="CreateTodo" method="POST">
 			<p>날짜선택</p>
 			<input type="date" id="target_at" name="target_at">
 			<p>일정 추가</p>
@@ -41,21 +34,32 @@
 		
 		<form action="">
 			<p>날짜선택</p>
-			<input type="date" id="dateInput" name="date" value="">
+			<input type="date" id="dateInput" name="date">
 			<p>삭제할 일정</p>
 			<input type="text" id="text" name="task" value="">
 			<button type="submit" id="button2" onclick="ValueCheck()">삭제하기</button>
 		</form>
 	</div>
 	
-	<input type="text" id="todo" value="${requestScope.todo }">
-	<input type="text" id="print">
-
 	<div class="check">
 		<label for="inputDate">날짜 선택:</label> <input type="date" id="inputDate" required>
 	</div>
 	<button onclick="printWeek()">조회</button>
 	<div id="output"></div>
+	<div>
+		<input type="text" id="todoList">
+		<div>
+			<c:forEach var="todo" items="${todo}">
+				<c:set var="target" value="${todo.target_at}"></c:set>
+				<div id="checkTodo">
+					<p id="target">${todo.target_at}</p>
+					<p>${todo.content}"</p>
+					<p>${todo.check}</p>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
+
 
 	<script src="../resources/script/to-do.js"></script>
 </body>

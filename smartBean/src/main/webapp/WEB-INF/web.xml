@@ -103,6 +103,15 @@
 		<url-pattern>/SearchTodoRequest</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>CreateTodoFormAction</servlet-name>
+		<servlet-class>controller.todo.CreateTodoFormAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateTodoFormAction</servlet-name>
+		<url-pattern>/CreateTodo</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 2. JSP 페이지 맵핑 -->
 	<servlet>
 		<servlet-name>header</servlet-name>

@@ -16,7 +16,7 @@ public class TodoDao {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+	private SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
 
 	private TodoDao() {}
 	private static TodoDao instance = new TodoDao();

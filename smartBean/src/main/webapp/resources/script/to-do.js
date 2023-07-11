@@ -1,3 +1,7 @@
+$(document).ready(function(){
+	    
+});
+
 function updateProgress(progressId) {
     var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
     var progress = document.getElementById('progress' + progressId);
@@ -107,17 +111,3 @@ function deleteTask() {
 
     alert('일정이 삭제되었습니다.');
 }
-
-const list = document.getElementById('todo');
-console.log(todo);
-
-list.forEach(todo => {
-	const content = todo.content;
-	$('#print').append(
-		`<div>
-		   	<p>${content}</p>
-		</div>`
-	);
-})
-
-
