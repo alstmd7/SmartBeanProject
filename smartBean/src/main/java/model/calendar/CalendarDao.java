@@ -125,12 +125,9 @@ public class CalendarDao {
             conn = DBManager.getConnection();
 
             if (conn != null) {
-                // 사용자의 code 값을 가져온다
-                int userCode = getUserCodeByEmail(calendarDto.getEmail());
-
-                String sql = "INSERT INTO calendar (code, email, name) VALUES (?, ?, ?)";
+                String sql = "INSERT INTO calendar (code, email, `name`) VALUES (?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(1, userCode);
+                pstmt.setInt(1, calendarDto.getCode());
                 pstmt.setString(2, calendarDto.getEmail());
                 pstmt.setString(3, calendarDto.getName());
 

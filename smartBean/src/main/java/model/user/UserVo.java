@@ -14,7 +14,7 @@ public class UserVo {
 		this.name = name;
 	}
 	
-	public int getNo() {
+	public int getCode() {
 		return code;
 	}
 

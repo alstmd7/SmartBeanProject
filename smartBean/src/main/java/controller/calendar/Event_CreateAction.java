@@ -7,6 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.calendar.CalendarDao;
+import model.calendar.CalendarRequestDto;
+import model.event.EventDao;
+import model.event.EventRequestDto;
+import model.user.UserRequestDto;
+
 /**
  * Servlet implementation class Event_CreateAction
  */
@@ -34,8 +40,22 @@ public class Event_CreateAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		
+		EventDao eventDao = EventDao.getInstance();
+		
+		int calendarCode = Integer.parseInt(request.getParameter("calendarCode"));
+		int taskNo = Integer.parseInt(request.getParameter("taskNo"));
+		String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String taskTitle = request.getParameter("tastTitle");
+        String teakContent = request.getParameter("teakContent");
+        int startDate =  Integer.parseInt(request.getParameter("startDate"));
+        int endDate =  Integer.parseInt(request.getParameter("endDate"));
+        String all_day = request.getParameter("all_day");
+        
+        EventRequestDto event = new EventRequestDto(0, calendarCode, taskNo, name, email, taskTitle, teakContent, startDate, endDate, all_day);
+        boolean result = eventDao.createEvent(event);
 	}
 
 }
