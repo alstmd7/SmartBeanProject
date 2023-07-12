@@ -1,6 +1,9 @@
 package controller.calendar;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import model.calendar.CalendarDao;
+import model.calendar.CalendarRequestDto;
 import model.calendar.CalendarVo;
+import model.user.UserDao;
+import model.user.UserVo;
 
 /**
  * Servlet implementation class Calendar_DeleteAction
@@ -33,23 +39,32 @@ public class Calendar_DeleteAction extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+	    request.setCharacterEncoding("UTF-8");
 
-        CalendarDao dao = CalendarDao.getInstance();
-        
-		System.out.println("----- Delete -----");
-        int deleteCalendarNo = 2;
-        boolean deleteResult = dao.deleteCalendarByNo(deleteCalendarNo);
-        if (deleteResult) {
-            System.out.println("Delete 성공: " + deleteResult);
-        } else {
-            System.out.println("Delete 실패");
-        }
+	    // 삭제할 캘린더의 번호를 파라미터에서 가져옴
+	    int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
 
+	    CalendarDao calDao = CalendarDao.getInstance();
+
+	    // 캘린더 삭제
+	    boolean result = calDao.deleteCalendarByNo(calendarNo);
+		String url = "calendar";
+		
+        response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
+		if (result) {
+			out.println("<script> alert('캘린더 삭제가 완료되었습니다.'); </script>");
+		} else {
+			out.println("<script> alert('캘린더 삭제가 실패하였습니다.'); </script>");
+		}
+		
+		out.print("<script>location.href='"+url+"';</script>");
+		
+		out.close();
 	}
+
 
 }

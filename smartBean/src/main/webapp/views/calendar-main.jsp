@@ -35,30 +35,32 @@
 		<!-- 캘린더 리스트 -->
 		<div id="calendar-list"></div>
 		
-		<!-- 캘린더 생성 팝업 -->
+			<!-- 캘린더 생성 팝업 -->
 		<div id="create-calendar-popup" style="display: none;">
 			<form method="post" action="CreateCalendar" id="create-calendar-form">
-			 	<input type="text" id="create-calendar-popup" name="calendarName" placeholder="new calendar title"><br>
-			  	<input type="text" id="newCalendar-owner-input" name="owner" value="${sessionScope.log}" placeholder="calendar owner"><br>
-			  	<input type="submit" id="save-newCalendar-button" value="생성">
-			 </form>
+				<input type="text" id="create-calendar-popup" name="calendarName" placeholder="new calendar title"><br>
+				<input type="text" id="newCalendar-owner-input" name="owner" value="${sessionScope.log}" placeholder="calendar owner"><br>
+				<input type="submit" id="save-newCalendar-button" value="생성">
+			</form>
 		</div> 
-
-		<!-- 새로 생성한 캘린더 관리 팝업 -->
-		<div id="admin-newCalendar-popup" style="display: none;">
-		  <h2 id="newCalendar-popup-title"></h2>
-		  <button id="close-newCalendar-button">닫기</button>
-		  <p>사용자 공유(1명씩만 추가 가능)</p>
-		  <input type="text" id="user-share-input" placeholder="사용자 이메일">
-		  <button id="share-button">공유하기</button>
-		  <br>
-		  <div class="user-share-list"></div>
-		  
-		  <button id="delete-calendar-button">캘린더 삭제</button><br>
-		  <p>캘린더 이름 변경</p>
-		  <input type="text" id="new-calendar-name-input-${calendarId}" placeholder="변경할 캘린더 이름">
-		  <button id="update-calendar-button">수정하기</button>
-		</div>
+	
+			<!-- 새로 생성한 캘린더 관리 팝업 -->
+		<form method="post" action="UpdateCalendar" id="update-calendar-form">
+			<div id="admin-newCalendar-popup" style="display: none;">
+			  <h2 id="newCalendar-popup-title"></h2>
+			  <button id="close-newCalendar-button">닫기</button>
+			  <p>사용자 공유(1명씩만 추가 가능)</p>
+			  <input type="text" id="user-share-input" placeholder="사용자 이메일">
+			  <button id="share-button">공유하기</button>
+			  <br>
+			  <div class="user-share-list"></div>
+			  
+			  <button id="delete-calendar-button">캘린더 삭제</button><br>
+			  <p>캘린더 이름 변경</p>
+			  <input type="text" id="new-calendar-name-input-${calendarId}" placeholder="변경할 캘린더 이름">
+			  <button id="update-calendar-button">수정하기</button>
+			</div>
+		</form>
 
 
 		<!-- Event 수정 Popup 팝업 -->
@@ -79,6 +81,7 @@
 
 			<button id="save-event-button">저장</button>
 		</div>
+		
 
 		<!-- =============== TASK =================== -->
 		<!-- Task 추가/관리 버튼 -->
@@ -106,10 +109,12 @@
 		</div>
 		
 		<!-- Task 추가 팝업 -->
-		<div id="add-task-popup" style="display: none;">
-		  <input type="text" id="task-name-input" placeholder="task title 입력">
-		  <button id="save-task-button">Task 저장</button>
-		</div>
+		<form method="post" action="CreateTask" id="create-task-form">
+			<div id="add-task-popup" style="display: none;">
+			  <input type="text" id="task-name-input" name="name" placeholder="task title 입력">
+			  <button id="save-task-button">Task 저장</button>
+			</div>
+		</form>
 		
 		<!-- Task 관리 팝업 -->
 		<div id="admin-task-popup" style="display: none;">
@@ -131,6 +136,7 @@
 	<div id='calendar-container'>
 		<!-- 캘린더 전체 저장하기 버튼 -->
 		<button id="save-button">SAVE</button>
+		
 		<div id='calendar'></div>
 	</div>
 

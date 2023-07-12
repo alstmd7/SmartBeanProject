@@ -38,9 +38,8 @@ public class Calendar_CreateAction extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
+	// DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 

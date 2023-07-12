@@ -41,19 +41,7 @@ public class Calendar_UpdateAction extends HttpServlet {
 
         CalendarDao dao = CalendarDao.getInstance();
 		
-		 // Update
-        System.out.println("----- Update -----");
-        int updateCalendarNo = 1;
-        String newCalendarName = "New Test Calendar";
-        dao.updateCalendarName(updateCalendarNo, newCalendarName);
-        System.out.println("Update 성공");
-
-        // Read after update
-        System.out.println("----- Read All Calendars -----");
-        allCalendars = dao.getAllCalendars(email);
-        for (CalendarVo calendar : allCalendars) {
-            System.out.println(calendar);
-        }
+        // 미완성 
 	}
 
 }

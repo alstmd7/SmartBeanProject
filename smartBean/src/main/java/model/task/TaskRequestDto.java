@@ -23,4 +23,8 @@ public class TaskRequestDto {
 		return name;
 	}
 	
+	public String setName() {
+		return name;
+	}
+	
 }

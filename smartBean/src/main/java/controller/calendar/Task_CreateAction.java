@@ -30,19 +30,33 @@ public class Task_CreateAction extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-
+	// DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
 		
+//		UserDao userDao = UserDao.getInstance();
+		
 		String email = (String) request.getSession().getAttribute("log");
+//        UserVo userVo = userDao.getUserByEmail(email);
 		String name = request.getParameter("name");
 
 		TaskDao taskDao = TaskDao.getInstance();
 		taskDao.createTask(email, name);
+		
+		TaskRequestDto taskDto = new TaskRequestDto(email, name);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+        
+		boolean result = taskDao.createTask(email, name);
+//		boolean result = taskDao.createTask(taskDto);
+		String url = "calendar";
+		
+		
+		out.print("<script>location.href='"+url+"';</script>");
+		
+		out.close();
 
 	}
 

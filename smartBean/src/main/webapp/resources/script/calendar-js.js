@@ -1,3 +1,5 @@
+var calendar = null;
+
 $(document).ready(function() {
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
@@ -14,7 +16,7 @@ $(document).ready(function() {
 		}
 	});
 
-	var calendar = new Calendar(calendarEl, {
+	calendar = new Calendar(calendarEl, {
 		headerToolbar: {
 			left: 'prev,next today',
 			center: 'title',
@@ -38,7 +40,6 @@ $(document).ready(function() {
 
 	// 캘린더 불러오기 
 	calendar.render();
-	
 	
 	// <<<<<<<<<<<<<<< calendar >>>>>>>>>>>>>>>
 	// 캘린더 만들기 
@@ -134,14 +135,48 @@ $(document).ready(function() {
 	});
 
 
-	// 캘린더 전체 저장 버튼
-	$("#save-button").on("click", function() {
-		var events = calendar.getEvents();
-		console.log(events);
+	// 1. 전체 이벤트 데이터 추출 --> 2. 추출된 데이터를 ajax로 서버에 전송하여 DB에 저장
+	$("#save-button").on("click", function() {			// 캘린더 전체 저장 버튼
+		var allEvent = calendar.getEvents();
+		console.log(allEvent); // 확인용 
+
+		var events = new Array();
+		for (var i = 0; i < allEvent.length; i++) {
+			var obj = new Object();	// JSON 형태로 저장하기 위해 
+			
+			obj.title = allEvent[i]._def.title;	// 이벤트 명칭
+			obj.allday = allEvent[i]._def.allday;	// 하루종일 이벤트인지 boolean
+			
+			// var temp = allEvent[i]._instance.range.start;
+			// var realStart = temp.substring(0,9);
+			// console.log(realStart);
+			
+			obj.start = allEvent[i]._instance.range.start;
+			obj.end = allEvent[i]._instance.range.end;
+
+			
+			// 이벤트 추가할 캘린더 no 선택값도 넣어줘야함 
+
+			events.push(obj);	// for문 돌때마다 obj를 배열에 json 형태로 저장 
+		}
+
+		var jsondata = JSON.stringify(events); // json 형태를 문자열로 넘겨주기 
+		console.log(jsondata);
+		
 	});
+	
+	$('.fc-daygrid-day-events').append(
+		`<div class="book">
+	     	<p>tttttttt</p>
+	     </div>`
+	);
+
+// .find(`div[data-date="start"]`).text(); &{}
+// .append 이벤트를 넣은 칸이랑 안넣은 칸이랑 뭐가 다른지 찾아서 다른 영역을 전부 append로 추가
 
 	containerEl.style.overflowY = 'auto';
 	
+		
 	// <<<<<<<<<<<<<<< task >>>>>>>>>>>>>>>
 	// task 추가 버튼 
 	$("#add-task-button").on("click", function() {
@@ -166,7 +201,7 @@ $(document).ready(function() {
 
 	// 추가한 task 저장 버튼 
 	$("#save-task-button").on("click", function() {
-		var taskName = $("#task-name-input").val();
+		var taskName = $("#newTaskTitle").val();
 
 		if (taskName.trim() !== "") {
 			if (taskNameDupl(taskName)) {
@@ -180,7 +215,7 @@ $(document).ready(function() {
 	      `;
 				containerEl.insertBefore(newEvent, containerEl.lastChild);
 				$("#add-task-popup").fadeOut();
-				$("#task-name-input").val("");
+				$("#newTaskTitle").val("");
 
 				// Task 관리 버튼 클릭 시 관리 팝업 표시
 				$(newEvent).find(".admin-task-btn").on("click", function() {
