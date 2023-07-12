@@ -214,13 +214,12 @@ footer>ul>li:nth-child(2){
 	font-family: 'Roboto', sans-serif;
 	font-family: Arial, sans-serif;
 	background-color: #fafafa;
-	height: 100vh;
 }
 
 /* 로그인 래퍼 스타일 */
 .login-wrapper {
 	width: 400px;
-	height: 400px;
+	height: 440px;
 	padding: 40px;
 	box-sizing: border-box;
 	border: 1px solid #000000;
@@ -235,8 +234,7 @@ footer>ul>li:nth-child(2){
 	font-size: 2.5rem;
 	/* color: #6A24FE; */
 	color: #d73434;
-	margin-bottom: 20px;
-
+	margin: 0 0 20px 0;
 }
 
 /* 로그인 폼 내 입력 필드 스타일 */
@@ -303,5 +301,28 @@ footer>ul>li:nth-child(2){
 	font-size: 12px;
 	text-decoration: none;
 }
+
+/* 로그인 영역 */
+.error {
+	color: red;
+	display: none;
+}
+
+#login-form ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 70px;
+}
+
+#login-form li {
+	list-style: none;
+	margin: 0 0 10px 0;
+	padding: 0;
+}
+
+
+
 
   

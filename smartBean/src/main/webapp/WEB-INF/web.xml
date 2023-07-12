@@ -95,12 +95,12 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>SearchTodoRequestAction</servlet-name>
-		<servlet-class>controller.todo.SearchTodoRequestAction</servlet-class>
+		<servlet-name>SearchTodoAction</servlet-name>
+		<servlet-class>controller.todo.SearchTodoAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>SearchTodoRequestAction</servlet-name>
-		<url-pattern>/SearchTodoRequest</url-pattern>
+		<servlet-name>SearchTodoAction</servlet-name>
+		<url-pattern>/SearchTodo</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

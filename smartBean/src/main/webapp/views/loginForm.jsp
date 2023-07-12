@@ -6,16 +6,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insert title here</title>
+    <title>로그인</title>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <style type="text/css" ></style>
 </head>
 
 <body>
 	<jsp:include page="/header"></jsp:include>
 
-	<section>
+	<main>
 		<div class="login-section">
 		<!-- 로그인 래퍼 -->
 		    <div class="login-wrapper">
@@ -27,10 +26,6 @@
 		            <input type="text" id="email" name="email" placeholder="이메일">
 		            <!-- 비밀번호 입력 필드 -->
 		            <input type="password" id="password" name="password" placeholder="비밀번호">
-		            <!-- 아이디 저장 체크박스 -->
-		            <label for="remember-check">
-		                <input type="checkbox" id="remember-check">아이디 저장하기
-		            </label>
 		            <ul>
 						<li class="error" id="error-email">이메일을 입력해주세요.</li>
 						<li class="error" id="error-password">비밀번호를 입력해주세요.</li>
@@ -45,7 +40,7 @@
 		        </div>
 		    </div>
 	    </div>
-	</section>
+	</main>
 	
 	<jsp:include page="/footer"></jsp:include>
 
