@@ -20,17 +20,17 @@ public class TaskDao {
 		return instance;
 	}
 	
-	public TaskVo getTaskByName(int calendar_no, String name) {
+	public TaskVo getTaskByName(String email, String name) {
 		TaskVo task = null;
 		
 		this.conn = DBManager.getConnection();
 		
 		if(this.conn != null) {
-			String sql = "SELECT * FROM task WHERE calendar_no=? AND `name`=?";
+			String sql = "SELECT * FROM task WHERE email=? AND `name`=?";
 			
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);
-				this.pstmt.setInt(1, calendar_no);
+				this.pstmt.setString(1, email);
 				this.pstmt.setString(2, name);
 				
 				this.rs = this.pstmt.executeQuery();
@@ -38,7 +38,7 @@ public class TaskDao {
 				if(this.rs.next()) {
 					int no = this.rs.getInt(1);
 					
-					task = new TaskVo(no, calendar_no, name);
+					task = new TaskVo(no, email, name);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -50,16 +50,16 @@ public class TaskDao {
 		return task;
 	}
 	
-	public ArrayList<String> getTaskAll(int calendar_no) {
+	public ArrayList<String> getTaskAll(String email) {
 		ArrayList<String> task = new ArrayList<String>();
 		
 		this.conn = DBManager.getConnection();
 		
-		String sql = "SELECT `name` FROM task WHERE calendar_no=?";
+		String sql = "SELECT `name` FROM task WHERE email=?";
 		
 		try {
 			this.pstmt = this.conn.prepareStatement(sql);
-			this.pstmt.setInt(1, calendar_no);
+			this.pstmt.setString(1, email);
 			this.rs = this.pstmt.executeQuery();
 			
 			if(this.rs.next()) {
@@ -77,24 +77,24 @@ public class TaskDao {
 		return task;
 	}
 	
-	public boolean createTask(int calendar_no, String name) {
+	public boolean createTask(String email, String name) {
 		
-		TaskVo result = getTaskByName(calendar_no, name);
+		TaskVo result = getTaskByName(email, name);
 		
 		if(result != null)
 			return false;
 		
 		boolean check = true;
 		
-		if(calendar_no != 0 && name != null) {
+		if(email != null && name != null) {
 			this.conn = DBManager.getConnection();
 			
 			if(this.conn != null) {
-				String sql = "INSERT INTO task (calendar_no, `name`) VALUES (?, ?)";
+				String sql = "INSERT INTO task (email, `name`) VALUES (?, ?)";
 
 				try {
 					this.pstmt = this.conn.prepareStatement(sql);
-					this.pstmt.setInt(1, calendar_no);
+					this.pstmt.setString(1, email);
 					this.pstmt.setString(2, name);
 					
 					this.pstmt.execute();
@@ -120,13 +120,14 @@ public class TaskDao {
 		
 		boolean check = true;
 		
-		if(this.conn != null && taskDto.getNo() != 0) {
-			String sql = "UPDATE task SET `name`=? WHERE `no`=?";
+		if(this.conn != null) {
+			String sql = "UPDATE task SET `name`=? WHERE email=? AND `name`=?";
 
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);
 				this.pstmt.setString(1, name);
-				this.pstmt.setInt(2, taskDto.getNo());
+				this.pstmt.setString(2, taskDto.getEmail());
+				this.pstmt.setString(3, taskDto.getName());
 
 				this.pstmt.execute();
 
@@ -144,18 +145,18 @@ public class TaskDao {
 		return check;
 	}
 	
-	public boolean deleteTaskByName(int calendar_no, String name) {
+	public boolean deleteTaskByName(String email, String name) {
 		
 		this.conn = DBManager.getConnection();
 
 		boolean check = true;
 
 		if (this.conn != null) {
-			String sql = "DELETE FROM task WHERE calendar_no=? AND name=?";
+			String sql = "DELETE FROM task WHERE email=? AND `name`=?";
 
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);
-				this.pstmt.setInt(1, calendar_no);
+				this.pstmt.setString(1, email);
 				this.pstmt.setString(2, name);
 
 				this.pstmt.execute();
