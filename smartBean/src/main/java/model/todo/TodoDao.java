@@ -42,11 +42,12 @@ public class TodoDao {
 				while(this.rs.next()) {
 					int no = this.rs.getInt(1);
 					String content = this.rs.getString(3);
-					int target_at = this.rs.getInt(4);
+					Date target_at = this.rs.getDate(4);
+					int target_atNum = Integer.parseInt(sdf.format(target_at));
 					String check = this.rs.getString(5);
-					
-					TodoVo todo = new TodoVo(no, email, content, target_at, check);
+					TodoVo todo = new TodoVo(no, email, content, target_atNum, check);
 					list.add(todo);
+					System.out.println(todo.toString());
 				}
 				
 			} catch (SQLException e) {
