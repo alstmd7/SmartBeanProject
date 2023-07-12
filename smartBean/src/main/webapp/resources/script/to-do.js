@@ -1,7 +1,3 @@
-$(document).ready(function(){
-	    
-});
-
 function updateProgress(progressId) {
     var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
     var progress = document.getElementById('progress' + progressId);
@@ -15,7 +11,7 @@ function updateProgress(progressId) {
     }
 
     var percentage = (checkedCount / total) * 100;
-    progress.innerHTML = '진행률: ' + percentage.toFixed(1) + '%';
+    progress.innerHTML = '진행률: ' + percentage.toFixed(1)*2 + '%';
 
     if (percentage === 100) {
         for (var i = 0; i < checkboxes.length; i++) {
@@ -63,9 +59,9 @@ function printWeek() {
             table += "<td class='Annual'>" + "<li>연차</li>" + "</td>";
         } else {
             table += "<td>" +
-                "<li>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1<br>" +"</li>"+
-                "<li>"+"<input type='checkbox' name='hobby' value='h2' onclick='updateProgress(" + (i + 1) + ")'> 일정2<br>" +"</li>"+
-                "<li>"+"<input type='checkbox' name='hobby' value='h3' onclick='updateProgress(" + (i + 1) + ")'> 일정3<br>" +"</li>"+
+                "<li>"+"<input type='checkbox' name='hobby' value='h1' class='none'>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1" +"</li><br>"+
+                "<li>"+"<input type='checkbox' name='hobby' value='h2' class='none'>"+"<input type='checkbox' name='hobby' value='h2' onclick='updateProgress(" + (i + 1) + ")'> 일정2" +"</li><br>"+
+                "<li>"+"<input type='checkbox' name='hobby' value='h3' class='none'>"+"<input type='checkbox' name='hobby' value='h3' onclick='updateProgress(" + (i + 1) + ")'> 일정3" +"</li><br>"+
                 "<li>"+"<span id='progress" + (i + 1) + "'>진행률: 0%</span>" + "</li>"+"</td>";
         }
     }
@@ -81,6 +77,8 @@ function showList(listId) {
     var list3 = document.getElementById('list3');
     var list4 = document.getElementById('list4');
 
+    var noneElements = document.getElementsByClassName('none');
+
     if (listId === 1) {
         list1.style.display = 'block';
         list2.style.display = 'none';
@@ -91,6 +89,11 @@ function showList(listId) {
         list2.style.display = 'block';
         list3.style.display = 'none';
         list4.style.display = 'none';
+
+        // Show elements with class "none"
+        for (var i = 0; i < noneElements.length; i++) {
+            noneElements[i].style.display = 'block';
+        }
     } else if (listId === 3) {
         list1.style.display = 'none';
         list2.style.display = 'none';
@@ -102,7 +105,6 @@ function showList(listId) {
         list3.style.display = 'none';
         list4.style.display = 'block';
     }
-
 }
 
 function addTask() {
@@ -144,8 +146,6 @@ function editTasks() {
 
     var editText = document.getElementById('editText').value;
 
-    alert('일정이 삭제되었습니다.');
-
     if (editText === '') {
         alert('수정할 내용을 입력해주세요.');
         return;
@@ -161,4 +161,3 @@ function editTasks() {
         alert('일정이 수정되었습니다.');
     }
 }
-

@@ -1,5 +1,4 @@
-@charset "UTF-8";
- @font-face {
+@font-face {
     font-family: 'LeferiPoint-WhiteObliqueA';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
     font-weight: normal;
@@ -114,19 +113,27 @@ button {
     background-color: #fff;
 }
 
-#button1,#button2,#button3,#button33,#button4,#button44 {
+
+
+#button1,
+#button2,
+#button3,
+#button33,
+#button4,
+#button44 {
     width: 70%;
     margin-left: 15%;
     font-size: 2rem;
     margin-top: 40px;
 }
 
-#button33,#button44{
+#button33,
+#button44 {
     width: 75%;
     font-size: 1.7rem;
 }
 
-#dateInput{
+#dateInput {
     font-size: 1.8rem;
 }
 
@@ -187,18 +194,21 @@ p {
 }
 
 #text,
-#dateInput,#editText {
+#dateInput,
+#editText {
     margin-left: 10%;
     width: 80%;
 }
+
 /*삭제체크박스*/
-.none{
+.none {
     display: none;
     float: left;
     margin-top: 4px;
 
 }
-td>li{
+
+td>li {
     width: 70%;
-    margin:0px 15% ;
+    margin: 0px 15%;
 }

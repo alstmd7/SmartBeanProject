@@ -6,8 +6,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="./ppp.js"></script>
-    <link href="./ppp.css" rel="stylesheet">
+    <script src="../resources/script/to-do.js"></script>
+    <link href="../resources/style/todo_style.css" rel="stylesheet">
+
 
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <title>To-do list</title>
@@ -17,31 +18,28 @@
 
 
 <body onload="printWeek()">
-    <c:if test="${empty sessionScope.log }">
-        <c:redirect url="login"></c:redirect>
-    </c:if>
-
     <div class="To-do-list">
+        <h1>To-do list</h1>
+        <ul>
+            <li>이름: 장재원</li>
+        </ul>
+
         <button type="submit" id="button1" onclick="showList(1)">To-do list 추가</button>
 
-        <form action="CreateTodo" method="POST" id="list1">
+        <ol id="list1">
             <p>날짜선택</p>
-            <input type="date" id="target_at" name="target_at">
+            <input type="date" id="dateInput" name="date" value="">
             <p>일정 추가</p>
-            <input type="text" id="content" name="content">
-            <input type="submit" value="일정추가">
-        </form>
-
+            <input type="text" id="text" name="task" value="">
+            <button type="submit" id="button1" onclick="addTask()">추가 하기</button>
+        </ol>
 
         <button type="submit" id="button2" onclick="showList(2)">To-do list 삭제</button>
 
-        <form action="">
-            <p>날짜선택</p>
-            <input type="date" id="dateInput" name="date">
+        <ol id="list2">
             <p>삭제할 일정</p>
-            <input type="text" id="text" name="task" value="">
-            <button type="submit" id="button2" onclick="ValueCheck()">삭제하기</button>
-        </form>
+            <button type="submit" id="button2" onclick="deleteTasks()">선택한 일정 삭제</button>
+        </ol>
 
         <button type="submit" id="button3" onclick="showList(3)">To-do list 수정</button>
 
@@ -63,10 +61,14 @@
     </div>
 
     <div class="check">
-        <label for="inputDate">날짜 선택:</label> <input type="date" id="inputDate" required>
+        <label for="inputDate">날짜 선택:</label>
+        <input type="date" id="inputDate" required>
     </div>
     <button onclick="printWeek()">조회</button>
     <div id="output"></div>
+
+
+
     <div>
         <input type="text" id="todoList">
         <div>
@@ -85,6 +87,5 @@
 </body>
 
 </html>
-
 
 
