@@ -191,3 +191,14 @@ p {
     margin-left: 10%;
     width: 80%;
 }
+/*삭제체크박스*/
+.none{
+    display: none;
+    float: left;
+    margin-top: 4px;
+
+}
+td>li{
+    width: 70%;
+    margin:0px 15% ;
+}
