@@ -28,20 +28,22 @@
 		<!-- 로그인한 사용자의 캘린더 -->
 		<div id="user-calendar">
 			<input type="checkbox" id="user-calendar-checkbox"
-				class="calendar-checkbox-input"> <label
-				for="user-calendar-checkbox">{로그인한 사용자의 이름}님 캘린더</label>
+				class="calendar-checkbox-input">
+				<label for="user-calendar-checkbox">${sessionScope.name}님 캘린더</label>
 		</div>
 		
 		<!-- 캘린더 리스트 -->
 		<div id="calendar-list"></div>
-
+		
 		<!-- 캘린더 생성 팝업 -->
 		<div id="create-calendar-popup" style="display: none;">
-		  <input type="text" id="newCalendar-name-input" name="캘린더 이름" placeholder="new calendar title"><br>
-		  <input type="text" id="newCalendar-owner-input" name="관리자 이메일" placeholder="calendar owner"><br>
-		  <button id="save-newCalendar-button">생성</button>
-		</div>
-		
+			<form method="post" action="CreateCalendar" id="create-calendar-form">
+			 	<input type="text" id="newCalendar-name-input" name="calendarName" placeholder="new calendar title"><br>
+			  	<input type="text" id="newCalendar-owner-input" name="email" value="${sessionScope.log}" placeholder="calendar owner"><br>
+			  	<input type="submit" id="save-newCalendar-button" value="생성">
+			 </form>
+		</div> 
+
 		<!-- 새로 생성한 캘린더 관리 팝업 -->
 		<div id="admin-newCalendar-popup" style="display: none;">
 		  <h2 id="newCalendar-popup-title"></h2>

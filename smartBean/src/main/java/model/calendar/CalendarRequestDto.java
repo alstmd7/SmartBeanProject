@@ -1,6 +1,7 @@
 package model.calendar;
 
 public class CalendarRequestDto {
+	private int no;
     private int code;
     private String email;
     private String name;
@@ -9,6 +10,15 @@ public class CalendarRequestDto {
         this.code = code;
         this.email = email;
         this.name = name;
+    }
+    
+    public CalendarRequestDto(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
+
+    public int getNo() {
+        return no;
     }
 
     public int getCode() {

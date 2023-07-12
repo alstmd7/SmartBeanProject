@@ -15,6 +15,5 @@ UPDATE calendar SET `name`='NEW캘린더1' WHERE no=2;
 
 UPDATE calendar SET `email`='new@gmail.com' WHERE no=2;
 
-DELETE FROM calendar WHERE no=2;
 
-DROP TABLE calendar;
+DROP TABLE calendar;ELETE FROM calendar WHERE no=2;

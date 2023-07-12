@@ -1,6 +1,9 @@
 package controller.calendar;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.calendar.CalendarDao;
 import model.calendar.CalendarRequestDto;
+import model.user.UserDao;
+import model.user.UserVo;
 
 /**
  * Servlet implementation class Calendar_CreateAction
@@ -39,21 +44,38 @@ public class Calendar_CreateAction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
-        CalendarDao dao = CalendarDao.getInstance();
-
-        int calendarCode = Integer.parseInt(request.getParameter("calendarCode"));
-        String email = request.getParameter("email");
-        String calendarName = request.getParameter("calendarName");
-
-        CalendarRequestDto calendarDto = new CalendarRequestDto(0, email, calendarName);
-
-        boolean isSuccess1 = dao.createCalendar(calendarDto);
-        if (isSuccess1) {
-            System.out.println("Create 성공");
-        } else {
-            System.out.println("Create 실패");
-        }
+		Map map = request.getParameterMap();
+		Object[] keyset = map.keySet().toArray();
+		for(Object key : keyset) {
+			System.out.println(">> " + ((String) key));
+		}
 		
+		String calendarName = request.getParameter("calendarName");
+		System.out.println("calendarName : " + calendarName);
+		
+        CalendarDao dao = CalendarDao.getInstance();
+        UserDao userDao = UserDao.getInstance();
+        
+        String email = (String) request.getSession().getAttribute("log");
+        UserVo userVo = userDao.getUserByEmail(email);
+
+        CalendarRequestDto calendarDto = new CalendarRequestDto(userVo.getCode(), email, calendarName);
+
+        response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+        
+		boolean isSuccess1 = dao.createCalendar(calendarDto);
+		if (isSuccess1) {
+		    System.out.println("Create 성공");
+		    out.println("<script> alert('Create calendar success'); </script>");
+		} else {
+		    System.out.println("Create 실패");
+		    out.println("<script> alert('Create calendar fail'); </script>");
+		}
+
+        
 	}
+	
+
 
 }
