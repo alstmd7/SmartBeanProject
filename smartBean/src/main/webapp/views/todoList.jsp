@@ -6,15 +6,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <script src="./ppp.js"></script>
-    <link href="./ppp.css" rel="stylesheet">
+    <script src="../resources/script/to-do.js"></script>
+    <link href="../resources/style/todo_style.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <title>To-do list</title>
 </head>
-
-
-
 
 <body onload="printWeek()">
     <c:if test="${empty sessionScope.log }">

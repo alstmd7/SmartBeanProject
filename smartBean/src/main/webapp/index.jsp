@@ -21,7 +21,7 @@ DBManager.getConnection();
 		<div class="div-todoList">
 			<a href="todoList"><h2>To-do list</h2></a> <!-- 링크 설정 필요 -->
 		</div>
-		<c:if test="${!empty sessionScope.log }">
+		<c:if test="${empty sessionScope.log }">
 		<div class="login-nav">
 			<ul>
 				<li><a href="login">LOGIN&nbsp;&nbsp;&nbsp;></a></li>
