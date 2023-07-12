@@ -44,38 +44,41 @@ public class Calendar_CreateAction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 
-		Map map = request.getParameterMap();
-		Object[] keyset = map.keySet().toArray();
-		for(Object key : keyset) {
-			System.out.println(">> " + ((String) key));
-		}
+//		Map map = request.getParameterMap();
+//		Object[] keyset = map.keySet().toArray();
+//		for(Object key : keyset) {
+//			System.out.println(">> " + ((String) key));
+//		}
 		
 		String calendarName = request.getParameter("calendarName");
-		System.out.println("calendarName : " + calendarName);
+//		System.out.println("calendarName : " + calendarName);
+//		System.out.println("email : " + email);
 		
         CalendarDao dao = CalendarDao.getInstance();
         UserDao userDao = UserDao.getInstance();
         
         String email = (String) request.getSession().getAttribute("log");
         UserVo userVo = userDao.getUserByEmail(email);
+        String owner = request.getParameter("owner");
 
-        CalendarRequestDto calendarDto = new CalendarRequestDto(userVo.getCode(), email, calendarName);
-
+        CalendarRequestDto calendarDto = new CalendarRequestDto(userVo.getCode(), owner, calendarName);
+        
         response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
         
-		boolean isSuccess1 = dao.createCalendar(calendarDto);
-		if (isSuccess1) {
-		    System.out.println("Create 성공");
-		    out.println("<script> alert('Create calendar success'); </script>");
+		boolean result = dao.createCalendar(calendarDto);
+		String url = "calendar";
+		
+		if (result) {
+			out.println("<script> alert('새로운 캘린더 생성이 완료되었습니다.'); </script>");
 		} else {
-		    System.out.println("Create 실패");
-		    out.println("<script> alert('Create calendar fail'); </script>");
+			out.println("<script> alert('새로운 캘린더 생성이 실패하였습니다.'); </script>");
 		}
-
-        
+		
+		out.print("<script>location.href='"+url+"';</script>");
+		
+		out.close();
+		
 	}
 	
-
-
 }

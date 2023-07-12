@@ -38,8 +38,8 @@
 		<!-- 캘린더 생성 팝업 -->
 		<div id="create-calendar-popup" style="display: none;">
 			<form method="post" action="CreateCalendar" id="create-calendar-form">
-			 	<input type="text" id="newCalendar-name-input" name="calendarName" placeholder="new calendar title"><br>
-			  	<input type="text" id="newCalendar-owner-input" name="email" value="${sessionScope.log}" placeholder="calendar owner"><br>
+			 	<input type="text" id="create-calendar-popup" name="calendarName" placeholder="new calendar title"><br>
+			  	<input type="text" id="newCalendar-owner-input" name="owner" value="${sessionScope.log}" placeholder="calendar owner"><br>
 			  	<input type="submit" id="save-newCalendar-button" value="생성">
 			 </form>
 		</div> 
