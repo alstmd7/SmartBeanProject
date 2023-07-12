@@ -1,7 +1,3 @@
-$(document).ready(function(){
-	    
-});
-
 function updateProgress(progressId) {
     var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
     var progress = document.getElementById('progress' + progressId);
@@ -15,7 +11,7 @@ function updateProgress(progressId) {
     }
 
     var percentage = (checkedCount / total) * 100;
-    progress.innerHTML = '진행률: ' + percentage.toFixed(1) + '%';
+    progress.innerHTML = '진행률: ' + percentage.toFixed(1)*2 + '%';
 
     if (percentage === 100) {
         for (var i = 0; i < checkboxes.length; i++) {
@@ -26,6 +22,55 @@ function updateProgress(progressId) {
 
 function printWeek() {
     var inputDate = document.getElementById("inputDate");
+    
+    var searchSplit = inputDate.value.split("-");
+	const search = "" + searchSplit[1] + searchSplit[2] + searchSplit[3];
+	if (search !== "") {
+		$.ajax({
+			"url": `/LoadTodoAction?query=${search}`,
+			"method": "GET"
+		}).done(function(response) {
+			$('#contents-container').empty();
+
+			const list = response;
+			console.log('typeof list : ', typeof list);
+			
+			if(typeof list === 'string') {
+				location.href = "login";
+			} else {
+				list.forEach(book => {
+					// 썸네일
+					const no = book.no;
+					// 제목 
+					const title = book.title;
+					// 저자
+					const author = book.author;
+					// 출판사 
+					const publisher = book.publisher;
+					// 판매가 
+					const price = book.price;
+					// 상세페이지
+					const url = book.url;
+	
+					if (thumb !== not_found && thumb !== "") {
+						$('#output').append(
+							`<div class="book">
+	                                <a href="${url}">
+	                                    <img src="${thumb}">
+	                                </a>
+	                                <p class="book-title">${no}</p>
+	                                <p><span class="book-author">${author}</span> | <span class="book-publisher">${publisher}</span></p>
+	                                <p><span class="book-price">${price}</span>원</p>
+	                            </div>`
+						);
+					}
+				});
+			}
+
+		}).fail(function() {
+			location.href = "login";
+		});
+	}
 
     if (!inputDate.value) {
         var currentDate = new Date();
@@ -63,9 +108,9 @@ function printWeek() {
             table += "<td class='Annual'>" + "<li>연차</li>" + "</td>";
         } else {
             table += "<td>" +
-                "<li>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1<br>" +"</li>"+
-                "<li>"+"<input type='checkbox' name='hobby' value='h2' onclick='updateProgress(" + (i + 1) + ")'> 일정2<br>" +"</li>"+
-                "<li>"+"<input type='checkbox' name='hobby' value='h3' onclick='updateProgress(" + (i + 1) + ")'> 일정3<br>" +"</li>"+
+                "<li>"+"<input type='checkbox' name='hobby' value='h1' class='none'>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1" +"</li><br>"+
+                "<li>"+"<input type='checkbox' name='hobby' value='h2' class='none'>"+"<input type='checkbox' name='hobby' value='h2' onclick='updateProgress(" + (i + 1) + ")'> 일정2" +"</li><br>"+
+                "<li>"+"<input type='checkbox' name='hobby' value='h3' class='none'>"+"<input type='checkbox' name='hobby' value='h3' onclick='updateProgress(" + (i + 1) + ")'> 일정3" +"</li><br>"+
                 "<li>"+"<span id='progress" + (i + 1) + "'>진행률: 0%</span>" + "</li>"+"</td>";
         }
     }
@@ -73,6 +118,8 @@ function printWeek() {
 
     document.getElementById("output").innerHTML = table;
     updateProgress();
+    
+    
 }
 
 function showList(listId) {
@@ -80,6 +127,8 @@ function showList(listId) {
     var list2 = document.getElementById('list2');
     var list3 = document.getElementById('list3');
     var list4 = document.getElementById('list4');
+
+    var noneElements = document.getElementsByClassName('none');
 
     if (listId === 1) {
         list1.style.display = 'block';
@@ -91,6 +140,11 @@ function showList(listId) {
         list2.style.display = 'block';
         list3.style.display = 'none';
         list4.style.display = 'none';
+
+        // Show elements with class "none"
+        for (var i = 0; i < noneElements.length; i++) {
+            noneElements[i].style.display = 'block';
+        }
     } else if (listId === 3) {
         list1.style.display = 'none';
         list2.style.display = 'none';
@@ -102,7 +156,6 @@ function showList(listId) {
         list3.style.display = 'none';
         list4.style.display = 'block';
     }
-
 }
 
 function addTask() {
@@ -143,8 +196,6 @@ function editTasks() {
     }
 
     var editText = document.getElementById('editText').value;
-
-    alert('일정이 삭제되었습니다.');
 
     if (editText === '') {
         alert('수정할 내용을 입력해주세요.');

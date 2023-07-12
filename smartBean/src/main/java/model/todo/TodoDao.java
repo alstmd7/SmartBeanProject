@@ -25,24 +25,24 @@ public class TodoDao {
 		return instance;
 	}
 	
-	public ArrayList<TodoVo> getTodoAll(String email, int target_at) {
+	public ArrayList<TodoVo> getTodoAll(String email) {
 		ArrayList<TodoVo> list = new ArrayList<TodoVo>();
 		
 		this.conn = DBManager.getConnection();
 		
 		if(this.conn != null) {
-			String sql = "SELECT * FROM todo WHERE email=? AND target_at=?";
+			String sql = "SELECT * FROM todo WHERE email=?";
 			
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);
 				this.pstmt.setString(1, email);
-				this.pstmt.setInt(2, target_at);
 				
 				this.rs = this.pstmt.executeQuery();
 				
 				while(this.rs.next()) {
 					int no = this.rs.getInt(1);
 					String content = this.rs.getString(3);
+					int target_at = this.rs.getInt(4);
 					String check = this.rs.getString(5);
 					
 					TodoVo todo = new TodoVo(no, email, content, target_at, check);
