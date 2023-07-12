@@ -33,7 +33,7 @@ public class LogoutAction extends HttpServlet {
     	session.setAttribute("log", null);
     	session.setAttribute("name", null);
     	
-    	response.sendRedirect("index.jsp");
+    	response.sendRedirect("login");
 	}
 
 }

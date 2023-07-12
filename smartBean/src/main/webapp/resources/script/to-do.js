@@ -1,3 +1,7 @@
+/*$(window).on('load', function() {
+	printWeek();
+});*/
+
 function updateProgress(progressId) {
     var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
     var progress = document.getElementById('progress' + progressId);
@@ -22,55 +26,6 @@ function updateProgress(progressId) {
 
 function printWeek() {
     var inputDate = document.getElementById("inputDate");
-    
-    var searchSplit = inputDate.value.split("-");
-	const search = "" + searchSplit[1] + searchSplit[2] + searchSplit[3];
-	if (search !== "") {
-		$.ajax({
-			"url": `/LoadTodoAction?query=${search}`,
-			"method": "GET"
-		}).done(function(response) {
-			$('#contents-container').empty();
-
-			const list = response;
-			console.log('typeof list : ', typeof list);
-			
-			if(typeof list === 'string') {
-				location.href = "login";
-			} else {
-				list.forEach(book => {
-					// 썸네일
-					const no = book.no;
-					// 제목 
-					const title = book.title;
-					// 저자
-					const author = book.author;
-					// 출판사 
-					const publisher = book.publisher;
-					// 판매가 
-					const price = book.price;
-					// 상세페이지
-					const url = book.url;
-	
-					if (thumb !== not_found && thumb !== "") {
-						$('#output').append(
-							`<div class="book">
-	                                <a href="${url}">
-	                                    <img src="${thumb}">
-	                                </a>
-	                                <p class="book-title">${no}</p>
-	                                <p><span class="book-author">${author}</span> | <span class="book-publisher">${publisher}</span></p>
-	                                <p><span class="book-price">${price}</span>원</p>
-	                            </div>`
-						);
-					}
-				});
-			}
-
-		}).fail(function() {
-			location.href = "login";
-		});
-	}
 
     if (!inputDate.value) {
         var currentDate = new Date();
@@ -91,6 +46,15 @@ function printWeek() {
     for (var i = 0; i < 7; i++) {
         var currentDate = new Date(firstDay);
         currentDate.setDate(firstDay.getDate() + i);
+        
+        var checkDate = currentDate.getFullYear() +
+		'' + ( (currentDate.getMonth()+1) < 10 ? "0" + (currentDate.getMonth()+1) : (currentDate.getMonth()+1) )+
+		'' + ( (currentDate.getDate()) < 10 ? "0" + (currentDate.getDate()) : (currentDate.getDate()) );
+		console.log(checkDate);
+		
+		
+
+		
         var dayOfWeek = days[currentDate.getDay()];
         var options = { day: 'numeric' };
         var dateStr = currentDate.toLocaleDateString('ko-KR', options);
@@ -106,9 +70,9 @@ function printWeek() {
     for (var i = 0; i < datesAndWeekdays.length; i++) {
         if (i == 3) {
             table += "<td class='Annual'>" + "<li>연차</li>" + "</td>";
-        } else {
+        } else {	
             table += "<td>" +
-                "<li>"+"<input type='checkbox' name='hobby' value='h1' class='none'>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1" +"</li><br>"+
+                "<li id='todoList'>"+"<input type='checkbox' name='hobby' value='h1' class='none'>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1" +"</li><br>"+
                 "<li>"+"<input type='checkbox' name='hobby' value='h2' class='none'>"+"<input type='checkbox' name='hobby' value='h2' onclick='updateProgress(" + (i + 1) + ")'> 일정2" +"</li><br>"+
                 "<li>"+"<input type='checkbox' name='hobby' value='h3' class='none'>"+"<input type='checkbox' name='hobby' value='h3' onclick='updateProgress(" + (i + 1) + ")'> 일정3" +"</li><br>"+
                 "<li>"+"<span id='progress" + (i + 1) + "'>진행률: 0%</span>" + "</li>"+"</td>";
@@ -119,7 +83,40 @@ function printWeek() {
     document.getElementById("output").innerHTML = table;
     updateProgress();
     
-    
+    // LoadTodo
+		$.ajax({
+				"url": `/LoadTodo`,
+				"method": "GET"
+			}).done(function(response) {
+				$('#todoList').empty();
+
+				const list = response;
+				console.log('typeof list : ', typeof list);
+				
+				list.forEach(todo => {
+					const content = todo.content;
+					const check = todo.check;
+
+					if (todo.target_at === checkDate) {
+						if (check === 0) {
+							$('#output').append(
+								`<input type='checkbox' name='hobby' value='h1' class='none'>`
+							);
+						} else {
+							$('#output').append(
+								`<input type='checkbox' name='hobby' value='h1' class='none' checked>`
+							);
+						}
+						$('#output').append(
+						`<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> ${content}`
+						);
+					}
+				});
+
+
+			}).fail(function() {
+
+			});
 }
 
 function showList(listId) {
@@ -167,8 +164,6 @@ function addTask() {
 
     dateInput.value = '';
     taskInput.value = '';
-
-    alert('일정이 추가되었습니다.');
 }
 
 function deleteTasks() {

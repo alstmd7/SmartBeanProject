@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
+    <link href="/resources/style/todo_style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 </head>
 
 <body>
@@ -23,15 +21,15 @@
 		        <!-- 로그인 폼 -->
 		        <form method="post" action="Login" id="login-form">
 		            <!-- 사용자 이름/이메일 입력 필드 -->
-		            <input type="text" id="email" name="email" placeholder="이메일">
+		            <input type="text" id="email" name="email" value="${requestScope.email }" placeholder="이메일">
 		            <!-- 비밀번호 입력 필드 -->
-		            <input type="password" id="password" name="password" placeholder="비밀번호">
+		            <input type="password" id="password" name="password" value="${requestScope.password }" placeholder="비밀번호">
 		            <ul>
-						<li class="error" id="error-email">이메일을 입력해주세요.</li>
-						<li class="error" id="error-password">비밀번호를 입력해주세요.</li>
+						<li class="error" id="error-email">- 이메일을 입력해주세요.</li>
+						<li class="error" id="error-password">- 비밀번호를 입력해주세요.</li>
 					</ul>
 		            <!-- 로그인 버튼 -->
-		            <input type="button" value="로그인" onclick="checkValue(form)">
+		            <input type="button" id="submit-btn" value="로그인" onclick="checkValue(form)">
 		        </form>
 		
 		        <!-- 비밀번호 찾기 링크 -->

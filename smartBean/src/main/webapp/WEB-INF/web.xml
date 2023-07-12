@@ -102,6 +102,15 @@
 		<servlet-name>CreateTodoFormAction</servlet-name>
 		<url-pattern>/CreateTodo</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LoadTodoAction</servlet-name>
+		<servlet-class>controller.todo.LoadTodoAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoadTodoAction</servlet-name>
+		<url-pattern>/LoadTodo</url-pattern>
+	</servlet-mapping>
 
 				<!-- About calendar -->
 	<servlet>
@@ -114,6 +123,7 @@
 	</servlet-mapping>
 
 	<!-- 2. JSP 페이지 맵핑 -->
+	
 	<servlet>
 		<servlet-name>header</servlet-name>
 		<jsp-file>/header.jsp</jsp-file>
@@ -148,6 +158,15 @@
 	<servlet-mapping>
 		<servlet-name>loginForm</servlet-name>
 		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>loginFail</servlet-name>
+		<jsp-file>/views/loginFail.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginFail</servlet-name>
+		<url-pattern>/loginFail</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

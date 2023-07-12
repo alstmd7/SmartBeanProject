@@ -1,7 +1,7 @@
 package controller.todo;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,16 +34,16 @@ public class CreateTodoFormAction extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String email = (String) request.getSession().getAttribute("log");
-		String content = request.getParameter("content");
-		String dateInfo = request.getParameter("target_at");
-		String[] data = dateInfo.split("-"); 
-		int target_at = Integer.parseInt(data[0]+data[1]+data[2]);
+		String content = request.getParameter("task");
+		String dateInfo = request.getParameter("date");
+		String[] dateSplit = dateInfo.split("-");
+		int target_at = Integer.parseInt(dateSplit[0]+dateSplit[1]+dateSplit[2]);
 	    
 	    TodoRequestDto todo = new TodoRequestDto(email, content, target_at);
 
 		TodoDao todoDao = TodoDao.getInstance();
-		boolean result = todoDao.createTodo(todo);
-	
+		todoDao.createTodo(todo);
+		response.sendRedirect("todoList");
 	}
 
 }
