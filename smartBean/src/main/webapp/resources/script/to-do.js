@@ -1,13 +1,6 @@
-<<<<<<< HEAD
 /*$(window).on('load', function() {
 printWeek();
 });*/
-=======
-$(window).on('load', function() {
-	document.getElementById('inputDate').value = new Date().toISOString().substring(0, 10);
-	printWeek();
-});
->>>>>>> refs/remotes/origin/master
 
 function updateProgress(progressId) {
 var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
@@ -95,13 +88,7 @@ $.ajax({
 					table += "<input type='checkbox' name='hobby' value='h1' class='none' >";
 				}
 				
-<<<<<<< HEAD
 				table += "<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'>" + content + "</li>";
-=======
-				});
-
-				table += "<li><span id='progress" + (i + 1) + "'>진행률: 0%</span></li></td>";
->>>>>>> refs/remotes/origin/master
 			}
 			
 			});
@@ -183,36 +170,21 @@ taskInput.value = '';
 
 
 function deleteTasks() {
-	  var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-	  if (checkboxes.length === 0) {
-	    alert('삭제할 일정을 선택해주세요.');
-	    return;
-	  }
+var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+if (checkboxes.length === 0) {
+    alert('삭제할 일정을 선택해주세요.');
+    return;
+}
 
-	  var confirmation = confirm('정말로 선택한 일정을 삭제하시겠습니까?');
-	  if (confirmation) {
-	    var data = [];
-	    checkboxes.forEach(function (checkbox) {
-	      var parentLi = checkbox.parentNode;
-	      var taskId = checkbox.value; // 체크박스의 값으로 삭제할 데이터의 식별자를 사용한다고 가정합니다.
-	      data.push(taskId);
-	      parentLi.remove(); // 해당 checkbox를 감싸는 <li> 요소를 삭제
-	    });
-
-	    // AJAX 요청을 사용하여 서버로 데이터 전송
-	    $.ajax({
-	      url: '/deleteTasks',
-	      method: 'POST',
-	      data: { tasks: data },
-	      success: function (response) {
-	        alert('일정이 삭제되었습니다.');
-	      },
-	      error: function () {
-	        alert('일정 삭제에 실패했습니다.');
-	      }
-	    });
-	  }
-	}
+var confirmation = confirm('정말로 선택한 일정을 삭제하시겠습니까?');
+if (confirmation) {
+    checkboxes.forEach(function (checkbox) {
+        var parentLi = checkbox.parentNode;
+        parentLi.remove(); // 해당 checkbox를 감싸는 <li> 요소를 삭제
+    });
+    alert('일정이 삭제되었습니다.');
+}
+}
 
 
 
