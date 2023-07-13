@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
@@ -7,9 +8,12 @@
 <head>
     <meta charset="UTF-8">
     <link href="../resources/style/todo_style.css" rel="stylesheet">
+	 <script src="../resources/script/to-do.js"></script> 
+
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <title>To-do list</title>
 </head>
+
 
 <body>
 	<c:if test="${empty sessionScope.log }">
@@ -68,17 +72,16 @@
 		        <label for="inputDate">날짜 선택:</label>
 		        <input type="date" id="inputDate" required>
 		    </div>
-		    <button onclick="printWeek()">조회</button>
+		    <button onclick="printWeek()" id="button">조회</button>
 		    <div id="output"></div>
 	    </div>
 	</main>
 	
     <jsp:include page="/footer"></jsp:include>
     
-    <script src="../resources/script/to-do.js"></script>
     
+   
 </body>
 
 </html>
-
 

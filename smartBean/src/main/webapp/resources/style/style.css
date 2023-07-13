@@ -152,6 +152,27 @@ footer {
     grid-area: footer;
     background: #dcdcdc;
     font-size: 0.8rem;
+    height: 170px;
+}
+footer>ul{
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+footer>ul>li{
+    /* 각 리스트 inline-block(줄바꿈하지 않고, 각 크기(너비,높이)는 가지게 함) */
+    display: inline-block;
+    padding: 0 2%;
+}
+footer>ul>li>a{
+    font-size: 13px;
+}
+div>p{
+    font-size: 15px;
+}
+footer>ul>li:nth-child(2){
+    /* 리스트 양 옆에 테두리로 | 표시 주기 */
+    border-left: 2px solid rgb(0, 0, 0);
+    border-right: 2px solid rgb(0, 0, 0);
 }
 
 #policy-box, #company-info-box{

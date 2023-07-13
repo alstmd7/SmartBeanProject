@@ -82,11 +82,14 @@ img {
     font-size: 2rem;
 }
 
+.To-do-list p{
+	font-size: 2.3rem
+}
+
 .check {
     width: 380px;
     height: 45px;
     margin-top: 3%;
-    margin-left: 7%;
     display: inline-block;
     border: 2px solid black;
     border-radius: 10px;
@@ -106,7 +109,9 @@ button {
     padding: 10px;
     background-color: #fff;
 }
-
+#button{
+	margin-right: 0;
+}
 
 
 #button1,
@@ -116,7 +121,7 @@ button {
 #button4,
 #button44 {
     width: 70%;
-    margin-left: 15%;
+    margin-left: 3%;
     font-size: 2rem;
     margin-top: 40px;
 }
