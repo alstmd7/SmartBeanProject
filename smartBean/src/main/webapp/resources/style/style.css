@@ -151,7 +151,7 @@ main .div-todoList {
 footer {
     grid-area: footer;
     background: #dcdcdc;
-    
+    height: 170px;
 }
 footer>ul{
     padding-bottom: 10px;

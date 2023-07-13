@@ -19,6 +19,5 @@
             <p>&copy; copyrights all reserved.</p>
           </div>
     </footer>
-
 </body>
 </html>

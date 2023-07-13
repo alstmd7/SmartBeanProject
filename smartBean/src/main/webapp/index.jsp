@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>일잘러의 업무관리 | 똑똑빈</title>
 </head>
+
 <body>
 <%
 DBManager.getConnection();

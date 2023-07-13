@@ -166,9 +166,6 @@ taskInput.value = '';
 }
 
 
-
-
-
 function deleteTasks() {
 var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
 if (checkboxes.length === 0) {
@@ -185,7 +182,6 @@ if (confirmation) {
     alert('일정이 삭제되었습니다.');
 }
 }
-
 
 
 
