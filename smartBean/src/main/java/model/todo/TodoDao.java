@@ -42,8 +42,8 @@ public class TodoDao {
 				while(this.rs.next()) {
 					int no = this.rs.getInt(1);
 					String content = this.rs.getString(3);
-					Date target_at = this.rs.getDate(4);
-					int target_atNum = Integer.parseInt(sdf.format(target_at));
+					String target_at = sdf.format(this.rs.getDate(4));
+					int target_atNum = Integer.parseInt(target_at);
 					String check = this.rs.getString(5);
 					TodoVo todo = new TodoVo(no, email, content, target_atNum, check);
 					list.add(todo);

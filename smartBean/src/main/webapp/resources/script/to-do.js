@@ -68,55 +68,53 @@ function printWeek() {
     }
     table += "</tr><tr>";
     for (var i = 0; i < datesAndWeekdays.length; i++) {
-        if (i == 3) {
+				
+		// LoadTodo
+		$.ajax({
+			"url": `/LoadTodo?query=${checkDate}`,
+			"method": "GET"
+		}).done(function(response) {
+
+			const list = response;
+			console.log('typeof list : ', typeof list +", " +response);
+			table += "<td>"
+
+			response.forEach(todo => {
+				const content = todo.content;
+				const check = todo.check;
+
+				if (todo.target_at === checkDate) {
+					if (check === 0) {
+						table += "<li><input type='checkbox' name='hobby' value='h1' class='none'>"
+					} else {
+						table += "<input type='checkbox' name='hobby' value='h1' class='none' checked>"
+					}
+					table += "<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> ${content} </li><br>"
+				}
+			});
+			
+			table += "<li><span id='progress" + (i + 1) + "'>진행률: 0%</span></li></td>"
+
+		}).fail(function() {
+
+		});
+		
+        /*if (i == 3) {
             table += "<td class='Annual'>" + "<li>연차</li>" + "</td>";
         } else {	
             table += "<td>" +
-                "<li id='todoList'>"+"<input type='checkbox' name='hobby' value='h1' class='none'>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1" +"</li><br>"+
+                "<li>"+"<input type='checkbox' name='hobby' value='h1' class='none'>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1" +"</li><br>"+
                 "<li>"+"<input type='checkbox' name='hobby' value='h2' class='none'>"+"<input type='checkbox' name='hobby' value='h2' onclick='updateProgress(" + (i + 1) + ")'> 일정2" +"</li><br>"+
                 "<li>"+"<input type='checkbox' name='hobby' value='h3' class='none'>"+"<input type='checkbox' name='hobby' value='h3' onclick='updateProgress(" + (i + 1) + ")'> 일정3" +"</li><br>"+
                 "<li>"+"<span id='progress" + (i + 1) + "'>진행률: 0%</span>" + "</li>"+"</td>";
-        }
+        }*/
     }
     table += "</tr></table>";
 
     document.getElementById("output").innerHTML = table;
     updateProgress();
     
-    // LoadTodo
-		$.ajax({
-				"url": `/LoadTodo`,
-				"method": "GET"
-			}).done(function(response) {
-				$('#todoList').empty();
-
-				const list = response;
-				console.log('typeof list : ', typeof list);
-				
-				list.forEach(todo => {
-					const content = todo.content;
-					const check = todo.check;
-
-					if (todo.target_at === checkDate) {
-						if (check === 0) {
-							$('#output').append(
-								`<input type='checkbox' name='hobby' value='h1' class='none'>`
-							);
-						} else {
-							$('#output').append(
-								`<input type='checkbox' name='hobby' value='h1' class='none' checked>`
-							);
-						}
-						$('#output').append(
-						`<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> ${content}`
-						);
-					}
-				});
-
-
-			}).fail(function() {
-
-			});
+    
 }
 
 function showList(listId) {
