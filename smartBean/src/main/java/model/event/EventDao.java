@@ -43,7 +43,7 @@ public class EventDao {
 				this.conn = DBManager.getConnection();
 				if(this.conn != null) {
 						String sql = "INSERT INTO `event` (calendar_no, task_no, `name`, email, title, content, `start`, `end`)"
-								+ " VALUES (?, ?, ?, ?, ?, ?, DATE(?), DATE(?), ?)";
+								+ " VALUES (?, ?, ?, ?, ?, ?, DATE(?), DATE(?), ?, ?)";
 						
 						try {
 							this.pstmt = this.conn.prepareStatement(sql);
@@ -76,46 +76,46 @@ public class EventDao {
 			return check;
 		}
 		
-		public ArrayList<EventVo> getEventAll(int calendar_no) {
-			ArrayList<EventVo> list = new ArrayList<EventVo>();
-			
-			this.conn = DBManager.getConnection();
-			
-			if(this.conn != null) {
-				String sql = "SELECT * FROM `event` WHERE calendar_no=?";
-				
-				try {
-					this.pstmt = this.conn.prepareStatement(sql);
-					this.pstmt.setInt(1, calendar_no);
-					
-					this.rs = this.pstmt.executeQuery();
-					
-					while(this.rs.next()) {
-						int no = this.rs.getInt(1);
-						int task_no = this.rs.getInt(3);
-						String name = this.rs.getString(4);
-						String email = this.rs.getString(5);
-						String title = this.rs.getString(6);
-						String content = this.rs.getString(7);
-						Date start = this.rs.getDate(8);
-						int startNum = Integer.parseInt(sdf.format(start));
-						Date end = this.rs.getDate(9);
-						int endNum = Integer.parseInt(sdf.format(end));
-						String all_day = this.rs.getString(10);
-						
-						EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, startNum, endNum, all_day);
-						list.add(event);
-					}
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					DBManager.close(this.conn, this.pstmt, this.rs);
-				}
-			}
-			
-			return list;
+		public ArrayList<EventVo> getEventAll() {
+		    ArrayList<EventVo> list = new ArrayList<EventVo>();
+
+		    this.conn = DBManager.getConnection();
+
+		    if (this.conn != null) {
+		        String sql = "SELECT * FROM `event`";
+
+		        try {
+		            this.pstmt = this.conn.prepareStatement(sql);
+		            this.rs = this.pstmt.executeQuery();
+
+		            while (this.rs.next()) {
+		                int no = this.rs.getInt(1);
+		                int calendar_no = this.rs.getInt(2);
+		                int task_no = this.rs.getInt(3);
+		                String name = this.rs.getString(4);
+		                String email = this.rs.getString(5);
+		                String title = this.rs.getString(6);
+		                String content = this.rs.getString(7);
+		                Date start = new Date(this.rs.getDate(8).getTime());
+		                int startNum = Integer.parseInt(start);
+		                Date end = new Date(this.rs.getDate(9).getTime());
+		                String all_day = this.rs.getString(10);
+
+		                EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end, all_day);
+		                list.add(event);
+		            }
+
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        } finally {
+		            DBManager.close(this.conn, this.pstmt, this.rs);
+		        }
+		    }
+
+		    return list;
 		}
+
+
 		
 		public boolean updateEvent(EventRequestDto eventDto) {
 			
