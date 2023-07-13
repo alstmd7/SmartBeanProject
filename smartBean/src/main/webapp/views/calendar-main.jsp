@@ -70,7 +70,7 @@
 			<br>
 			<!-- 이벤트 타이틀 입력 -->
 			<input type="text" id="event-title-input" name="이벤트 타이틀" placeholder="이벤트 타이틀 입력"><br> <label>
-			<input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br>
+<!-- 			<input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br> -->
 			<label for="start-date">시작일:</label> <input type="date" id="start-date"> <br>
 			<label for="end-date">종료일:</label> <input type="date" id="end-date"> <br>
 			<h4>일정 추가할 캘린더 위치</h4>

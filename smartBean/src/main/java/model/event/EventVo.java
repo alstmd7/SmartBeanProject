@@ -11,8 +11,8 @@ public class EventVo {
 	private String email;
     private String title;
     private String content;
-    private String start; // 수정된 부분
-    private String end; // 수정된 부분
+    private String start;
+    private String end; 
     private String all_day;
     
     public EventVo(int no, int calendar_no, int task_no, String name, String email, String title, String content,
