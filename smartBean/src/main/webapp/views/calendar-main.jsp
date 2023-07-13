@@ -84,28 +84,28 @@
 			<label for="end-date">종료일:</label> <input type="date" id="end-date"> <br>
 			<h4>일정 추가할 캘린더 위치</h4>
 				<select id="calendars" multiple>
-				    <% 
-				    // 사용자의 이메일 정보를 세션에서 가져옴
-				    String email = (String) session.getAttribute("log");
-				    
-				    // DB 접근을 위한 객체 생성
-				    CalendarDao calendarDao = CalendarDao.getInstance();
-				    ShareDao shareDao = ShareDao.getInstance();
-				    
-				    // 기본 캘린더 가져오기
-				    ArrayList<CalendarVo> defaultCalendars = calendarDao.getAllCalendars(email);
-				    
-				    // 공유받은 캘린더 가져오기
-				    ArrayList<CalendarVo> sharedCalendars = shareDao.getSharedCalendars(email);
-				    
-				    // 기본 캘린더와 공유받은 캘린더 합치기
-				    ArrayList<CalendarVo> calendars = new ArrayList<>();
-				    calendars.addAll(defaultCalendars);
-				    calendars.addAll(sharedCalendars);
-				    
-				    for (CalendarVo calendar : calendars) { %>
-				        <option value="<%= calendar.getNo() %>"><%= calendar.getName() %></option>
-				    <% } %>
+					<% 
+					// 사용자의 이메일 정보를 세션에서 가져옴
+					String email = (String) session.getAttribute("log");
+					
+					// DB 접근을 위한 객체 생성
+					CalendarDao calendarDao = CalendarDao.getInstance();
+					ShareDao shareDao = ShareDao.getInstance();
+					
+					// 기본 캘린더 가져오기
+					ArrayList<CalendarVo> defaultCalendars = calendarDao.getDefaultCalendars(email); // 이거 안됨
+					
+					// 공유받은 캘린더 가져오기
+					ArrayList<CalendarVo> sharedCalendars = shareDao.getSharedCalendars(email);
+					
+					// 기본 캘린더와 공유받은 캘린더 합치기
+					ArrayList<CalendarVo> calendars = new ArrayList<>();
+					calendars.addAll(defaultCalendars);
+					calendars.addAll(sharedCalendars);
+					
+					for (CalendarVo calendar : calendars) { %>
+					    <option value="<%= calendar.getNo() %>"><%= calendar.getName() %></option>
+					<% } %>
 				</select>
 			<p>상세내용</p>
 			<textarea id="event-description"></textarea>

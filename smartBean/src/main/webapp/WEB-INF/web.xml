@@ -158,6 +158,15 @@
 		<url-pattern>/EventRequest</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>Event_DeleteAction</servlet-name>
+		<servlet-class>controller.calendar.Event_DeleteAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Event_DeleteAction</servlet-name>
+		<url-pattern>/EventDelete</url-pattern>
+	</servlet-mapping>
+
 
 	<!-- 2. JSP 페이지 맵핑 -->
 	

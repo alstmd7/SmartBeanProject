@@ -40,14 +40,15 @@ public class ShareCalendar_RequestAction extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 
 	    String userEmail = request.getParameter("email");
-	    int calendarNo = request.getParameter();
+	    int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
 
 	    ShareDao shareDao = ShareDao.getInstance();
-	    shareDao.addShareEmail(userEmail, calendarNo);
+	    shareDao.addSharedCalendar(userEmail, calendarNo);
 
 	    response.setContentType("text/plain");
 	    response.getWriter().write("이메일 정보가 성공적으로 처리되었습니다.");
 	}
+
 
 
 	

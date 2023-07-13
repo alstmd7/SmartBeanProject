@@ -385,7 +385,7 @@ $(document).ready(function() {
    			 (eventElement.end ? moment(endDateInput.val() + 'T' + eventElement.end.format('HH:mm:ss')) : moment(endDateInput.val()));
 
 			var description = eventDescriptionInput.val(); */
-			// 클릭한 이벤트의 ID 가져오기
+			// 클릭한 이벤트의 ID 가져오기 ---> 안됨
 		    var eventId = eventElement.id;
 		
 		    // AJAX 요청을 통해 서버로 이벤트 ID 전송하여 날짜 데이터 조회
@@ -446,30 +446,59 @@ $(document).ready(function() {
 			console.log('Updated Event:', eventElement); */
 
 			// 이벤트 삭제 기능 ---> 재확인 필요 
-			deleteButton.on("click", function() {
-				var eventId = $("#delete-event-popup").data("eventId");
+			/* deleteButton.on("click", function() {
+			    var eventId = $("#delete-event-popup").data("eventId");
+			
+			    if (eventId) {
+			        // AJAX를 통해 서버에 이벤트 삭제 요청
+			        $.ajax({
+			            url: "/EventDelete",
+			            method: "POST",
+						data: { eventNo: eventId },
+			            dataType: "text",
+			            success: function(response) {
+							console.log("Delete success:", response);
+			                // 페이지 리로드
+			                window.location.reload();
+			            },
+			            error: function(xhr, status, error) {
+			                 console.log("Delete error:", error);
+			            }
+			        });
+			    }
+			}); */
+			
+			// 이벤트 삭제
+				// 이벤트가 생성될 때 각 이벤트의 no 값을 해당 DOM 요소의 data 속성에 저장하고, 이벤트를 클릭했을 때 이 data 속성의 값을 가져오는걸로 바꿔야
+			$(".fc-event-title.fc-sticky").on("click", function() {
+	   			 var eventId = this.no; // 이벤트의 no 값 가져오기
+	   			 $("#delete-event-button").data("eventId", eventId); // 가져온 no 값을 delete 버튼의 data 속성에 저장
+			});
+
+			$("#delete-event-button").on("click", function() {
+				var eventId = $(this).data("eventId"); // 삭제 버튼의 data 속성에서 이벤트의 no 값을 가져옵니다.
 
 				if (eventId) {
-					// AJAX를 통해 서버에 이벤트 삭제 요청
 					$.ajax({
-						url: "/DeleteEventAction",
-						method: "POST",
-						data: { eventId: eventId },
-						dataType: "text",
+						url: "/EventDelete",
+						type: "POST",
+						data: { eventNo: eventId },
+						dataType: "json",
 						success: function(response) {
-							// 성공적으로 삭제되면 해당 이벤트를 캘린더에서 제거
-							var event = calendar.getEventById(eventId);
-							if (event) {
-								event.remove();
+							if (response.success) {
+								alert(response.message);
+								window.location.reload();
+							} else {
+								alert(response.message);
 							}
-							$("#delete-event-popup").hide();
 						},
-						error: function(xhr, status, error) {
-							console.log("Error: " + error);
+						error: function(error) {
+							console.log("Error: ", error);
 						}
 					});
 				}
 			});
+
 
 			eventPopup.fadeOut();
 		});
