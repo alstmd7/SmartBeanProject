@@ -33,7 +33,7 @@ public class LoadTodoAction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
 		
 		TodoDao todoDao = TodoDao.getInstance();
 		String emailUser = (String) request.getSession().getAttribute("log");

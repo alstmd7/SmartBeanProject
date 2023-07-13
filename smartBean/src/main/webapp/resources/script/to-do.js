@@ -74,26 +74,23 @@ function printWeek() {
 			"url": `/LoadTodo?query=${checkDate}`,
 			"method": "GET"
 		}).done(function(response) {
-
-			const list = response;
-			console.log('typeof list : ', typeof list +", " +response);
 			table += "<td>"
-
 			response.forEach(todo => {
 				const content = todo.content;
 				const check = todo.check;
-
+				console.log(todo.target_at);
+				
 				if (todo.target_at === checkDate) {
 					if (check === 0) {
-						table += "<li><input type='checkbox' name='hobby' value='h1' class='none'>"
+						table += "<li><input type='checkbox' name='hobby' value='h1' class='none'>";
 					} else {
-						table += "<input type='checkbox' name='hobby' value='h1' class='none' checked>"
+						table += "<input type='checkbox' name='hobby' value='h1' class='none' checked>";
 					}
-					table += "<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> ${content} </li><br>"
+					table += "<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'>" + content + "</li><br>";
 				}
 			});
 			
-			table += "<li><span id='progress" + (i + 1) + "'>진행률: 0%</span></li></td>"
+			table += "<li><span id='progress" + (i + 1) + "'>진행률: 0%</span></li></td>";
 
 		}).fail(function() {
 
