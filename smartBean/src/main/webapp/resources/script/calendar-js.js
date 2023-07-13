@@ -325,6 +325,7 @@ $(document).ready(function() {
 	  dataType: "json",
 	  success: function(response) {
 	    var eventData = response;
+		console.log(response);	
 	
 	    for (var i = 0; i < eventData.length; i++) {
 	      var event = eventData[i];

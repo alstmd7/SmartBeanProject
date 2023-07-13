@@ -11,12 +11,12 @@ public class EventVo {
 	private String email;
     private String title;
     private String content;
-    private Date start; // 수정된 부분
-    private Date end; // 수정된 부분
+    private String start; // 수정된 부분
+    private String end; // 수정된 부분
     private String all_day;
     
     public EventVo(int no, int calendar_no, int task_no, String name, String email, String title, String content,
-            Date start, Date end, String all_day) {
+    		String start, String end, String all_day) {
         super();
         this.no = no;
         this.calendar_no = calendar_no;
@@ -60,11 +60,11 @@ public class EventVo {
 		return content;
 	}
 
-	public Date getStart() { // 수정된 부분
+	public String getStart() { // 수정된 부분
 		return start;
 	}
 
-	public Date getEnd() { // 수정된 부분
+	public String getEnd() { // 수정된 부분
 		return end;
 	}
 

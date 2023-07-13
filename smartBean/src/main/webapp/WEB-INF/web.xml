@@ -137,7 +137,16 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Calendar_UpdateAction</servlet-name>
-		<url-pattern>/UeleteCalendar</url-pattern>
+		<url-pattern>/UpdateCalendar</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Event_RequestAction</servlet-name>
+		<servlet-class>controller.calendar.Event_RequestAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Event_RequestAction</servlet-name>
+		<url-pattern>/EventRequest</url-pattern>
 	</servlet-mapping>
 
 

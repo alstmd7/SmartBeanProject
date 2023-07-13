@@ -32,14 +32,14 @@ public class EventDao {
 			String email = eventDto.getEmail();
 			String title = eventDto.getTitle();
 			String content = eventDto.getContent();
-			int start = eventDto.getStart();
-			int end = eventDto.getEnd();
+			String start = eventDto.getStart();
+			String end = eventDto.getEnd();
 			String all_day = eventDto.getAll_day();
 			
 			boolean check = true;
 			
 			if(calendar_no != 0 && task_no != 0 && name != null && email != null && title != null 
-					&& content != null && start != 0 && end != 0 && all_day != null) {
+					&& content != null && start != null && end != null && all_day != null) {
 				this.conn = DBManager.getConnection();
 				if(this.conn != null) {
 						String sql = "INSERT INTO `event` (calendar_no, task_no, `name`, email, title, content, `start`, `end`)"
@@ -53,8 +53,8 @@ public class EventDao {
 							this.pstmt.setString(4, email);
 							this.pstmt.setString(5, title);
 							this.pstmt.setString(6, content);
-							this.pstmt.setInt(7, start);
-							this.pstmt.setInt(8, end);
+							this.pstmt.setString(7, start);
+							this.pstmt.setString(8, end);
 							this.pstmt.setString(9, all_day);
 							
 							this.pstmt.execute();
@@ -96,9 +96,8 @@ public class EventDao {
 		                String email = this.rs.getString(5);
 		                String title = this.rs.getString(6);
 		                String content = this.rs.getString(7);
-		                Date start = new Date(this.rs.getDate(8).getTime());
-		                int startNum = Integer.parseInt(start);
-		                Date end = new Date(this.rs.getDate(9).getTime());
+		                String start = sdf.format(this.rs.getDate(8));
+		                String end = sdf.format(this.rs.getDate(9));
 		                String all_day = this.rs.getString(10);
 
 		                EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end, all_day);
@@ -124,7 +123,7 @@ public class EventDao {
 			boolean check = true;
 			
 			if(this.conn != null && eventDto.getName() != null && eventDto.getTitle() != null && eventDto.getContent() != null 
-					&& eventDto.getStart() != 0 && eventDto.getEnd() != 0 && eventDto.getAll_day() != null) {
+					&& eventDto.getStart() != null && eventDto.getEnd() != null && eventDto.getAll_day() != null) {
 
 				String sql = "UPDATE `event` SET `name`=?, title=?, content=?, "
 						+ "`start`=DATE(?), `end`= DATE(?), all_day=? WHERE `no`=?";
@@ -134,8 +133,8 @@ public class EventDao {
 					this.pstmt.setString(1, eventDto.getName());
 					this.pstmt.setString(2, eventDto.getTitle());
 					this.pstmt.setString(3, eventDto.getContent());
-					this.pstmt.setInt(4, eventDto.getStart());
-					this.pstmt.setInt(5, eventDto.getEnd());
+					this.pstmt.setString(4, eventDto.getStart());
+					this.pstmt.setString(5, eventDto.getEnd());
 					this.pstmt.setString(6, eventDto.getAll_day());
 					this.pstmt.setInt(7, eventDto.getNo());
 
