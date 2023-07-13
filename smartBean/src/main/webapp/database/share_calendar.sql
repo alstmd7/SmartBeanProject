@@ -5,8 +5,7 @@ CREATE TABLE share_calendar (
     FOREIGN KEY (`no`) REFERENCES calendar(`no`) ON DELETE CASCADE
 );
 
--- ALTER TABLE share_calender RENAME TO share_calendar;
-INSERT INTO share_calendar VALUES ("qortmdals120@gmail.com", 3);
+INSERT INTO share_calendar VALUES ("test2@gmail.com", 3);
 
 SELECT * FROM share_calendar;
 SELECT * FROM share_calendar WHERE email='qortmdals120@gmail.com';

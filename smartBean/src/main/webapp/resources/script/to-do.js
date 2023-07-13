@@ -80,7 +80,6 @@ function printWeek() {
 				var target_at = todo.target_at;
 
 				if (target_at == checkDate) {
-					$('#output').append(`<div>${content} + ${target_at} </div>` + checkDate);
 					
 					if (check === 0) {
 						table += "<li><input type='checkbox' name='hobby' value='h1' class='none'>";

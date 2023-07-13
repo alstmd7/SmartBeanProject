@@ -1,6 +1,8 @@
 var calendar = null;
 
 $(document).ready(function() {
+	
+	
   var Calendar = FullCalendar.Calendar;
   var Draggable = FullCalendar.Draggable;
 
@@ -86,6 +88,26 @@ $(document).ready(function() {
       $("#newCalendar-popup-title").text(newCalendarName);
     }
   });
+  
+	/* 공유중인 캘린더 불러오기 */
+	$.ajax({
+		"url": `/LoadShare`,
+		"method": "GET"
+	}).done(function(response) {
+		console.log(response);
+		response.forEach(share => {
+			const email = share.email;
+			const name = share.name;
+			console.log(email + ", " + name);
+			$('#calendar-list').append(
+				`<input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${email}">
+	        	<span>${name} (${email})</span>
+	        	<button class="admin-calendar-btn">캘린더 관리</button>`)
+		});
+
+	}).fail(function() {
+
+	});
 
 
   // 캘린더 관리 팝업 닫기
