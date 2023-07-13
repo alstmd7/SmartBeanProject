@@ -1,6 +1,7 @@
-/*$(window).on('load', function() {
+$(window).on('load', function() {
+	document.getElementById('inputDate').value = new Date().toISOString().substring(0, 10);
 	printWeek();
-});*/
+});
 
 function updateProgress(progressId) {
     var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
@@ -93,16 +94,6 @@ function printWeek() {
 				});
 
 				table += "<li><span id='progress" + (i + 1) + "'>진행률: 0%</span></li></td>";
-
-				/*if (i == 3) {
-					table += "<td class='Annual'>" + "<li>연차</li>" + "</td>";
-				} else {	
-					table += "<td>" +
-						"<li>"+"<input type='checkbox' name='hobby' value='h1' class='none'>"+"<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'> 일정1" +"</li><br>"+
-						"<li>"+"<input type='checkbox' name='hobby' value='h2' class='none'>"+"<input type='checkbox' name='hobby' value='h2' onclick='updateProgress(" + (i + 1) + ")'> 일정2" +"</li><br>"+
-						"<li>"+"<input type='checkbox' name='hobby' value='h3' class='none'>"+"<input type='checkbox' name='hobby' value='h3' onclick='updateProgress(" + (i + 1) + ")'> 일정3" +"</li><br>"+
-						"<li>"+"<span id='progress" + (i + 1) + "'>진행률: 0%</span>" + "</li>"+"</td>";
-				}*/
 			}
 			table += "</tr></table>";
 
