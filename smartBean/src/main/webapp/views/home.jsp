@@ -28,6 +28,7 @@
         font-family: Arial, sans-serif;
         background-color: #fafafa;
         height: 100vh;
+        
     }
 
     /* 래퍼 스타일 */
@@ -76,6 +77,7 @@
         <c:redirect url="login"></c:redirect>
     </c:if>
 
+	<jsp:include page="/header"></jsp:include>
 
     <div class="edit-member">
 
@@ -89,6 +91,8 @@
 
         </form>
     </div>
+    
+    <jsp:include page="/footer"></jsp:include>
 </body>
 
 </html>
