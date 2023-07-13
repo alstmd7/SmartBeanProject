@@ -43,13 +43,13 @@
 				<input type="submit" id="save-newCalendar-button" value="생성">
 			</form>
 		</div> 
-	
+		
 			<!-- 새로 생성한 캘린더 관리 팝업 -->
 		<form method="post" action="UpdateCalendar" id="update-calendar-form">
 			<div id="admin-newCalendar-popup" style="display: none;">
 			  <h2 id="newCalendar-popup-title"></h2>
 			  <button id="close-newCalendar-button">닫기</button>
-			  <p>사용자 공유(1명씩만 추가 가능)</p>
+			  <p>공유할 멤버의 이메일(여러명은 '/'로 분리)</p>
 			  <input type="text" id="user-share-input" placeholder="사용자 이메일">
 			  <button id="share-button">공유하기</button>
 			  <br>
@@ -57,12 +57,13 @@
 			  
 			  <button id="delete-calendar-button">캘린더 삭제</button><br>
 			  <p>캘린더 이름 변경</p>
-			  <input type="text" id="new-calendar-name-input-${calendarId}" placeholder="변경할 캘린더 이름">
+			  <!-- <input type="text" id="new-calendar-name-input-${calendarId}" placeholder="변경할 캘린더 이름"> -->
+			  <input type="text" id="new-calendar-name-input" placeholder="변경할 캘린더 이름">
 			  <button id="update-calendar-button">수정하기</button>
 			</div>
 		</form>
-
-
+		
+		
 		<!-- Event 수정 Popup 팝업 -->
 		<div id="event-popup" style="display: none;">
 			<button id="close-event-button">닫기</button>
@@ -70,7 +71,7 @@
 			<br>
 			<!-- 이벤트 타이틀 입력 -->
 			<input type="text" id="event-title-input" name="이벤트 타이틀" placeholder="이벤트 타이틀 입력"><br> <label>
-			<input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br>
+			<!-- <input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br> -->
 			<label for="start-date">시작일:</label> <input type="date" id="start-date"> <br>
 			<label for="end-date">종료일:</label> <input type="date" id="end-date"> <br>
 			<h4>일정 추가할 캘린더 위치</h4>

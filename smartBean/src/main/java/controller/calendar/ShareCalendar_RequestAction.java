@@ -7,20 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.calendar.CalendarDao;
-import model.calendar.CalendarVo;
-
 /**
- * Servlet implementation class Calendar_UpdateAction
+ * Servlet implementation class ShareCalendar_RequestAction
  */
-@WebServlet("/Calendar_UpdateAction")
-public class Calendar_UpdateAction extends HttpServlet {
+@WebServlet("/Calendar_RequestAction")
+public class ShareCalendar_RequestAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Calendar_UpdateAction() {
+    public ShareCalendar_RequestAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,20 +34,17 @@ public class Calendar_UpdateAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    request.setCharacterEncoding("UTF-8");
-	    response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+	    String userEmail = request.getParameter("email");
 
-	    CalendarDao calDao = CalendarDao.getInstance();
-	    int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
-	    String newCalendarName = request.getParameter("newCalendarName");
+	    ShareCalendarDao shareCalendarDao = ShareCalendarDao.getInstance();
+	    shareCalendarDao.addShareEmail(userEmail);
 
-	    calDao.updateCalendarName(calendarNo, newCalendarName);
-
-	    // 공유할 멤버의 이메일 정보를 가져와서 처리하는 부분 추가해야됨
-
-	    // 응답 처리
-	    response.getWriter().write("캘린더의 멤버 공유가 완료되었습니다.");
+	    // 처리 결과를 클라이언트에 응답 (옵션)
+	    response.setContentType("text/plain");
+	    response.getWriter().write("이메일 정보가 성공적으로 처리되었습니다.");
 	}
-
-
+	
 }

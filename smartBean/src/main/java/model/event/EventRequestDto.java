@@ -9,12 +9,12 @@ public class EventRequestDto {
 	private String email;
     private String title;
     private String content;
-    private int start;
-    private int end;
+    private String start;
+    private String end;
     private String all_day;
     
 	public EventRequestDto(int no, int calendar_no, int task_no, String name, String email, String title,
-			String content, int start, int end, String all_day) {
+			String content, String start, String end, String all_day) {
 		super();
 		this.no = no;
 		this.calendar_no = calendar_no;
@@ -29,7 +29,7 @@ public class EventRequestDto {
 	}
 	
 	public EventRequestDto(int calendar_no, int task_no, String name, String email, String title,
-			String content, int start, int end, String all_day) {
+			String content, String start, String end, String all_day) {
 		super();
 		this.calendar_no = calendar_no;
 		this.task_no = task_no;
@@ -43,7 +43,7 @@ public class EventRequestDto {
 	}
 	
 	public EventRequestDto(String name, String title,
-			String content, int start, int end, String all_day) {
+			String content, String start, String end, String all_day) {
 		super();
 		this.name = name;
 		this.title = title;
@@ -81,11 +81,11 @@ public class EventRequestDto {
 		return content;
 	}
 
-	public int getStart() {
+	public String getStart() {
 		return start;
 	}
 
-	public int getEnd() {
+	public String getEnd() {
 		return end;
 	}
 
@@ -101,11 +101,11 @@ public class EventRequestDto {
 		this.content = content;
 	}
 
-	public void setStart(int start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
 
-	public void setEnd(int end) {
+	public void setEnd(String end) {
 		this.end = end;
 	}
 

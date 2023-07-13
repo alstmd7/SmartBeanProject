@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,18 +7,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-	 <footer>
-        <ul>
-            <li><a href="#">개인정보처리방침</a></li>
-            <li><a href="#">이메일무단수집거부</a></li>
-            <li><a href="#">서비스이용약관</a></li>
-          </ul>
-          <div>
-            <p>(우편번호)서울시 강남구 ~</p>
-            <p>문의전화 : (주)02-1234 / 010-1234-1234</p>
-            <p>&copy; copyrights all reserved.</p>
-          </div>
-    </footer>
-
+	<footer>
+		<div id="policy-box">
+			<a href="/views/privacyTerm.jsp">개인정보처리방침</a>
+			<a href="/views/userTerm.jsp">서비스이용약관</a>
+		</div>
+		<div id="company-info-box">
+			<p><strong>COMPANY INFO</strong></p>
+			<p>서울 강남구 테헤란로5길 24, 장연빌딩/ 3~7층 02-1234-1234</p>
+			<p>대표자 : TTT </p>
+			<p>&copy; copyrights all reserved.</p>
+		</div>
+	</footer>
 </body>
 </html>

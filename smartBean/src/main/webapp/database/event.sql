@@ -1,17 +1,19 @@
-
-SELECT * FROM `event` WHERE calendar_no=3;
-SELECT * FROM `event` WHERE `no`=1;
-
-
-DELETE FROM `event` WHERE `event_code`=1;
-
-DROP TABLE `event`;
-
 CREATE TABLE `event` (
-  `event_code` int NOT NULL AUTO_INCREMENT,
-  `event_name` varchar(50) DEFAULT NULL,
-  `start_date` datetime NOT NULL,
-  `end_date` datetime NOT NULL,
-  `allday` tinyint(1) NOT NULL,
-  PRIMARY KEY (`event_code`)
+  `no` int NOT NULL AUTO_INCREMENT,
+  `calendar_no` int DEFAULT NULL,
+  `task_no` int DEFAULT NULL,
+  `name` varchar(20) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `title` varchar(20) NOT NULL,
+  `content` varchar(400) DEFAULT NULL,
+  `start` date NOT NULL,
+  `end` date NOT NULL,
+  `all_day` char(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`no`),
+  KEY `calendar_no` (`calendar_no`),
+  KEY `task_no` (`task_no`),
+  KEY `email` (`email`),
+  CONSTRAINT `event_ibfk_1` FOREIGN KEY (`calendar_no`) REFERENCES `calendar` (`no`) ON DELETE CASCADE,
+  CONSTRAINT `event_ibfk_2` FOREIGN KEY (`task_no`) REFERENCES `task` (`no`) ON DELETE SET NULL,
+  CONSTRAINT `event_ibfk_3` FOREIGN KEY (`email`) REFERENCES `user` (`email`) ON DELETE SET NULL
 );
