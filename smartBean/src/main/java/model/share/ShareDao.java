@@ -3,6 +3,7 @@ package model.share;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.calendar.CalendarDao;
@@ -50,4 +51,24 @@ public class ShareDao {
 		
 		return share;
 	}
+	
+	public void addShareEmail(String email, int calendarNo) {
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+
+	    try {
+	        conn = DBManager.getConnection();
+	        String sql = "INSERT INTO share_calendar (email, `no`) VALUES (?, ?)";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, email);
+	        pstmt.setInt(2, calendarNo);
+	        pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        DBManager.close(conn, pstmt);
+	    }
+	}
+
+
 }

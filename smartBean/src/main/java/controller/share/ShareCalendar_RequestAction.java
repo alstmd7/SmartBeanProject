@@ -1,4 +1,4 @@
-package controller.calendar;
+package controller.share;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import model.share.ShareDao;
 
 /**
  * Servlet implementation class ShareCalendar_RequestAction
@@ -34,17 +36,19 @@ public class ShareCalendar_RequestAction extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		
+	    request.setCharacterEncoding("UTF-8");
+	    response.setCharacterEncoding("UTF-8");
+
 	    String userEmail = request.getParameter("email");
+	    int calendarNo = request.getParameter();
 
-	    ShareCalendarDao shareCalendarDao = ShareCalendarDao.getInstance();
-	    shareCalendarDao.addShareEmail(userEmail);
+	    ShareDao shareDao = ShareDao.getInstance();
+	    shareDao.addShareEmail(userEmail, calendarNo);
 
-	    // 처리 결과를 클라이언트에 응답 (옵션)
 	    response.setContentType("text/plain");
 	    response.getWriter().write("이메일 정보가 성공적으로 처리되었습니다.");
 	}
+
+
 	
 }
