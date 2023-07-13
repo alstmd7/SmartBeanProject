@@ -11,64 +11,61 @@ import model.calendar.CalendarVo;
 import util.DBManager;
 
 public class ShareDao {
-	private Connection conn;
-	private PreparedStatement pstmt;
-	private ResultSet rs;
+    private Connection conn;
+    private PreparedStatement pstmt;
+    private ResultSet rs;
 
-	private ShareDao() {}
-	private static ShareDao instance = new ShareDao();
-	
-	public static ShareDao getInstance() {
-		return instance;
-	}
-	
-	public ArrayList<CalendarVo> getShareCalendar(String email) {
-		ArrayList<CalendarVo> share = new ArrayList<CalendarVo>();
-		
-		CalendarDao calendarDao = CalendarDao.getInstance();
-		
-		this.conn = DBManager.getConnection();
-		
-		String sql = "SELECT * FROM share_calendar WHERE email=?";
-		
-		try {
-			this.pstmt = this.conn.prepareStatement(sql);
-			this.pstmt.setString(1, email);
-			this.rs = this.pstmt.executeQuery();
-			
-			if(this.rs.next()) {
-				int no = this.rs.getInt(2);
-				
-				CalendarVo calendarVo = calendarDao.getCalendarByNo(no);
-				share.add(calendarVo);
-			}
+    private ShareDao() {
+    }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(this.conn, this.pstmt, this.rs);
-		}
-		
-		return share;
-	}
-	
-	public void addShareEmail(String email, int calendarNo) {
-	    Connection conn = null;
-	    PreparedStatement pstmt = null;
+    private static ShareDao instance = new ShareDao();
 
-	    try {
-	        conn = DBManager.getConnection();
-	        String sql = "INSERT INTO share_calendar (email, `no`) VALUES (?, ?)";
-	        pstmt = conn.prepareStatement(sql);
-	        pstmt.setString(1, email);
-	        pstmt.setInt(2, calendarNo);
-	        pstmt.executeUpdate();
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    } finally {
-	        DBManager.close(conn, pstmt);
-	    }
-	}
+    public static ShareDao getInstance() {
+        return instance;
+    }
 
+    public ArrayList<CalendarVo> getSharedCalendars(String email) {
+        ArrayList<CalendarVo> sharedCalendars = new ArrayList<>();
+        CalendarDao calendarDao = CalendarDao.getInstance();
 
+        conn = DBManager.getConnection();
+
+        if (conn != null) {
+            String sql = "SELECT * FROM share_calendar WHERE email=?";
+            try {
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, email);
+                rs = pstmt.executeQuery();
+
+                while (rs.next()) {
+                    int calendarNo = rs.getInt("no");
+                    CalendarVo calendar = calendarDao.getCalendarByNo(calendarNo);
+                    sharedCalendars.add(calendar);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                DBManager.close(conn, pstmt, rs);
+            }
+        }
+
+        return sharedCalendars;
+    }
+
+    public void addSharedCalendar(String email, int calendarNo) {
+        conn = DBManager.getConnection();
+        if (conn != null) {
+            String sql = "INSERT INTO share_calendar (email, `no`) VALUES (?, ?)";
+            try {
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, email);
+                pstmt.setInt(2, calendarNo);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                DBManager.close(conn, pstmt);
+            }
+        }
+    }
 }

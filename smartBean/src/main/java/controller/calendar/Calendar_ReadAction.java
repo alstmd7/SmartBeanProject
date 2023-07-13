@@ -42,22 +42,32 @@ public class Calendar_ReadAction extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 
 	    CalendarDao calDao = CalendarDao.getInstance();
-	    
+
 	    // 로그인된 사용자의 이메일 가져오기
 	    String email = (String) request.getSession().getAttribute("log");
 
 	    // 해당 사용자의 모든 캘린더 가져오기
 	    ArrayList<CalendarVo> calendarList = calDao.getAllCalendars(email);
 
-	    // 가져온 캘린더를 출력 또는 처리하는 로직 작성
-
-	    // test >>> 가져온 캘린더를 콘솔에 출력
+	    // 가져온 캘린더를 JSON 형식으로 변환
+	    StringBuilder sb = new StringBuilder("[");
 	    for (CalendarVo calendar : calendarList) {
-	        System.out.println("Calendar Name: " + calendar.getName());
+	        sb.append("{");
+	        sb.append("\"name\":\"").append(calendar.getName()).append("\",");
+	        sb.append("\"owner\":\"").append(calendar.getOwner()).append("\"");
+	        sb.append("},");
 	    }
+	    if (sb.length() > 1) {
+	        sb.deleteCharAt(sb.length() - 1); // 마지막 콤마 제거
+	    }
+	    sb.append("]");
 
-	    // 미완성 
+	    // JSON 형식의 캘린더 목록을 클라이언트에게 반환
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(sb.toString());
 	}
+
 
 
 }

@@ -6,6 +6,7 @@ public class CalendarVo {
     private int code;
     private String email;
     private String name;
+    private String owner;
     
     public CalendarVo(int no, int code, String email, String name) {
         this.no = no;
@@ -33,9 +34,17 @@ public class CalendarVo {
     public String getEmail() {
         return email;
     }
-
+    
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getOwner() {
+    	return email;
+    }
+    
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public String getName() {

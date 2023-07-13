@@ -85,6 +85,26 @@ public class EventRequestDto {
 		return start;
 	}
 
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public void setCalendar_no(int calendar_no) {
+		this.calendar_no = calendar_no;
+	}
+
+	public void setTask_no(int task_no) {
+		this.task_no = task_no;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getEnd() {
 		return end;
 	}
