@@ -11,6 +11,7 @@ import java.util.Date;
 import util.DBManager;
 
 public class TodoDao {
+	
 
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -22,6 +23,7 @@ public class TodoDao {
 	private static TodoDao instance = new TodoDao();
 	
 	public static TodoDao getInstance() {
+		
 		return instance;
 	}
 	
@@ -157,4 +159,7 @@ public class TodoDao {
 		
 		return check;
 	}
+
+
+    
 }

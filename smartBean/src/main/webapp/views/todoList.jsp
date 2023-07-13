@@ -7,9 +7,12 @@
 <head>
     <meta charset="UTF-8">
     <link href="../resources/style/todo_style.css" rel="stylesheet">
+	   <script src="../resources/script/to-do.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <title>To-do list</title>
 </head>
+
 
 <body>
 	<c:if test="${empty sessionScope.log }">
@@ -75,10 +78,12 @@
 	
     <jsp:include page="/footer"></jsp:include>
     
-    <script src="../resources/script/to-do.js"></script>
     
+   
 </body>
 
 </html>
+
+
 
 
