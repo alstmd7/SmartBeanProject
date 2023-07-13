@@ -47,7 +47,6 @@ public class TodoDao {
 					String check = this.rs.getString(5);
 					TodoVo todo = new TodoVo(no, email, content, target_atNum, check);
 					list.add(todo);
-					System.out.println(todo.toString());
 				}
 				
 			} catch (SQLException e) {
@@ -131,7 +130,7 @@ public class TodoDao {
 		return check;
 	}
 	
-	public boolean deleteUserById(int no) {
+	public boolean deleteTodoNo(int no) {
 		this.conn = DBManager.getConnection();
 		
 		boolean check = true;

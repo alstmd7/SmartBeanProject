@@ -111,6 +111,15 @@
 		<servlet-name>LoadTodoAction</servlet-name>
 		<url-pattern>/LoadTodo</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Task_ReadAction</servlet-name>
+		<servlet-class>controller.todo.Task_ReadAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Task_ReadAction</servlet-name>
+		<url-pattern>/Task_Read</url-pattern>
+	</servlet-mapping>
 
 				<!-- About calendar -->
 	<servlet>

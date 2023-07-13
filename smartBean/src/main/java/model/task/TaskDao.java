@@ -50,8 +50,8 @@ public class TaskDao {
 		return task;
 	}
 	
-	public ArrayList<String> getTaskAll(String email) {
-		ArrayList<String> task = new ArrayList<String>();
+	public ArrayList<TaskVo> getTaskAll(String email) {
+		ArrayList<TaskVo> list = new ArrayList<TaskVo>();
 		
 		this.conn = DBManager.getConnection();
 		
@@ -62,10 +62,13 @@ public class TaskDao {
 			this.pstmt.setString(1, email);
 			this.rs = this.pstmt.executeQuery();
 			
-			if(this.rs.next()) {
-				String name = this.rs.getString(1);
+			while(this.rs.next()) {
+				int no = this.rs.getInt(1);
+				String name = this.rs.getString(3);
 				
-				task.add(name);
+				TaskVo taskVo = new TaskVo(no, email, name);
+				
+				list.add(taskVo);
 			}
 
 		} catch (Exception e) {
@@ -74,7 +77,7 @@ public class TaskDao {
 			DBManager.close(this.conn, this.pstmt, this.rs);
 		}
 		
-		return task;
+		return list;
 	}
 	
 	public boolean createTask(String email, String name) {

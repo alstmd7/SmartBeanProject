@@ -75,6 +75,7 @@ function printWeek() {
 				(dayTd < 10 ? "0" + dayTd : dayTd);
 				
 				response.forEach(todo => {
+				var no = todo.no;
 				var content = todo.content;
 				var check = todo.check;
 				var target_at = todo.target_at;
@@ -82,9 +83,9 @@ function printWeek() {
 				if (target_at == checkDate) {
 					
 					if (check === 0) {
-						table += "<li><input type='checkbox' name='hobby' value='h1' class='none'>";
+						table += "<li><input type='checkbox' name='hobby' value='"+no+"' class='none'>";
 					} else {
-						table += "<input type='checkbox' name='hobby' value='h1' class='none' checked>";
+						table += "<input type='checkbox' name='hobby' value='"+no+"' class='none' checked>";
 					}
 					
 					table += "<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'>" + content + "</li><br>";
@@ -153,6 +154,8 @@ function addTask() {
 }
 
 function deleteTasks() {
+	
+	
     var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
     if (checkboxes.length === 0) {
         alert('삭제할 일정을 선택해주세요.');
