@@ -101,43 +101,63 @@ $(document).ready(function() {
 		var userEmail = $("#user-share-input").val();
 
 		if (userEmail.trim() !== "") {
-			var listItem = $("<div>", { class: "user-share-list-item" });
-			listItem.text(userEmail);
+			var emails = userEmail.split("/"); // 이메일을 '/'로 분리하여 배열로 저장
 
-			var deleteButton = $("<button>", { class: "delete-share-button" });
-			deleteButton.text("(멤버 삭제)");
-			deleteButton.on("click", function() {
-				listItem.remove();
+			emails.forEach(function(email) {
+				var listItem = $("<div>", { class: "user-share-list-item" });
+				listItem.text(email);
+
+				var deleteButton = $("<button>", { class: "delete-share-button" });
+				deleteButton.text("(멤버 삭제)");
+				deleteButton.on("click", function() {
+					listItem.remove();
+				});
+
+				listItem.append(deleteButton);
+				$(".user-share-list").append(listItem);
 			});
 
-			listItem.append(deleteButton);
-			$(".user-share-list").append(listItem);
+			$.ajax({
+				url: "/ShareCalendar_RequestAction", // 서버의 URL
+				method: "POST", // POST 메소드 사용
+				data: { email: userEmail }, // 전송할 데이터 (이메일 정보)
+				success: function(response) {
+					// 서버에서의 처리가 성공적으로 완료된 경우
+					console.log("이메일 정보 전송 및 처리 완료");
+					
+				},
+				error: function(xhr, status, error) {
+					// 요청이 실패한 경우
+					console.log("AJAX 요청 실패: " + error);
+				}
+			});
 		}
 	});
 
+	
 	// 캘린더 삭제 기능
 	$("#delete-calendar-button").on("click", function() {
-		var calendarId = $(".calendar-checkbox-input:checked").attr("id");
-
-		if (calendarId) {
-			// 캘린더 삭제
-			$("#" + calendarId).parent().remove();
-		}
+	    var calendarId = $(".calendar-checkbox-input:checked").attr("id");
+	
+	    if (calendarId) {
+	        // 캘린더 삭제
+	        $("#" + calendarId).parent().remove();
+	    }
 	});
-
+	
 	// 캘린더 이름 변경 기능
 	$("#update-calendar-button").on("click", function() {
-		var calendarId = $(".calendar-checkbox-input:checked").attr("id");
-		var newCalendarName = $("#new-calendar-name-input-" + calendarId).val();
-		var calendarSpan = $("#" + calendarId).siblings("span");
-
-		if (newCalendarName.trim() !== "") {
-			calendarSpan.text(newCalendarName);
-			$("#new-calendar-name-input-" + calendarId).val("");
-		}
+	    var newCalendarName = $("#new-calendar-name-input").val();
+	    var calendarSpan = $("#newCalendar-popup-title").siblings("span");
+	
+	    if (newCalendarName.trim() !== "") {
+	        calendarSpan.text(newCalendarName);
+	        $("#new-calendar-name-input").val("");
+	    }
 	});
 
 
+	// 서버에 저장된 이벤트 데이터 가져오기
 	// 1. 전체 이벤트 데이터 추출 --> 2. 추출된 데이터를 ajax로 서버에 전송하여 DB에 저장
 	$("#save-button").on("click", function() {
 		var allEvent = calendar.getEvents();
