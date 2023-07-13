@@ -64,6 +64,7 @@
 		</form>
 		
 		
+		<!-- =============== EVENT =================== -->
 		<!-- Event 수정 Popup 팝업 -->
 		<div id="event-popup" style="display: none;">
 			<button id="close-event-button">닫기</button>
@@ -128,7 +129,6 @@
 		  <input type="text" id="new-task-name-input" placeholder="변경할 Task 이름">
 		  <button id="update-task-button">수정하기</button>
 		</div>
-
 
 
 	</div> <!-- external-events -->

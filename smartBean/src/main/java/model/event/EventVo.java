@@ -29,8 +29,15 @@ public class EventVo {
         this.end = end;
         this.all_day = all_day;
     }
-
-
+    
+    public EventVo(int no, int calendar_no, String name, String start, String end) {
+    	super();
+    	this.no = no;
+        this.calendar_no = calendar_no;
+        this.name = name;
+        this.start = start;
+        this.end = end;
+    }
 
 	public int getNo() {
 		return no;

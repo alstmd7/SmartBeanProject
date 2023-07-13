@@ -186,4 +186,26 @@ public class CalendarDao {
 
         return result;
     }
+    
+    public void deleteEventFromCalendar(int calendarId, int eventNo) {
+        conn = null;
+        pstmt = null;
+
+        try {
+            conn = DBManager.getConnection();
+
+            String sql = "DELETE FROM `event` WHERE calendar_no = ? AND no = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, calendarId);
+            pstmt.setInt(2, eventNo);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DBManager.close(conn, pstmt);
+        }
+        
+    }
+
 }
