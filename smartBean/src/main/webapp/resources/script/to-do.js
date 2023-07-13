@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 /*$(window).on('load', function() {
 printWeek();
 });*/
+=======
+$(window).on('load', function() {
+	document.getElementById('inputDate').value = new Date().toISOString().substring(0, 10);
+	printWeek();
+});
+>>>>>>> refs/remotes/origin/master
 
 function updateProgress(progressId) {
 var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
@@ -88,7 +95,13 @@ $.ajax({
 					table += "<input type='checkbox' name='hobby' value='h1' class='none' >";
 				}
 				
+<<<<<<< HEAD
 				table += "<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'>" + content + "</li>";
+=======
+				});
+
+				table += "<li><span id='progress" + (i + 1) + "'>진행률: 0%</span></li></td>";
+>>>>>>> refs/remotes/origin/master
 			}
 			
 			});

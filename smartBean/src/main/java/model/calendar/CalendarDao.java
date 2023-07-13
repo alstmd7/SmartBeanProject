@@ -172,7 +172,7 @@ public class CalendarDao {
         try {
             conn = DBManager.getConnection();
 
-            String sql = "DELETE FROM calendar WHERE no = 1"; // 나중에 no =? 바꾸기
+            String sql = "DELETE FROM calendar WHERE no = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, no);
 

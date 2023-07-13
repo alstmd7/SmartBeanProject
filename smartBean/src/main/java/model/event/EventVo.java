@@ -1,5 +1,7 @@
 package model.event;
 
+import java.sql.Date;
+
 public class EventVo {
 	
 	private int no;
@@ -9,24 +11,26 @@ public class EventVo {
 	private String email;
     private String title;
     private String content;
-    private int start;
-    private int end;
+    private Date start; // 수정된 부분
+    private Date end; // 수정된 부분
     private String all_day;
     
-	public EventVo(int no, int calendar_no, int task_no, String name, String email, String title, String content,
-			int start, int end, String all_day) {
-		super();
-		this.no = no;
-		this.calendar_no = calendar_no;
-		this.task_no = task_no;
-		this.name = name;
-		this.email = email;
-		this.title = title;
-		this.content = content;
-		this.start = start;
-		this.end = end;
-		this.all_day = all_day;
-	}
+    public EventVo(int no, int calendar_no, int task_no, String name, String email, String title, String content,
+            Date start, Date end, String all_day) {
+        super();
+        this.no = no;
+        this.calendar_no = calendar_no;
+        this.task_no = task_no;
+        this.name = name;
+        this.email = email;
+        this.title = title;
+        this.content = content;
+        this.start = start;
+        this.end = end;
+        this.all_day = all_day;
+    }
+
+
 
 	public int getNo() {
 		return no;
@@ -56,11 +60,11 @@ public class EventVo {
 		return content;
 	}
 
-	public int getStart() {
+	public Date getStart() { // 수정된 부분
 		return start;
 	}
 
-	public int getEnd() {
+	public Date getEnd() { // 수정된 부분
 		return end;
 	}
 

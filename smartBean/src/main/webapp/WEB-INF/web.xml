@@ -86,11 +86,11 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>CreateTaskFormAction</servlet-name>
-		<servlet-class>controller.CreateTaskFormAction</servlet-class>
+		<servlet-name>Task_CreateAction</servlet-name>
+		<servlet-class>controller.calendar.Task_CreateAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>CreateTaskFormAction</servlet-name>
+		<servlet-name>Task_CreateAction</servlet-name>
 		<url-pattern>/CreateTask</url-pattern>
 	</servlet-mapping>
 
@@ -121,6 +121,25 @@
 		<servlet-name>Calendar_CreateAction</servlet-name>
 		<url-pattern>/CreateCalendar</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Calendar_DeleteAction</servlet-name>
+		<servlet-class>controller.calendar.Calendar_DeleteAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Calendar_DeleteAction</servlet-name>
+		<url-pattern>/DeleteCalendar</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Calendar_UpdateAction</servlet-name>
+		<servlet-class>controller.calendar.Calendar_UpdateAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Calendar_UpdateAction</servlet-name>
+		<url-pattern>/UeleteCalendar</url-pattern>
+	</servlet-mapping>
+
 
 	<!-- 2. JSP 페이지 맵핑 -->
 	
@@ -212,15 +231,6 @@
 	<servlet-mapping>
 		<servlet-name>todoList</servlet-name>
 		<url-pattern>/todoList</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>createTaskForm</servlet-name>
-		<jsp-file>/views/createTaskForm.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>createTaskForm</servlet-name>
-		<url-pattern>/createTask</url-pattern>
 	</servlet-mapping>
 
 </web-app>
