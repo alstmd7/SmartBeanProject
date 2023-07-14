@@ -19,16 +19,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>JoinFormAction</servlet-name>
-		<url-pattern>/JoinUser</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>JoinRequestAction</servlet-name>
-		<servlet-class>controller.user.JoinRequestAction</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>JoinRequestAction</servlet-name>
-		<url-pattern>/JoinRequest</url-pattern>
+		<url-pattern>/Join</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -186,6 +177,15 @@
 	<servlet-mapping>
 		<servlet-name>joinForm</servlet-name>
 		<url-pattern>/join</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>joinSuccess</servlet-name>
+		<jsp-file>/views/joinSuccess.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>joinSuccess</servlet-name>
+		<url-pattern>/joinSuccess</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

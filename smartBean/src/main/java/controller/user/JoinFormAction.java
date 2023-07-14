@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.calendar.CalendarDao;
+import model.calendar.CalendarRequestDto;
+import model.calendar.CalendarVo;
 import model.user.UserDao;
 import model.user.UserRequestDto;
+import model.user.UserVo;
 
 /**
  * Servlet implementation class joinAction
@@ -37,25 +41,25 @@ public class JoinFormAction extends HttpServlet {
 	    String password = request.getParameter("password");
 	    String name = request.getParameter("name");
 	    
+	    request.setAttribute("email", email);
+		request.setAttribute("password", password);
+		request.setAttribute("name", name);
+		request.setAttribute("dupl", "동일한 아이디가 존재합니다.");
+	    
 	    UserRequestDto user = new UserRequestDto(email, password, name);
 
 		UserDao userDao = UserDao.getInstance();
-		boolean result = userDao.createUser(user);
-		
-		String url = "JoinRequest";
-		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		boolean result = userDao.createUser(user);		
 		
 		if(result) {
-			url = "home";
-			out.println("<script> alert('회원가입이 완료되었습니다.'); </script>");
+			UserVo joinUser = userDao.getUserByEmail(email);
+			CalendarRequestDto calendarRequestDto = new CalendarRequestDto(joinUser.getCode(), email, name);
+			CalendarDao calendarDao = CalendarDao.getInstance();
+			calendarDao.createCalendar(calendarRequestDto);
+			response.sendRedirect("joinSuccess");
 		} else {
-			out.println("<script> alert('이미 가입된 이메일입니다.'); </script>");
+			request.getRequestDispatcher("join").forward(request, response);
 		}
-		out.print("<script>location.href='"+url+"';</script>");
-		
-		out.close();
 	}
 
 }

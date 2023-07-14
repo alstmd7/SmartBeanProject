@@ -43,15 +43,14 @@ public class LoginFormAction extends HttpServlet {
 
 		UserDao userDao = UserDao.getInstance();
 		UserVo user = userDao.getUserByEmail(email);
-
+		
+		HttpSession session = request.getSession();
 		if(user != null && user.getPassword().equals(password)) {
-			HttpSession session = request.getSession();
 			session.setAttribute("log", email);
 			session.setAttribute("name", user.getName());
 			
 			response.sendRedirect("/");
 		} else {
-			
 			response.sendRedirect("loginFail");
 		}
 		

@@ -81,7 +81,7 @@
 	        <!-- 제목 -->
 	        <h1>join-the-membership</h1>
 	
-			<form action="JoinUser" method="POST" id="Join">
+			<form action="Join" method="POST" id="Join">
 				<p>이메일</p>
 				<input type="text" id="email" name="email" value="${requestScope.email }">
 				<p>비밀번호</p>
@@ -89,11 +89,12 @@
 				<p>이름</p>
 				<input type="text" id="name" name="name" value="${requestScope.name }">
 				
-				<ul>
+				<ul>	
 					<li class="error" id="error-email">이메일을 입력해주세요.</li>
 					<li class="error" id="error-password">비밀번호를 입력해주세요.</li>
 					<li class="error" id="error-name">이름을 입력해주세요.</li>
 				</ul>
+				<input class="error" name="error-dupl" value="${requestScope.dupl} }">
 				
 				<input type="button" value="회원가입" onclick="checkValue(form)">
 			</form>

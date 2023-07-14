@@ -1,7 +1,24 @@
 $(window).on('load', function() {
 	document.getElementById('inputDate').value = new Date().toISOString().substring(0, 10);
 	printWeek();
+	
+	$("#todo12").change(function() {
+		if ($("#todo12").is(":checked")) {
+
+			var checkValue = $("#todo12").val();
+			console.log(checkValue);
+			$('input[name=todoNo]').attr('value', checkValue);
+			console.log($("input[name=todoNo]").value());
+		} else {
+
+			var checkValue = $("input:radio[name='myName']:checked").val();
+			$('input[name=todoNo]').attr('value', null);
+			console.log(checkValue);
+		}
+	});
 });
+
+
 
 function updateProgress(progressId) {
 var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
@@ -75,21 +92,21 @@ $.ajax({
 			(dayTd < 10 ? "0" + dayTd : dayTd);
 			
 			response.forEach(todo => {
+			var no = todo.no;
 			var content = todo.content;
 			var check = todo.check;
 			var target_at = todo.target_at;
 
 			if (target_at == checkDate) {
-				$('#output').append(`<div>${content} + ${target_at} </div>` + checkDate);
 				
-				table += "<li>";
+				table += '<li>';
 				if (check === 0) {
 					table += "<li><input type='checkbox' name='hobby' value='h1' class='none'>";
 				} else {
 					table += "<input type='checkbox' name='hobby' value='h1' class='none' >";
 				}
 				
-				table += "<input type='checkbox' name='hobby' value='h1' onclick='updateProgress(" + (i + 1) + ")'>" + content + "</li>";
+				table += "<input type='checkbox' name='hobby' id='todo"+no+"' value='"+ no +"' onclick='updateProgress(" + (i + 1) + ")'>" + content +no + "</li>";
 			}
 			
 			});
@@ -173,6 +190,8 @@ if (confirmation) {
     });
     alert('일정이 삭제되었습니다.');
 }
+
+document.getElementById('delete-btn').click()
 }
 
 
