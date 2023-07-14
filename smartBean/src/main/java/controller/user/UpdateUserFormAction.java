@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import model.user.UserDao;
 import model.user.UserRequestDto;
+import model.user.UserVo;
 
 /**
  * Servlet implementation class UpdateUserFormAction
@@ -32,37 +33,30 @@ public class UpdateUserFormAction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		
-		UserRequestDto userDto = null;
 
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String new_password = request.getParameter("new_password");
 		String name = request.getParameter("name");
 
-		userDto = new UserRequestDto(email, password, name);
-
 		UserDao userDao = UserDao.getInstance();
-		boolean result = userDao.updateUser(userDto, new_password);
+		UserVo user = userDao.getUserByEmail(email);
+		boolean result = userDao.updateUser(user, new_password);
 		
-		String url = "UpdateUserRequest";
-		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		if(result) {
-			// 업데이트 성공 시
-			HttpSession session = request.getSession();
-			session.setAttribute("name", name);
-			
-			url = "home";
-			out.println("<script> alert('업데이트가 완료되었습니다.');</script>");
-		} else {
-			out.println("<script> alert('업데이트에 실패했습니다.'); </script>");
+		if(password == user.getPassword()) {
+			if(result) {
+				// 업데이트 성공 시
+				HttpSession session = request.getSession();
+				session.setAttribute("name", name);
+				request.setAttribute("message", "회원정보 수정이 완료되었습니다.");
+				
+				request.getRequestDispatcher("alert").forward(request, response);
+			} else {
+				request.getRequestDispatcher("updateUser").forward(request, response);
+			}
+		} else {			
+			response.sendRedirect("login");
 		}
-		out.print("<script>location.href='"+url+"';</script>");
-
-		// response.sendRedirect 사용불가
-		out.close();
 
 	}
 

@@ -31,28 +31,23 @@ public class UpdateUserRequestAction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		
+
 		UserDao userDao = UserDao.getInstance();
-
 		String email = (String) request.getSession().getAttribute("log");
-
 		UserVo user = userDao.getUserByEmail(email);
 		
 		String password = "";
 		String name = "";
-
-		String url = "home";
 		
 		if(user != null) {
 			password = user.getPassword();
 			name = user.getName();
 			
-			request.setAttribute("name", name);
-			
-			url = "updateUser";
+			request.getRequestDispatcher("updateUser").forward(request, response);
+		} else {
+			response.sendRedirect("login");
 		}
 		
-		request.getRequestDispatcher(url).forward(request, response);
 	}
 
 }

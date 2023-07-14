@@ -56,7 +56,9 @@ public class JoinFormAction extends HttpServlet {
 			CalendarRequestDto calendarRequestDto = new CalendarRequestDto(joinUser.getCode(), email, name);
 			CalendarDao calendarDao = CalendarDao.getInstance();
 			calendarDao.createCalendar(calendarRequestDto);
-			response.sendRedirect("joinSuccess");
+			request.setAttribute("message", "회원가입이 완료되었습니다. 로그인 후 이용해주세요.");
+			
+			request.getRequestDispatcher("alert").forward(request, response);
 		} else {
 			request.getRequestDispatcher("join").forward(request, response);
 		}

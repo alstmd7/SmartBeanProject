@@ -90,11 +90,11 @@ public class UserDao {
 		return check;
 	}
 	
-	public boolean updateUser(UserRequestDto userDto, String new_password) {
+	public boolean updateUser(UserVo user, String new_password) {
 		this.conn = DBManager.getConnection();
 		
 		boolean check = true;
-		if(this.conn != null && userDto.getEmail() != null && userDto.getPassword() != null && userDto.getName() != null) {
+		if(this.conn != null && user.getEmail() != null && user.getPassword() != null && user.getName() != null) {
 			
 			if(new_password != "") {
 				String sql = "UPDATE `user` SET `password`=?, `name`=? WHERE email=?";
@@ -102,8 +102,8 @@ public class UserDao {
 				try {
 					this.pstmt = this.conn.prepareStatement(sql);
 					this.pstmt.setString(1, new_password);
-					this.pstmt.setString(2, userDto.getName());
-					this.pstmt.setString(3, userDto.getEmail());
+					this.pstmt.setString(2, user.getName());
+					this.pstmt.setString(3, user.getEmail());
 
 					this.pstmt.execute();
 
@@ -117,8 +117,8 @@ public class UserDao {
 
 				try {
 					this.pstmt = this.conn.prepareStatement(sql);
-					this.pstmt.setString(1, userDto.getName());
-					this.pstmt.setString(2, userDto.getEmail());
+					this.pstmt.setString(1, user.getName());
+					this.pstmt.setString(2, user.getEmail());
 
 					this.pstmt.execute();
 

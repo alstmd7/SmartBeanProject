@@ -187,15 +187,6 @@
 		<servlet-name>joinForm</servlet-name>
 		<url-pattern>/join</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>joinSuccess</servlet-name>
-		<jsp-file>/views/joinSuccess.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>joinSuccess</servlet-name>
-		<url-pattern>/joinSuccess</url-pattern>
-	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>loginForm</servlet-name>
@@ -204,15 +195,6 @@
 	<servlet-mapping>
 		<servlet-name>loginForm</servlet-name>
 		<url-pattern>/login</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>loginFail</servlet-name>
-		<jsp-file>/views/loginFail.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>loginFail</servlet-name>
-		<url-pattern>/loginFail</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -234,12 +216,12 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>home</servlet-name>
-		<jsp-file>/views/home.jsp</jsp-file>
+		<servlet-name>alert</servlet-name>
+		<jsp-file>/views/alert.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>home</servlet-name>
-		<url-pattern>/home</url-pattern>
+		<servlet-name>alert</servlet-name>
+		<url-pattern>/alert</url-pattern>
 	</servlet-mapping>
 
 	<servlet> <!-- calendar main  -->
