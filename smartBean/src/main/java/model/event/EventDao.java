@@ -28,55 +28,62 @@ public class EventDao {
 	}
 
 	public boolean createEvent(EventRequestDto eventDto) {
+	    int calendar_no = eventDto.getCalendar_no();
+	    int task_no = eventDto.getTask_no();
+	    String name = eventDto.getName();
+	    String email = eventDto.getEmail();
+	    String title = eventDto.getTitle();
+	    String content = eventDto.getContent();
+	    String start = eventDto.getStart();
+	    String end = eventDto.getEnd();
+	    String all_day = eventDto.getAll_day();
 
-		int calendar_no = eventDto.getCalendar_no();
-		int task_no = eventDto.getTask_no();
-		String name = eventDto.getName();
-		String email = eventDto.getEmail();
-		String title = eventDto.getTitle();
-		String content = eventDto.getContent();
-		String start = eventDto.getStart();
-		String end = eventDto.getEnd();
-		String all_day = eventDto.getAll_day();
+	    boolean check = true;
 
-		boolean check = true;
+	    if (calendar_no != 0 && task_no != 0 && name != null && email != null && title != null && content != null
+	            && start != null && end != null && all_day != null) {
+	        this.conn = DBManager.getConnection();
+	        if (this.conn != null) {
+	            String sql = "INSERT INTO `event` (calendar_no, task_no, `name`, email, title, content, `start`, `end`)"
+	                    + " SELECT ?, ?, ?, ?, ?, ?, DATE(?), DATE(?)"
+	                    + " WHERE NOT EXISTS (SELECT 1 FROM `event` WHERE calendar_no = ? AND task_no = ? AND `name` = ? AND email = ? AND title = ? AND `start` = DATE(?) AND `end` = DATE(?) AND all_day = ?)";
 
-		if (calendar_no != 0 && task_no != 0 && name != null && email != null && title != null && content != null
-				&& start != null && end != null && all_day != null) {
-			this.conn = DBManager.getConnection();
-			if (this.conn != null) {
-				String sql = "INSERT INTO `event` (calendar_no, task_no, `name`, email, title, content, `start`, `end`)"
-						+ " VALUES (?, ?, ?, ?, ?, ?, DATE(?), DATE(?), ?, ?)";
+	            try {
+	                this.pstmt = this.conn.prepareStatement(sql);
+	                this.pstmt.setInt(1, calendar_no);
+	                this.pstmt.setInt(2, task_no);
+	                this.pstmt.setString(3, name);
+	                this.pstmt.setString(4, email);
+	                this.pstmt.setString(5, title);
+	                this.pstmt.setString(6, content);
+	                this.pstmt.setString(7, start);
+	                this.pstmt.setString(8, end);
+	                this.pstmt.setInt(9, calendar_no);
+	                this.pstmt.setInt(10, task_no);
+	                this.pstmt.setString(11, name);
+	                this.pstmt.setString(12, email);
+	                this.pstmt.setString(13, title);
+	                this.pstmt.setString(14, start);
+	                this.pstmt.setString(15, end);
+	                this.pstmt.setString(16, all_day);
 
-				try {
-					this.pstmt = this.conn.prepareStatement(sql);
-					this.pstmt.setInt(1, calendar_no);
-					this.pstmt.setInt(2, task_no);
-					this.pstmt.setString(3, name);
-					this.pstmt.setString(4, email);
-					this.pstmt.setString(5, title);
-					this.pstmt.setString(6, content);
-					this.pstmt.setString(7, start);
-					this.pstmt.setString(8, end);
-					this.pstmt.setString(9, all_day);
+	                this.pstmt.execute();
 
-					this.pstmt.execute();
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	                check = false;
+	            } finally {
+	                DBManager.close(this.conn, this.pstmt);
+	            }
 
-				} catch (Exception e) {
-					e.printStackTrace();
-					check = false;
-				} finally {
-					DBManager.close(this.conn, this.pstmt);
-				}
+	        } else {
+	            check = false;
+	        }
+	    } else {
+	        check = false;
+	    }
 
-			} else {
-				check = false;
-			}
-		} else {
-			check = false;
-		}
-
-		return check;
+	    return check;
 	}
 
 	public ArrayList<EventVo> getEventAll() {

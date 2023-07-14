@@ -218,7 +218,23 @@ $(document).ready(function() {
 
 		var jsondata = JSON.stringify(events);
 		console.log(jsondata);
+		
+		$.ajax({
+		url: '/Event_CreateAction', // 전송할 서버 url
+		type: 'post',
+		data: { 'events': jsondata }, // 서버로 전송할 데이터
+		dataType: 'json', // 서버로부터 받을 데이터의 타입
+		success: function(response) { // 서버 요청 성공 시 실행할 함수
+			// response 파라미터는 서버에서 전송한 데이터를 가지고 있음
+			// 예를 들어, 서버에서 {"status": "success"}를 전송했다면, response.status는 "success"를 출력할 것
+			console.log(response);
+		},
+		error: function(error) { // 서버 요청 실패 시 실행할 함수
+			console.log(error);
+		}
 	});
+	});
+	
 
 	// <<<<<<<<<<<<<<< task >>>>>>>>>>>>>>>
 	// task 추가 버튼
@@ -514,16 +530,22 @@ $(document).ready(function() {
 			console.log(response);
 
 			for (var i = 0; i < eventData.length; i++) {
-				var event = eventData[i];
-				var newEvent = {
-					title: event.title,
-					start: event.start,
-					end: event.end,
-					allDay: event.all_day
-				};
-
-				calendar.addEvent(newEvent);
+			    var event = eventData[i];
+			    var newEvent = {
+			        calendarCode: "ExampleCalendarCode", // 사용자의 기본 캘린더 no ------------------------> 모든 이벤트를 기본 캘린더에 저장하고 이벤트 관리 팝업에서 공유할 캘린더만 추가해서 넘겨주고 보여주면 될
+			        taskNo: "ExampleTaskNumber", // 사용자가 선택한 task no
+			        name: "ExampleName", // 사용자가 선택한 task name
+			        email: "ExampleEmail", // 현재 log 
+			        taskTitle: event.title,
+			        taskContent: "ExampleTaskContent", // 처음엔 무조건 내용이 비어있도록
+			        startDate: event.start,
+			        endDate: event.end,
+			        all_day: event.allDay
+			    };
+			
+			    calendar.addEvent(newEvent);
 			}
+
 
 			// EventVo의 필드를 추출하고 If 조건으로 사용자가 캘린더에 드래그해서 저장한 영역의 날짜와 DB에서 가져온 날짜가 같으면 append
 			var calendarEvents = calendar.getEvents();
