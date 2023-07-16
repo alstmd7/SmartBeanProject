@@ -77,13 +77,6 @@ $(document).ready(function() {
 				} */
 			});
 
-			// 캘린더 관리 버튼 클릭 시 관리 팝업 표시
-			$(newCalendar).find(".admin-calendar-btn").on("click", function() {
-				$("#admin-newCalendar-popup").fadeIn();
-			});
-
-			// 캘린더 관리 팝업에 생성한 캘린더 이름 표시
-			$("#newCalendar-popup-title").text(newCalendarName);
 		}
 	});
 
@@ -109,13 +102,15 @@ $(document).ready(function() {
 	});
 
 	// 캘린더 관리 팝업 열기
-	$(document).on("click", ".admin-calendar-btn", function() {
+	/* $(document).on("click", ".admin-calendar-btn", function() {
 		$("#admin-newCalendar-popup").fadeIn();
+		// 캘린더 관리 팝업에 생성한 캘린더 이름 표시
+		$("#newCalendar-popup-title").text(newCalendarName);
 	});
 
 
 	// 캘린더 관리 팝업 닫기 ---> UpdateCalendar 500 에러
-	$("#close-newCalendar-button").off("click").on("click", function() {
+	$(document).on("click", ".admin-calendar-btn", function() {
 		$("#admin-newCalendar-popup").fadeOut();
 	});
 
@@ -141,8 +136,8 @@ $(document).ready(function() {
 			});
 
 			$.ajax({
-				url: "/ShareCalendar_RequestAction", // 서버의 URL
-				method: "POST", // POST 메소드 사용
+				url: "/ShareCalendar_RequestAction", // 서블릿 만들어야...
+				method: "POST", 
 				data: { email: userEmail }, // 전송할 데이터 (이메일 정보)
 				success: function(response) {
 					// 서버에서의 처리가 성공적으로 완료된 경우
@@ -157,64 +152,39 @@ $(document).ready(function() {
 		}
 	});
 
-
-	// 캘린더 삭제 기능
-	 $("#delete-calendar-button").on("click", function() {
-		var calendarId = $(".calendar-checkbox-input:checked").attr("id");
-
-		if (calendarId) {
-			// 캘린더 삭제
-			$("#" + calendarId).parent().remove();
-		}
-	}); 
-
-// 캘린더 삭제 버튼 클릭 시 이벤트 핸들러
-$(document).on("click", "#delete-calendar-button", function() {
-	var selectedCheckboxes = $(".calendar-checkbox-input:checked");  // 체크된 모든 체크박스 가져오기
-	if (selectedCheckboxes.length === 0) {  // 체크된 체크박스가 없을 경우
-		alert('삭제할 캘린더를 선택해주세요.');
-		return;
-	}
-	selectedCheckboxes.each(function() {  // 각 체크된 체크박스에 대해
-		var calendarId = $(this).attr("id");  // 캘린더 ID 가져오기
-		$.post("/Calendar_DeleteAction", { calendarId: calendarId }, function(response) {
-			alert(response);  // 응답 메시지 표시
-			location.reload();  // 페이지 새로 고침
-		});
+	// 캘린더 삭제 버튼
+	$("#delete-calendar-button").on("click", function() {
+	    var calendarId = $(".calendar-checkbox-input:checked").attr("id");
+	
+	    // AJAX 요청을 사용하여 서버에 삭제 요청을 보냅니다.
+	    $.ajax({
+	        url: "/DeleteCalendar",
+	        method: "POST",
+	        data: { calendarId: calendarId }
+	    }).done(function(response) {
+	        console.log("삭제 완료");
+	    }).fail(function() {
+	        console.log("삭제 실패");
+	    });
 	});
-});
 
 	
-	// 캘린더 이름 변경 기능
-	/* $("#update-calendar-button").on("click", function() {
-		var newCalendarName = $("#new-calendar-name-input").val();
-		var calendarSpan = $("#newCalendar-popup-title").siblings("span");
-
-		if (newCalendarName.trim() !== "") {
-			calendarSpan.text(newCalendarName);
-			$("#new-calendar-name-input").val("");
-		}
-	}); */
-
-
+	// 캘린더 이름 수정하기 버튼
 	$("#update-calendar-button").on("click", function() {
-		var calendarId = $(this).data("calendar-id");  // 수정 버튼에 설정된 캘린더 ID 가져오기
-		var newCalendarName = $("#new-calendar-name-input").val();  // 새로운 캘린더 이름 가져오기
-
-		if (newCalendarName.trim() !== "") {
-			$.ajax({
-				type: "POST",
-				url: "/Calendar_UpdateAction",
-				data: {
-					"calendarId": calendarId,  // 수정 버튼에 설정된 캘린더 ID 전달
-					"newCalendarName": newCalendarName
-				}
-			});
-		} else {
-			alert("올바른 캘린더 ID와 새로운 캘린더 이름을 입력해주세요." + calendarId);
-		}
-	});
-
+	    var calendarId = $(".calendar-checkbox-input:checked").attr("id");
+	    var newCalendarName = $("#new-calendar-name-input").val();
+	
+	    // AJAX 요청을 사용하여 서버에 수정 요청을 보냅니다.
+	    $.ajax({
+	        url: "/Calendar_UpdateAction",
+	        method: "POST",
+	        data: { calendarId: calendarId, newCalendarName: newCalendarName }
+	    }).done(function(response) {
+	        console.log("수정 완료");
+	    }).fail(function() {
+	        console.log("수정 실패");
+	    });
+	}); */
 
 	// <<<<<<<<<<<<<<< task >>>>>>>>>>>>>>>
 	// task 추가 버튼
