@@ -55,8 +55,8 @@ public class CalendarDao {
         return calendarList;
     }
     
-    public ArrayList<CalendarVo> getDefaultCalendars(String email) {
-        ArrayList<CalendarVo> defaultCalendars = new ArrayList<>();
+    public ArrayList<CalendarVo> getUserCalendars(String email) {
+        ArrayList<CalendarVo> userCalendars = new ArrayList<>();
         conn = null;
         pstmt = null;
         rs = null;
@@ -64,7 +64,7 @@ public class CalendarDao {
         try {
             conn = DBManager.getConnection();
 
-            String sql = "SELECT * FROM calendar WHERE email=? AND code IS NULL";
+            String sql = "SELECT * FROM calendar WHERE email=?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, email);
 
@@ -75,7 +75,7 @@ public class CalendarDao {
                 String name = rs.getString("name");
 
                 CalendarVo calendar = new CalendarVo(no, 0, email, name); 
-                defaultCalendars.add(calendar);
+                userCalendars.add(calendar);
             }
 
         } catch (SQLException e) {
@@ -84,8 +84,9 @@ public class CalendarDao {
             DBManager.close(conn, pstmt, rs);
         }
 
-        return defaultCalendars;
+        return userCalendars;
     }
+
 
 
     public CalendarVo getCalendarByNo(int no) {

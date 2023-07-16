@@ -13,7 +13,6 @@ import model.calendar.CalendarVo;
 /**
  * Servlet implementation class Calendar_UpdateAction
  */
-@WebServlet("/Calendar_UpdateAction")
 public class Calendar_UpdateAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,21 +35,37 @@ public class Calendar_UpdateAction extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	// CalendarUpdateAction
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 
-	    CalendarDao calDao = CalendarDao.getInstance();
-	    int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
+	    CalendarDao calendarDao = CalendarDao.getInstance();
+	    int calendarId;
 	    String newCalendarName = request.getParameter("newCalendarName");
 
-	    calDao.updateCalendarName(calendarNo, newCalendarName);
+	    String calendarIdString = request.getParameter("calendarId");
+	    if (calendarIdString != null) {
+	        calendarId = Integer.parseInt(calendarIdString);
+	    } else {
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        response.getWriter().write("{\"message\": \"fail\"}");
+	        return;
+	    }
 
-	    // 공유할 멤버의 이메일 정보를 가져와서 처리하는 부분 추가해야됨
+	    int result = calendarDao.updateCalendarName(calendarId, newCalendarName);
 
-	    // 응답 처리
-	    response.getWriter().write("캘린더의 멤버 공유가 완료되었습니다.");
+	    if (result > 0) {
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        response.getWriter().write("{\"message\": \"success\"}");
+	    } else {
+	        response.setContentType("application/json");
+	        response.setCharacterEncoding("UTF-8");
+	        response.getWriter().write("{\"message\": \"fail\"}");
+	    }
 	}
-
 
 }

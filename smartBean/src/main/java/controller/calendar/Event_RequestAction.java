@@ -17,7 +17,6 @@ import model.event.EventVo;
 /**
  * Servlet implementation class Event_RequestAction
  */
-@WebServlet("/Event_RequestAction")
 public class Event_RequestAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
