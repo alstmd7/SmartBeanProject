@@ -13,7 +13,7 @@
 <body>
 	<header>
 		<div id="logo-space">
-        	<img src="/resources/img/logo.png"><!-- <a href="index.html"></a> -->
+        	<a  href="index.jsp"><img src="/resources/img/logo.png"></a>
         	<div class="title"><span class="sub-title">스마트한 업무관리,</span><span class="main-title">똑똑빈</span></div>
         </div>
         <c:if test="${!empty sessionScope.log }">
