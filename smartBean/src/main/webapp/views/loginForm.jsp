@@ -6,8 +6,8 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>로그인</title>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <title>로그인</title>
 </head>
 
 <body>
@@ -38,6 +38,7 @@
 				
 				<!-- 비밀번호 찾기 링크 -->
 		        <div class="findPassword">
+		        	<a href="join">회원가입</a>
 		            <a href="">비밀번호를 잊으셨나요?</a>
 		        </div>
 		    </div>

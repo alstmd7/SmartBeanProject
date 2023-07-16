@@ -44,7 +44,6 @@ public class JoinFormAction extends HttpServlet {
 	    request.setAttribute("email", email);
 		request.setAttribute("password", password);
 		request.setAttribute("name", name);
-		request.setAttribute("dupl", "동일한 아이디가 존재합니다.");
 	    
 	    UserRequestDto user = new UserRequestDto(email, password, name);
 
@@ -56,10 +55,13 @@ public class JoinFormAction extends HttpServlet {
 			CalendarRequestDto calendarRequestDto = new CalendarRequestDto(joinUser.getCode(), email, name);
 			CalendarDao calendarDao = CalendarDao.getInstance();
 			calendarDao.createCalendar(calendarRequestDto);
+			request.removeAttribute("dupl");
 			request.setAttribute("message", "회원가입이 완료되었습니다. 로그인 후 이용해주세요.");
 			
 			request.getRequestDispatcher("alert").forward(request, response);
 		} else {
+			request.setAttribute("message", "동일한 아이디가 존재합니다.");
+
 			request.getRequestDispatcher("join").forward(request, response);
 		}
 	}

@@ -1,4 +1,4 @@
-package controller.user;
+	package controller.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -41,23 +41,28 @@ public class UpdateUserFormAction extends HttpServlet {
 
 		UserDao userDao = UserDao.getInstance();
 		UserVo user = userDao.getUserByEmail(email);
-		boolean result = userDao.updateUser(user, new_password);
 		
-		if(password == user.getPassword()) {
-			if(result) {
-				// 업데이트 성공 시
+		System.out.println(password);
+		if(password == "") {	
+			userDao.updateUser(user, new_password);
+			HttpSession session = request.getSession();
+			session.setAttribute("name", name);
+			request.setAttribute("message", "회원정보 수정이 완료되었습니다.");
+			request.getRequestDispatcher("alert").forward(request, response);			
+		} else {
+			
+			if(password.equals(user.getPassword())) {
+				userDao.updateUser(user, new_password);
 				HttpSession session = request.getSession();
 				session.setAttribute("name", name);
 				request.setAttribute("message", "회원정보 수정이 완료되었습니다.");
-				
 				request.getRequestDispatcher("alert").forward(request, response);
+				
 			} else {
-				request.getRequestDispatcher("updateUser").forward(request, response);
+				request.setAttribute("message", "현재 비밀번호가 올바르지 않습니다.");
+				request.getRequestDispatcher("alert").forward(request, response);
 			}
-		} else {			
-			response.sendRedirect("login");
+			
 		}
-
 	}
-
 }

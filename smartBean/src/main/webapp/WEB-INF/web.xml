@@ -41,30 +41,12 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>UpdateUserRequestAction</servlet-name>
-		<servlet-class>controller.user.UpdateUserRequestAction</servlet-class>
+		<servlet-name>DeleteUserAction</servlet-name>
+		<servlet-class>controller.user.DeleteUserAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>UpdateUserRequestAction</servlet-name>
-		<url-pattern>/UpdateUserRequest</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DeleteUserFormAction</servlet-name>
-		<servlet-class>controller.user.DeleteUserFormAction</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteUserFormAction</servlet-name>
+		<servlet-name>DeleteUserAction</servlet-name>
 		<url-pattern>/DeleteUser</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DeleteUserRequestAction</servlet-name>
-		<servlet-class>controller.user.DeleteUserRequestAction</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteUserRequestAction</servlet-name>
-		<url-pattern>/DeleteUserRequest</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -213,6 +195,15 @@
 	<servlet-mapping>
 		<servlet-name>deleteUserForm</servlet-name>
 		<url-pattern>/deleteUser</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>home</servlet-name>
+		<jsp-file>/views/home.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>home</servlet-name>
+		<url-pattern>/home</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

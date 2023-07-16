@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <title>Insert title here 회원정보 변경</title>
+    <title>회원정보 변경</title>
 </head>
 
 <body>
@@ -23,27 +23,27 @@
 	        <!-- 제목 -->
 	        <h1>edit member</h1>
 
-	        <form action="UpdateUser" method="POST" id="UpdateUser">
+	        <form action="UpdateUser" method="POST" class="member-form">
 	        	<div>
 		        	<label for="email">이메일</label>
 		            <input type="text" id="email" name="email" readonly value="${sessionScope.log }">
 	            </div>
 	            <div>
-		            <label>닉네임</label>
+		            <label for="name">닉네임</label>
 		            <input type="text" id="name" name="name" value="${sessionScope.name }">
 	            </div>
 	            <div>
-	            	<label>비밀번호</label>
+	            	<label for="password">비밀번호</label>
 	            	<input type="password" id="password" name="password" placeholder="현재 비밀번호">
 	            </div>
 	            <div>
-	            	<label></label>
+	            	<label for="new_password"></label>
 		        	<input type="password" id="new_password" name="new_password" placeholder="새로운 비밀번호">
 		        </div>
 	            <input type="submit" value="회원정보 수정">
 	        </form>
 	        
-	        <button id="deleteUser-btn" onclick="location.href='DeleteUserRequest'">회원탈퇴</button>
+	        <button id="deleteUser-btn" onclick="location.href='deleteUser'">회원탈퇴</button>
 	    </div>
     </main>
     

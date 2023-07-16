@@ -18,7 +18,7 @@
         </div>
         <c:if test="${!empty sessionScope.log }">
         <div>
-        	<button class="logout-btn" onclick="location.href='UpdateUserRequest'">${sessionScope.name }님</button>
+        	<button class="logout-btn" onclick="location.href='home'">${sessionScope.name }님</button>
         	<button class="logout-btn" onclick="location.href='Logout'">로그아웃</button>
         </div>
         </c:if>

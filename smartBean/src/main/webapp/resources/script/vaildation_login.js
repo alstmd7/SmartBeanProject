@@ -4,6 +4,7 @@ $(window).on('load', function() {
 			$('#submit-btn').click();
 		}
 	})
+	
 });
 
 $('#email').on('change', e => {
@@ -40,4 +41,3 @@ function checkValue(htmlForm) {
 		htmlForm.submit();
 	}
 }
-

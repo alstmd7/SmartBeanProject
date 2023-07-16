@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.calendar.CalendarDao;
 import model.user.UserDao;
 import model.user.UserRequestDto;
 import model.user.UserVo;
@@ -16,13 +17,13 @@ import model.user.UserVo;
 /**
  * Servlet implementation class DropUserAction
  */
-public class DeleteUserFormAction extends HttpServlet {
+public class DeleteUserAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteUserFormAction() {
+    public DeleteUserAction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,29 +36,23 @@ public class DeleteUserFormAction extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String email = request.getParameter("email");
-		String password = request.getParameter("password");
+		String password = request.getParameter("password");	
 		
 		UserDao userDao = UserDao.getInstance();
-		boolean result = userDao.deleteUserByEmail(email);
+		UserVo user = userDao.getUserByEmail(email);
 		
-		String url = "deleteUser";
-		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		
-		if (result) {
-			HttpSession session = request.getSession();
-	    	session.setAttribute("log", null);
-	    	session.setAttribute("name", null);
-
-			url = "login";
-			out.println("<script> alert('회원탈퇴가 완료되었습니다.');</script>");
+		HttpSession session = request.getSession();
+		if(user.getPassword().equals(password)) {
+			userDao.deleteUserByEmail(email);
+			session.setAttribute("log", null);
+		    session.setAttribute("name", null);
+		    request.setAttribute("message", "탈퇴가 완료되었습니다.");
+		    request.getRequestDispatcher("alert").forward(request, response);
 		} else {
-			out.println("<script> alert('회원탈퇴에 실패했습니다.'); </script>");
+			request.setAttribute("message", "비밀번호가 올바르지 않습니다.");
+			request.getRequestDispatcher("alert").forward(request, response);
 		}
-		out.print("<script>location.href='"+url+"';</script>");
 
-		response.sendRedirect(url);
 	}
 
 }
