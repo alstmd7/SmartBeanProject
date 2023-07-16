@@ -22,6 +22,7 @@
 <!-- <script src="/WEB-INF/resources/script/ko.js"></script> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 	<c:if test="${empty sessionScope.log }"><c:redirect url="login"></c:redirect></c:if>
@@ -33,11 +34,11 @@
 			<button id="create-calendar-btn">새로운 캘린더 만들기</button>
 
 		<!-- 로그인한 사용자의 캘린더 -->
-		<div id="user-calendar">
+<!-- 
 			<input type="checkbox" id="user-calendar-checkbox"
 				class="calendar-checkbox-input">
 				<label for="user-calendar-checkbox">${sessionScope.name}님 캘린더</label>
-		</div>
+		</div> -->
 		
 		<!-- 캘린더 리스트 -->
 		<div id="calendar-list"></div>
@@ -56,13 +57,13 @@
 			<div id="admin-newCalendar-popup" style="display: none;">
 			  <h2 id="newCalendar-popup-title"></h2>
 			  <button id="close-newCalendar-button">닫기</button>
+			  <button id="delete-calendar-button">캘린더 삭제</button><br>
 			  <p>공유할 멤버의 이메일(여러명은 '/'로 분리)</p>
 			  <input type="text" id="user-share-input" placeholder="사용자 이메일">
 			  <button id="share-button">공유하기</button>
 			  <br>
 			  <div class="user-share-list"></div>
 			  
-			  <button id="delete-calendar-button">캘린더 삭제</button><br>
 			  <p>캘린더 이름 변경</p>
 			  <!-- <input type="text" id="new-calendar-name-input-${calendarId}" placeholder="변경할 캘린더 이름"> -->
 			  <input type="text" id="new-calendar-name-input" placeholder="변경할 캘린더 이름">
@@ -84,28 +85,28 @@
 			<label for="end-date">종료일:</label> <input type="date" id="end-date"> <br>
 			<h4>일정 추가할 캘린더 위치</h4>
 				<select id="calendars" multiple>
-					<% 
-					// 사용자의 이메일 정보를 세션에서 가져옴
-					String email = (String) session.getAttribute("log");
-					
-					// DB 접근을 위한 객체 생성
-					CalendarDao calendarDao = CalendarDao.getInstance();
-					ShareDao shareDao = ShareDao.getInstance();
-					
-					// 기본 캘린더 가져오기
-					ArrayList<CalendarVo> defaultCalendars = calendarDao.getDefaultCalendars(email); // 이거 안됨
-					
-					// 공유받은 캘린더 가져오기
-					ArrayList<CalendarVo> sharedCalendars = shareDao.getSharedCalendars(email);
-					
-					// 기본 캘린더와 공유받은 캘린더 합치기
-					ArrayList<CalendarVo> calendars = new ArrayList<>();
-					calendars.addAll(defaultCalendars);
-					calendars.addAll(sharedCalendars);
-					
-					for (CalendarVo calendar : calendars) { %>
-					    <option value="<%= calendar.getNo() %>"><%= calendar.getName() %></option>
-					<% } %>
+				    <% 
+				    // 사용자의 이메일 정보를 세션에서 가져옴
+				    String email = (String) session.getAttribute("log");
+				    
+				    // DB 접근을 위한 객체 생성
+				    CalendarDao calendarDao = CalendarDao.getInstance();
+				    ShareDao shareDao = ShareDao.getInstance();
+				    
+				    // 로그인한 사용자와 일치하는 모든 캘린더 가져오기
+				    ArrayList<CalendarVo> userCalendars = calendarDao.getUserCalendars(email);
+				    
+				    // 공유받은 캘린더 가져오기
+				    ArrayList<CalendarVo> sharedCalendars = shareDao.getSharedCalendars(email);
+				    
+				    // 기본 캘린더와 공유받은 캘린더 합치기
+				    ArrayList<CalendarVo> calendars = new ArrayList<>();
+				    calendars.addAll(userCalendars);
+				    calendars.addAll(sharedCalendars);
+				    
+				    for (CalendarVo calendar : calendars) { %>
+				        <option value="<%= calendar.getNo() %>"><%= calendar.getName() %></option>
+				    <% } %>
 				</select>
 			<p>상세내용</p>
 			<textarea id="event-description"></textarea>

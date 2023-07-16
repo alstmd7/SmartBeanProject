@@ -139,6 +139,16 @@
 		<servlet-name>Calendar_UpdateAction</servlet-name>
 		<url-pattern>/UpdateCalendar</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>getCalendarIdServlet</servlet-name>
+	    <servlet-class>controller.calendar..GetCalendarIdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>getCalendarIdServlet</servlet-name>
+	    <url-pattern>/getCalendarId</url-pattern>
+	</servlet-mapping>
+	
 
 	<servlet>
 		<servlet-name>Event_RequestAction</servlet-name>
@@ -147,6 +157,15 @@
 	<servlet-mapping>
 		<servlet-name>Event_RequestAction</servlet-name>
 		<url-pattern>/EventRequest</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Event_CreateAction</servlet-name>
+		<servlet-class>controller.calendar.Event_CreateAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Event_CreateAction</servlet-name>
+		<url-pattern>/EventCreate</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
