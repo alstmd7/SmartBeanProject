@@ -1,24 +1,19 @@
 $(window).on('load', function() {
 	document.getElementById('inputDate').value = new Date().toISOString().substring(0, 10);
 	printWeek();
-	
-	$("#todo12").change(function() {
-		if ($("#todo12").is(":checked")) {
-
-			var checkValue = $("#todo12").val();
-			console.log(checkValue);
-			$('input[name=todoNo]').attr('value', checkValue);
-			console.log($("input[name=todoNo]").value());
-		} else {
-
-			var checkValue = $("input:radio[name='myName']:checked").val();
-			$('input[name=todoNo]').attr('value', null);
-			console.log(checkValue);
-		}
-	});
 });
 
-
+function edit(id_check) {
+	$.ajax({
+			url: "/DeleteTodoAction",
+			type: "post",
+			data: { "todoNo": id_check },
+		}).done(function() {
+			alert('성공');
+		}).fail(function() {
+			alert('실패');
+		});	
+}
 
 function updateProgress(progressId) {
 var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
@@ -106,7 +101,7 @@ $.ajax({
 					table += "<input type='checkbox' name='hobby' value='h1' class='none' >";
 				}
 				
-				table += "<input type='checkbox' name='hobby' id='todo"+no+"' value='"+ no +"' onclick='updateProgress(" + (i + 1) + ")'>" + content + "</li>";
+				table += "<input type='checkbox' class='checkTodo' id='" + no + "'><div class='edit' onclick='edit(this.id)' id='" + no + "'> " + content + "</div></li>";
 			}
 			
 			});
@@ -122,6 +117,8 @@ $.ajax({
 }).fail(function() {
 
 });
+
+
 
 }
 
@@ -176,6 +173,8 @@ taskInput.value = '';
 
 
 function deleteTasks() {
+
+	
 var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
 if (checkboxes.length === 0) {
     alert('삭제할 일정을 선택해주세요.');

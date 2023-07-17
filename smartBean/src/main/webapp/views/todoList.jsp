@@ -80,7 +80,14 @@
 		    <button onclick="printWeek()" id="button">조회</button>
 		    
 		    <div id="output"></div>
+		    <form method="post">
+		    	<input id="todoDate" name="todoDate" value="${requestScope.date}">
+		    	<input id="todoContent" name="todoContent" value="${requestScope.content}">
+		    	<input type="button" onclick="edit()" value="수정">
+		    	<input type="button" onclick="remove()" value="삭제">
+		    </form>
 	    </div>
+	    
 	</main>
 	
     <jsp:include page="/footer"></jsp:include>

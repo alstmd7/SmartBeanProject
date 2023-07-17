@@ -138,7 +138,7 @@ public class TodoDao {
 		boolean check = true;
 		
 		if(this.conn != null) {
-			String sql = "DELETE FROM `event` WHERE `no`=?";
+			String sql = "DELETE FROM todo WHERE `no`=?";
 			
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);
