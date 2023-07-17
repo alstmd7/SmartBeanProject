@@ -30,7 +30,7 @@ public class DeleteTodoAction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
-		int no = Integer.parseInt(request.getParameter("no")); 
+		int no = Integer.parseInt(request.getParameter("todoNo")); 
 		
 		TodoDao todoDao = TodoDao.getInstance();
 		todoDao.deleteTodoNo(no);

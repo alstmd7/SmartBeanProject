@@ -19,16 +19,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>JoinFormAction</servlet-name>
-		<url-pattern>/JoinUser</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>JoinRequestAction</servlet-name>
-		<servlet-class>controller.user.JoinRequestAction</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>JoinRequestAction</servlet-name>
-		<url-pattern>/JoinRequest</url-pattern>
+		<url-pattern>/Join</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -50,30 +41,12 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>UpdateUserRequestAction</servlet-name>
-		<servlet-class>controller.user.UpdateUserRequestAction</servlet-class>
+		<servlet-name>DeleteUserAction</servlet-name>
+		<servlet-class>controller.user.DeleteUserAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>UpdateUserRequestAction</servlet-name>
-		<url-pattern>/UpdateUserRequest</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DeleteUserFormAction</servlet-name>
-		<servlet-class>controller.user.DeleteUserFormAction</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteUserFormAction</servlet-name>
+		<servlet-name>DeleteUserAction</servlet-name>
 		<url-pattern>/DeleteUser</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>DeleteUserRequestAction</servlet-name>
-		<servlet-class>controller.user.DeleteUserRequestAction</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DeleteUserRequestAction</servlet-name>
-		<url-pattern>/DeleteUserRequest</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -148,6 +121,16 @@
 		<servlet-name>Calendar_UpdateAction</servlet-name>
 		<url-pattern>/UpdateCalendar</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+	    <servlet-name>getCalendarIdServlet</servlet-name>
+	    <servlet-class>controller.calendar..GetCalendarIdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>getCalendarIdServlet</servlet-name>
+	    <url-pattern>/getCalendarId</url-pattern>
+	</servlet-mapping>
+	
 
 	<servlet>
 		<servlet-name>Event_RequestAction</servlet-name>
@@ -156,6 +139,24 @@
 	<servlet-mapping>
 		<servlet-name>Event_RequestAction</servlet-name>
 		<url-pattern>/EventRequest</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Event_CreateAction</servlet-name>
+		<servlet-class>controller.calendar.Event_CreateAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Event_CreateAction</servlet-name>
+		<url-pattern>/EventCreate</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Event_DeleteAction</servlet-name>
+		<servlet-class>controller.calendar.Event_DeleteAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Event_DeleteAction</servlet-name>
+		<url-pattern>/EventDelete</url-pattern>
 	</servlet-mapping>
 
 
@@ -196,15 +197,6 @@
 		<servlet-name>loginForm</servlet-name>
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>loginFail</servlet-name>
-		<jsp-file>/views/loginFail.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>loginFail</servlet-name>
-		<url-pattern>/loginFail</url-pattern>
-	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>updateUserForm</servlet-name>
@@ -223,7 +215,7 @@
 		<servlet-name>deleteUserForm</servlet-name>
 		<url-pattern>/deleteUser</url-pattern>
 	</servlet-mapping>
-
+	
 	<servlet>
 		<servlet-name>home</servlet-name>
 		<jsp-file>/views/home.jsp</jsp-file>
@@ -231,6 +223,15 @@
 	<servlet-mapping>
 		<servlet-name>home</servlet-name>
 		<url-pattern>/home</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>alert</servlet-name>
+		<jsp-file>/views/alert.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>alert</servlet-name>
+		<url-pattern>/alert</url-pattern>
 	</servlet-mapping>
 
 	<servlet> <!-- calendar main  -->

@@ -33,18 +33,21 @@ public class LoadShareAction extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// 한글 및 json 형태로 전달
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("application/json; charset=UTF-8");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 한글 및 json 형태로 전달
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
 
-		ShareDao shareDao = ShareDao.getInstance();
-		String email = (String) request.getSession().getAttribute("log");
-		ArrayList<CalendarVo> share = shareDao.getShareCalendar(email);
-		
-		JSONArray responseList = new JSONArray(share);
-		response.getWriter().append(responseList.toString());
-	}
+        ShareDao shareDao = ShareDao.getInstance();
+        String email = (String) request.getSession().getAttribute("log");
+        ArrayList<CalendarVo> sharedCalendars = shareDao.getSharedCalendars(email);
+
+        // 공유된 캘린더 목록을 JSON 배열로 변환
+        JSONArray jsonArray = new JSONArray(sharedCalendars);
+
+        // 응답 데이터로 JSON 배열 전송
+        response.getWriter().append(jsonArray.toString());
+    }
+
 
 }

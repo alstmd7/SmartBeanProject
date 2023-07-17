@@ -90,57 +90,45 @@ public class UserDao {
 		return check;
 	}
 	
-	public boolean updateUser(UserRequestDto userDto, String new_password) {
+	public void updateUser(UserVo user, String new_password) {
 		this.conn = DBManager.getConnection();
 		
-		boolean check = true;
-		if(this.conn != null && userDto.getEmail() != null && userDto.getPassword() != null && userDto.getName() != null) {
+		if(this.conn != null && user.getEmail() != null && user.getPassword() != null && user.getName() != null) {
 			
 			if(new_password != "") {
 				String sql = "UPDATE `user` SET `password`=?, `name`=? WHERE email=?";
-
 				try {
 					this.pstmt = this.conn.prepareStatement(sql);
 					this.pstmt.setString(1, new_password);
-					this.pstmt.setString(2, userDto.getName());
-					this.pstmt.setString(3, userDto.getEmail());
-
+					this.pstmt.setString(2, user.getName());
+					this.pstmt.setString(3, user.getEmail());
 					this.pstmt.execute();
-
 				} catch (Exception e) {
 					e.printStackTrace();
-				} finally {
-					DBManager.close(this.conn, this.pstmt);
-				}
-			} else {
-				String sql = "UPDATE `user` SET `name`=? WHERE email=?";
-
-				try {
-					this.pstmt = this.conn.prepareStatement(sql);
-					this.pstmt.setString(1, userDto.getName());
-					this.pstmt.setString(2, userDto.getEmail());
-
-					this.pstmt.execute();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					check = false;
 				} finally {
 					DBManager.close(this.conn, this.pstmt);
 				}
 				
+			} else {
+				
+				String sql = "UPDATE `user` SET `name`=? WHERE email=?";
+				try {
+					this.pstmt = this.conn.prepareStatement(sql);
+					this.pstmt.setString(1, user.getName());
+					this.pstmt.setString(2, user.getEmail());
+					this.pstmt.execute();
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					DBManager.close(this.conn, this.pstmt);
+				}
 			}
-		} else {
-			check = false;
+			
 		}
-		
-		return check;
 	}
 	
-	public boolean deleteUserByEmail(String email) {
+	public void deleteUserByEmail(String email) {
 		this.conn = DBManager.getConnection();
-		
-		boolean check = true;
 		
 		if(this.conn != null) {
 			String sql = "DELETE FROM `user` WHERE email=?";
@@ -153,17 +141,11 @@ public class UserDao {
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-				check = false;
 			} finally {
 				DBManager.close(this.conn, this.pstmt);
 			}
 			
-		} else {
-			check = false;
 		}
-		
-		return check;
 	}
-	
 	
 }

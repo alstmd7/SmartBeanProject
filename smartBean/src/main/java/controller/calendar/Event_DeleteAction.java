@@ -1,11 +1,15 @@
 package controller.calendar;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
 
 import model.calendar.CalendarDao;
 import model.event.EventDao;
@@ -15,7 +19,6 @@ import model.event.EventVo;
 /**
  * Servlet implementation class Event_DeleteAction
  */
-@WebServlet("/Event_DeleteAction")
 public class Event_DeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -42,27 +45,24 @@ public class Event_DeleteAction extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-
 		int eventNo = Integer.parseInt(request.getParameter("eventNo"));
 
-		EventDao eventDao = EventDao.getInstance();
-		EventVo eventVo = eventDao.getEventById(eventNo);
+        EventDao eventDao = EventDao.getInstance();
+        boolean success = eventDao.deleteEvent(eventNo);
 
-		if (eventVo != null) {
-		    // 이벤트가 존재하면 해당 캘린더에서만 삭제
-		    CalendarDao calendarDao = CalendarDao.getInstance();
-		    int calendarId = eventVo.getCalendar_no();
-		    calendarDao.deleteEventFromCalendar(calendarId, eventNo);
-		}
-
-		eventDao.deleteEvent(eventNo);
-
-		response.setContentType("text/plain");
-		response.getWriter().write("이벤트가 성공적으로 삭제되었습니다.");
-		
-		
-	}
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        JSONObject json = new JSONObject();
+        
+        if (success) {
+            json.put("success", true);
+            json.put("message", "이벤트가 성공적으로 삭제되었습니다.");
+        } else {
+            json.put("success", false);
+            json.put("message", "이벤트 삭제 실패");
+        }
+        
+        out.print(json.toString());
+    }
 
 }

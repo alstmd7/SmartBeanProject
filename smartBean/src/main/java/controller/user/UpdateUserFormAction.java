@@ -1,4 +1,4 @@
-package controller.user;
+	package controller.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import model.user.UserDao;
 import model.user.UserRequestDto;
+import model.user.UserVo;
 
 /**
  * Servlet implementation class UpdateUserFormAction
@@ -32,38 +33,36 @@ public class UpdateUserFormAction extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
-		
-		UserRequestDto userDto = null;
 
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String new_password = request.getParameter("new_password");
 		String name = request.getParameter("name");
 
-		userDto = new UserRequestDto(email, password, name);
-
 		UserDao userDao = UserDao.getInstance();
-		boolean result = userDao.updateUser(userDto, new_password);
+		UserVo user = userDao.getUserByEmail(email);
 		
-		String url = "UpdateUserRequest";
-		
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		if(result) {
-			// 업데이트 성공 시
+		System.out.println(password);
+		if(password == "") {	
+			userDao.updateUser(user, new_password);
 			HttpSession session = request.getSession();
 			session.setAttribute("name", name);
-			
-			url = "home";
-			out.println("<script> alert('업데이트가 완료되었습니다.');</script>");
+			request.setAttribute("message", "회원정보 수정이 완료되었습니다.");
+			request.getRequestDispatcher("alert").forward(request, response);			
 		} else {
-			out.println("<script> alert('업데이트에 실패했습니다.'); </script>");
+			
+			if(password.equals(user.getPassword())) {
+				userDao.updateUser(user, new_password);
+				HttpSession session = request.getSession();
+				session.setAttribute("name", name);
+				request.setAttribute("message", "회원정보 수정이 완료되었습니다.");
+				request.getRequestDispatcher("alert").forward(request, response);
+				
+			} else {
+				request.setAttribute("message", "현재 비밀번호가 올바르지 않습니다.");
+				request.getRequestDispatcher("alert").forward(request, response);
+			}
+			
 		}
-		out.print("<script>location.href='"+url+"';</script>");
-
-		// response.sendRedirect 사용불가
-		out.close();
-
 	}
-
 }

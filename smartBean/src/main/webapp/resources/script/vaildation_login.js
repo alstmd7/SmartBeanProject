@@ -1,9 +1,10 @@
-$(window).on('load', function() {
+$(window).on('load', function() {	
 	$(document).on('keypress', e => {
 		if (e.key === 'Enter') {
 			$('#submit-btn').click();
 		}
 	})
+	
 });
 
 $('#email').on('change', e => {
@@ -40,4 +41,3 @@ function checkValue(htmlForm) {
 		htmlForm.submit();
 	}
 }
-

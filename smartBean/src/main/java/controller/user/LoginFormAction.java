@@ -1,4 +1,4 @@
-package controller.user;
+	package controller.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -43,16 +43,16 @@ public class LoginFormAction extends HttpServlet {
 
 		UserDao userDao = UserDao.getInstance();
 		UserVo user = userDao.getUserByEmail(email);
-
+		
+		HttpSession session = request.getSession();
 		if(user != null && user.getPassword().equals(password)) {
-			HttpSession session = request.getSession();
 			session.setAttribute("log", email);
 			session.setAttribute("name", user.getName());
 			
 			response.sendRedirect("/");
 		} else {
-			
-			response.sendRedirect("loginFail");
+			request.setAttribute("message", "이메일 또는 비밀번호가 올바르지 않습니다.");
+			request.getRequestDispatcher("alert").forward(request, response);
 		}
 		
 	}

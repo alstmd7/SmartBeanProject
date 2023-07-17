@@ -6,9 +6,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <title>마이페이지</title>
 </head>
 
+<<<<<<< HEAD
 <style>
     /* 전체 초기화 스타일 */
     * {
@@ -72,11 +74,16 @@
 </style>
 
 
+=======
+>>>>>>> refs/remotes/origin/master
 <body>
     <c:if test="${empty sessionScope.log }">
         <c:redirect url="login"></c:redirect>
     </c:if>
+    
+    <jsp:include page="/header"></jsp:include>
 
+<<<<<<< HEAD
 	<jsp:include page="/header"></jsp:include>
 
     <div class="edit-member">
@@ -91,6 +98,16 @@
 
         </form>
     </div>
+=======
+	<main>
+	    <div class="edit-member">
+	        <h1>My Page</h1>
+			<button class="home-btn" onclick="location.href='calendar'">Calendar</button>
+	        <button class="home-btn" onclick="location.href='todoList'">To-do List</button>
+	        <button class="home-btn" onclick="location.href='updateUser'">회원정보 수정</button>
+	    </div>
+    </main>
+>>>>>>> refs/remotes/origin/master
     
     <jsp:include page="/footer"></jsp:include>
 </body>
