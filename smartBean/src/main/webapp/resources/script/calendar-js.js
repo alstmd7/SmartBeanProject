@@ -41,6 +41,8 @@ $(document).ready(function() {
 	calendar.render();
 
 	// <<<<<<<<<<<<<<< calendar >>>>>>>>>>>>>>>
+	var newCalendarName = "";
+
 	// 캘린더 만들기
 	$("#create-calendar-btn").on("click", function() {
 		$("#create-calendar-popup").fadeIn();
@@ -48,7 +50,7 @@ $(document).ready(function() {
 
 	// 캘린더 생성 정보 저장 및 관리 버튼 추가					 수정 : id를 만들고 -> id에 calendarNo(db에서 꺼내) , checked 속성값 있으면 선택된 애들의 아이디값만 가져와  
 	$("#save-newCalendar-button").on("click", function() {
-		var newCalendarName = $("#newCalendar-name-input").val();
+		newCalendarName = $("#newCalendar-name-input").val();
 		var newCalendarOwner = $("#newCalendar-owner-input").val();
 
 		if (newCalendarName.trim() !== "" && newCalendarOwner.trim() !== "") {
@@ -60,7 +62,7 @@ $(document).ready(function() {
         <button class="admin-calendar-btn">캘린더 관리</button>
       `;
 
-		// 수정 : id="${newCalendarName}" 부분을 가져온 calendarNo로 넣어줘야해
+			// 수정 : id="${newCalendarName}" 부분을 가져온 calendarNo로 넣어줘야해
 			$("#calendar-list").append(newCalendar);
 			$("#create-calendar-popup").fadeOut();
 			$("#newCalendar-name-input").val("");
@@ -103,16 +105,24 @@ $(document).ready(function() {
 	// 캘린더 관리 팝업 열기
 	$(document).on("click", ".admin-calendar-btn", function() {
 		$("#admin-newCalendar-popup").fadeIn();
-		// 캘린더 관리 팝업에 생성한 캘린더 이름 표시
-		$("#newCalendar-popup-title").text(newCalendarName);			// 수정 : 안나와 *********
+
+		var calendarName = $(this).prev().prev().attr('id');
+		document.getElementById("newCalendar-popup-title").innerHTML = calendarName;
 	});
 
-
 	// 캘린더 관리 팝업 닫기 ---> UpdateCalendar 500 에러
-	$(document).on("click", ".close-newCalendar-button", function(e) {
+	/* $(document).on("click", ".close-newCalendar-button", function(e) {
+		e.preventDefault();
+		$("#admin-newCalendar-popup").fadeOut();
+	}); */
+
+	// 해결 ! 캘린더 관리 팝업 닫기 ---> 트러블슈팅 : 동적으로 캘린더가 생성되기 때문에 이벤트를 바인딩 하려면 이벤트 위임을 사용해야함
+	// 부모 요소에 이벤트를 바인딩하고, 이벤트가 자식 요소로 전달되는 이벤트 버블링의 원리 이용
+	$(document).on("click", "#close-newCalendar-button", function(e) {
 		e.preventDefault();
 		$("#admin-newCalendar-popup").fadeOut();
 	});
+
 
 	// 사용자 공유 기능							수정 : email getPrmeter 받아와서 배열 만들고 배열 순회하면서 그거 다 shere_Calendar 테이블에 저장
 	$("#share-button").on("click", function() {
@@ -134,55 +144,40 @@ $(document).ready(function() {
 				listItem.append(deleteButton);
 				$(".user-share-list").append(listItem);
 			});
-
-			$.ajax({
-				url: "/ShareCalendar_RequestAction", // 서블릿 만들어야...
-				method: "POST", 
-				data: { email: userEmail }, // 전송할 데이터 (이메일 정보)
-				success: function(response) {
-					// 서버에서의 처리가 성공적으로 완료된 경우
-					console.log("이메일 정보 전송 및 처리 완료");
-
-				},
-				error: function(xhr, status, error) {
-					// 요청이 실패한 경우
-					console.log("AJAX 요청 실패: " + error);
-				}
-			});
 		}
 	});
 
 	// 캘린더 삭제 버튼
 	$("#delete-calendar-button").on("click", function() {
-	    var calendarId = $(".calendar-checkbox-input:checked").attr("id");
-	
-	    // AJAX 요청을 사용하여 서버에 삭제 요청을 보냅니다.
-	    $.ajax({
-	        url: "/DeleteCalendar",
-	        method: "POST",
-	        data: { calendarId: calendarId }
-	    }).done(function(response) {
-	        console.log("삭제 완료");
-	    }).fail(function() {
-	        console.log("삭제 실패");
-	    });
+		var calendarId = $(".calendar-checkbox-input:checked").attr("id");
+
+		// AJAX 요청을 사용하여 서버에 삭제 요청을 보냅니다.
+		$.ajax({
+			url: "/DeleteCalendar",
+			method: "POST",
+			data: { calendarId: calendarId }
+		}).done(function(response) {
+			console.log("삭제 완료");
+		}).fail(function() {
+			console.log("삭제 실패");
+		});
 	});
 
-	
+
 	// 캘린더 이름 수정하기 버튼
 	$("#update-calendar-button").on("click", function() {
-	    var calendarId = $(".calendar-checkbox-input:checked").attr("id");
-	    var newCalendarName = $("#new-calendar-name-input").val();
-	
-	    $.ajax({
-	        url: "/UpdateCalendar",
-	        method: "POST",
-	        data: { calendarId: calendarId, newCalendarName: newCalendarName }
-	    }).done(function(response) {
-	        console.log("수정 완료");
-	    }).fail(function() {
-	        console.log("수정 실패");
-	    });
+		var calendarId = $(".calendar-checkbox-input:checked").attr("id");
+		var newCalendarName = $("#new-calendar-name-input").val();
+
+		$.ajax({
+			url: "/UpdateCalendar",
+			method: "POST",
+			data: { calendarId: calendarId, newCalendarName: newCalendarName }
+		}).done(function(response) {
+			console.log("수정 완료");
+		}).fail(function() {
+			console.log("수정 실패");
+		});
 	});
 
 	// <<<<<<<<<<<<<<< task >>>>>>>>>>>>>>>
@@ -320,7 +315,7 @@ $(document).ready(function() {
 				name: allEvent[i]._def.title,
 				email: '', // 세션에 저장된 로그..?
 				title: allEvent[i]._def.title,
-				content: $("#event-description").val(), 
+				content: $("#event-description").val(),
 				start: allEvent[i]._instance.range.start.toISOString().split("T")[0], // "start":"2023-07-18T00:00:00.000Z" 파싱 
 				end: allEvent[i]._instance.range.end.toISOString().split("T")[0],
 				allday: allEvent[i]._def.allday,
