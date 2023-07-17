@@ -1,5 +1,4 @@
 var calendar = null;
-// 커밋 테스트
 $(document).ready(function() {
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
@@ -47,7 +46,7 @@ $(document).ready(function() {
 		$("#create-calendar-popup").fadeIn();
 	});
 
-	// 캘린더 생성 정보 저장 및 관리 버튼 추가
+	// 캘린더 생성 정보 저장 및 관리 버튼 추가					 수정 : id를 만들고 -> id에 calendarNo(db에서 꺼내) , checked 속성값 있으면 선택된 애들의 아이디값만 가져와  
 	$("#save-newCalendar-button").on("click", function() {
 		var newCalendarName = $("#newCalendar-name-input").val();
 		var newCalendarOwner = $("#newCalendar-owner-input").val();
@@ -55,12 +54,13 @@ $(document).ready(function() {
 		if (newCalendarName.trim() !== "" && newCalendarOwner.trim() !== "") {
 			var newCalendar = document.createElement("div");
 			newCalendar.className = "calendar-checkbox";
-			newCalendar.innerHTML = `
-        <input type="checkbox" id="${newCalendarName}" class="calendar-checkbox-input" data-owner="${newCalendarOwner}">
+			newCalendar.innerHTML = ` 
+        <input type="checkbox" id="${newCalendarName}" class="calendar-checkbox-input" data-owner="${newCalendarOwner}"> 
         <span>${newCalendarName} (${newCalendarOwner})</span>
         <button class="admin-calendar-btn">캘린더 관리</button>
       `;
 
+		// 수정 : id="${newCalendarName}" 부분을 가져온 calendarNo로 넣어줘야해
 			$("#calendar-list").append(newCalendar);
 			$("#create-calendar-popup").fadeOut();
 			$("#newCalendar-name-input").val("");
@@ -76,7 +76,6 @@ $(document).ready(function() {
 				  // 캘린더에서 이벤트 소스 제거
 				} */
 			});
-
 		}
 	});
 
@@ -102,19 +101,20 @@ $(document).ready(function() {
 	});
 
 	// 캘린더 관리 팝업 열기
-	/* $(document).on("click", ".admin-calendar-btn", function() {
+	$(document).on("click", ".admin-calendar-btn", function() {
 		$("#admin-newCalendar-popup").fadeIn();
 		// 캘린더 관리 팝업에 생성한 캘린더 이름 표시
-		$("#newCalendar-popup-title").text(newCalendarName);
+		$("#newCalendar-popup-title").text(newCalendarName);			// 수정 : 안나와 *********
 	});
 
 
 	// 캘린더 관리 팝업 닫기 ---> UpdateCalendar 500 에러
-	$(document).on("click", ".admin-calendar-btn", function() {
+	$(document).on("click", ".close-newCalendar-button", function(e) {
+		e.preventDefault();
 		$("#admin-newCalendar-popup").fadeOut();
 	});
 
-	// 사용자 공유 기능
+	// 사용자 공유 기능							수정 : email getPrmeter 받아와서 배열 만들고 배열 순회하면서 그거 다 shere_Calendar 테이블에 저장
 	$("#share-button").on("click", function() {
 		var userEmail = $("#user-share-input").val();
 
@@ -174,9 +174,8 @@ $(document).ready(function() {
 	    var calendarId = $(".calendar-checkbox-input:checked").attr("id");
 	    var newCalendarName = $("#new-calendar-name-input").val();
 	
-	    // AJAX 요청을 사용하여 서버에 수정 요청을 보냅니다.
 	    $.ajax({
-	        url: "/Calendar_UpdateAction",
+	        url: "/UpdateCalendar",
 	        method: "POST",
 	        data: { calendarId: calendarId, newCalendarName: newCalendarName }
 	    }).done(function(response) {
@@ -184,7 +183,7 @@ $(document).ready(function() {
 	    }).fail(function() {
 	        console.log("수정 실패");
 	    });
-	}); */
+	});
 
 	// <<<<<<<<<<<<<<< task >>>>>>>>>>>>>>>
 	// task 추가 버튼
@@ -384,7 +383,8 @@ $(document).ready(function() {
 
 	});
 
-	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 모든 이벤트 불러와짐. 필터링 필요
+	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 모든 이벤트 불러와짐. 필터링 필요 수정 : 조회하려면 캘린더no랑 이벤트No가 필요한데 두개가 해당해야 이벤트 조회가 가능.
+	// share_Event에서 외래키로 받아와서 select * from share_Event where 선택한캘린더번호=?
 	$.ajax({
 		url: "/EventRequest",
 		method: "GET",

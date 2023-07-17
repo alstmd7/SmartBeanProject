@@ -55,17 +55,17 @@ public class Calendar_UpdateAction extends HttpServlet {
 	        return;
 	    }
 
-	    int result = calendarDao.updateCalendarName(calendarId, newCalendarName);
+	    calendarDao.updateCalendarName(calendarId, newCalendarName);
 
-	    if (result > 0) {
-	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");
-	        response.getWriter().write("{\"message\": \"success\"}");
-	    } else {
-	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");
-	        response.getWriter().write("{\"message\": \"fail\"}");
-	    }
+//	    if (result > 0) {
+//	        response.setContentType("application/json");
+//	        response.setCharacterEncoding("UTF-8");
+//	        response.getWriter().write("{\"message\": \"success\"}");
+//	    } else {
+//	        response.setContentType("application/json");
+//	        response.setCharacterEncoding("UTF-8");
+//	        response.getWriter().write("{\"message\": \"fail\"}");
+//	    }
 	}
 
 }
