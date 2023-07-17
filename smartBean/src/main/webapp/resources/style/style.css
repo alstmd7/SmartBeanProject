@@ -241,7 +241,7 @@ footer>ul>li:nth-child(2){
 	height: 440px;
 	padding: 40px;
 	box-sizing: border-box;
-	border: 2px solid lightcoral;
+	border: 2px solid #006400;
 	border-radius: 6px;
 	background-color: #fff;
 	display:flex;
@@ -254,7 +254,7 @@ footer>ul>li:nth-child(2){
 	font-family: 'Lobster', cursive;
 	font-size: 2.5rem;
 	/* color: #6A24FE; */
-	color: #d73434;
+	color: #006400;
 	margin: 0 0 10px 0;
 }
 
@@ -268,9 +268,9 @@ footer>ul>li:nth-child(2){
 	padding: 0 10px;
 	box-sizing: border-box;
 	margin: 8px 0;
-	border: 1px solid #ddd;
+	border: 1px solid #006400;
 	border-radius: 6px;
-	background-color: #F8F8F8;
+	background-color: #006400;
 	font-size: 14px;
 }
 
@@ -284,11 +284,11 @@ footer>ul>li:nth-child(2){
     padding: 0 10px;
     margin-top: 20px;
     box-sizing: border-box;
-    border: 1px solid #ddd;
+    border: 1px solid #006400;
     border-radius: 6px;
 	color: #fff;
 	font-size: 16px;
-	background-color: #d73434;
+	background-color: #006400;
 	cursor: pointer;
 }
 
@@ -329,11 +329,11 @@ footer>ul>li:nth-child(2){
     height: 48px;
     margin-top: 40px;
     box-sizing: border-box;
-    border: 1px solid #ddd;
+    border: 1px solid #006400;
     border-radius: 6px;
     color: #fff;
     font-size: 16px;
-    background-color: #d73434;
+    background-color: #006400;
     cursor: pointer;
 }
 
@@ -341,7 +341,7 @@ footer>ul>li:nth-child(2){
 	width: 400px;
 	padding: 40px;
 	box-sizing: border-box;
-	border: 2px solid lightcoral;
+	border: 2px solid #006400;
 	border-radius: 6px;
 	background-color: #fff;
 }
@@ -350,7 +350,7 @@ footer>ul>li:nth-child(2){
 	text-align: center;
 	font-family: 'Lobster', cursive;
 	font-size: 2.5rem;
-	color: #d73434;
+	color: #006400;
 	margin: 0;
 	margin-bottom: 20px;
 }
@@ -361,9 +361,8 @@ footer>ul>li:nth-child(2){
 	padding: 0 10px;
 	box-sizing: border-box;
 	margin-top: 16px;
-	border: 1px solid #ddd;
+	border: 1px solid #006400;
 	border-radius: 6px;
-	background-color: #F8F8F8;
 	font-size: 14px;
 }
 
@@ -384,9 +383,8 @@ footer>ul>li:nth-child(2){
 	height: 48px;
 	padding: 0 10px;
 	box-sizing: border-box;
-	border: 1px solid #ddd;
+	border: 1px solid #006400;
 	border-radius: 6px;
-	background-color: #F8F8F8;
 	font-size: 14px;
 }
 
@@ -399,9 +397,8 @@ footer>ul>li:nth-child(2){
 	height: 48px;
 	box-sizing: border-box;
 	margin-top: 16px;
-	border: 1px solid #ddd;
+	border: 1px solid #006400;
 	border-radius: 6px;
-	background-color: #F8F8F8;
 	font-size: 14px;
 	cursor: pointer;
 }
@@ -411,11 +408,11 @@ footer>ul>li:nth-child(2){
     height: 48px;
     margin-top: 16px;
     box-sizing: border-box;	
-    border: 1px solid #ddd;
+    border: 1px solid #006400;
     border-radius: 6px;
 	color: #fff;
 	font-size: 16px;
-	background-color: #d73434;
+	background-color: #006400;
 	cursor: pointer;
 }
 
@@ -425,11 +422,11 @@ footer>ul>li:nth-child(2){
     padding: 0 10px;
     margin-top: 20px;
     box-sizing: border-box;
-    border: 1px solid #ddd;
+    border: 1px solid #006400;
     border-radius: 6px;
     color: #fff;
     font-size: 16px;
-    background-color: #d73434;
+    background-color: #006400;
     cursor: pointer;
 }
 
@@ -437,7 +434,7 @@ footer>ul>li:nth-child(2){
 .delete-box {
 	width: 700px;
 	padding: 20px;	
-	border: 2px solid lightcoral;
+	border: 2px solid #006400;
 	border-radius: 40px;
 }
 
@@ -460,9 +457,8 @@ footer>ul>li:nth-child(2){
 	height: 48px;
 	padding: 0 10px;
 	box-sizing: border-box;
-	border: 1px solid #ddd;
+	border: 1px solid #006400;
 	border-radius: 6px;
-	background-color: #F8F8F8;
 	font-size: 14px;
 }
 
@@ -471,7 +467,7 @@ footer>ul>li:nth-child(2){
     height: 48px;
     margin-top: 16px;
     box-sizing: border-box;	
-    border: 1px solid #ddd;
+    border: 1px solid #006400;
     border-radius: 15px;
 	color: #fff;
 	font-size: 16px;

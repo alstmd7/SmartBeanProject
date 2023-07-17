@@ -56,10 +56,10 @@
 		<form method="post" action="UpdateCalendar" id="update-calendar-form">
 			<div id="admin-newCalendar-popup" style="display: none;">
 			  <h2 id="newCalendar-popup-title"></h2>
-			  <button id="close-newCalendar-button">닫기</button>
+			  <button id="close-newCalendar-button">닫기</button> 					<!-- 수정 : 이벤트 동작 안하게 하거나 밖으로 빼거나 ******** -->
 			  <button id="delete-calendar-button">캘린더 삭제</button><br>
 			  <p>공유할 멤버의 이메일(여러명은 '/'로 분리)</p>
-			  <input type="text" id="user-share-input" placeholder="사용자 이메일">
+			  <input type="text" id="user-share-input" name="user-share-input" placeholder="사용자 이메일">
 			  <button id="share-button">공유하기</button>
 			  <br>
 			  <div class="user-share-list"></div>
