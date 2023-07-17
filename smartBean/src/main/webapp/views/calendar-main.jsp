@@ -53,26 +53,35 @@
 		</div> 
 		
 			<!-- 새로 생성한 캘린더 관리 팝업 -->
-		<form method="post" action="UpdateCalendar" id="update-calendar-form">
-			<div id="admin-newCalendar-popup" style="display: none;">
-			  <h2 id="newCalendar-popup-title"></h2>
-			  <!--  <button id="close-newCalendar-button">닫기</button> -->					<!-- 수정 : 이벤트 동작 안하게 하거나 밖으로 빼거나 ******** -->
-			  <button id="close-newCalendar-button" type="button">닫기</button>
-			  <button id="delete-calendar-button">캘린더 삭제</button><br>
-			  <p>공유할 멤버의 이메일(여러명은 '/'로 분리)</p>
-			  <input type="text" id="user-share-input" name="user-share-input" placeholder="사용자 이메일">
-			  <button id="share-button">공유하기</button>
-			  <br>
-			  <div class="user-share-list"></div>
-			  
-			  <p>캘린더 이름 변경</p>
-			  <!-- <input type="text" id="new-calendar-name-input-${calendarId}" placeholder="변경할 캘린더 이름"> -->
-			  <input type="text" id="new-calendar-name-input" placeholder="변경할 캘린더 이름">
-			  <button id="update-calendar-button">수정하기</button>
-			</div>
-		</form>
-		
-		
+			<form method="post" action="UpdateCalendar" id="update-calendar-form">
+				<div id="admin-newCalendar-popup" style="display: none;">
+					<div class="button-container">
+						<button id="delete-calendar-button">캘린더 삭제</button>
+						<br>
+						<button id="close-newCalendar-button" type="button">
+							<img class="close-icon" src="../resources/img/closeIcon.png" alt="Close Icon">
+						</button>
+					</div>
+					<h2 id="newCalendar-popup-title"></h2>
+					<!--  <button id="close-newCalendar-button">닫기</button> -->
+					<!-- 수정 : 이벤트 동작 안하게 하거나 밖으로 빼거나 ******** -->
+					<!--  <button id="close-newCalendar-button" type="button">닫기</button> -->
+					<p>공유할 멤버의 이메일(여러명은 '/'로 분리)</p>
+					<input type="text" id="user-share-input" name="user-share-input"
+						placeholder="사용자 이메일">
+					<button id="share-button">공유하기</button>
+					<br>
+					<div class="user-share-list"></div>
+	
+					<p>캘린더 이름 변경</p>
+					<!-- <input type="text" id="new-calendar-name-input-${calendarId}" placeholder="변경할 캘린더 이름"> -->
+					<input type="text" id="new-calendar-name-input"
+						placeholder="변경할 캘린더 이름">
+					<button id="update-calendar-button">수정하기</button>
+				</div>
+			</form>
+
+
 		<!-- =============== EVENT =================== -->
 		<!-- Event 수정 Popup 팝업 -->
 		<div id="event-popup" style="display: none;">
@@ -116,30 +125,30 @@
 			<button id="save-event-button">저장</button>
 		</div>
 		
+		<hr>
 
 		<!-- =============== TASK =================== -->
 		<!-- Task 추가/관리 버튼 -->
 		<button id="add-task-button">Task 추가</button>
 		
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main' style="background-color: #FF6A89;">휴가</div>
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main' style="height: 20px; font-size: medium; padding: 5px;">휴가</div>
 		</div>
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main'>오전반차</div>
+		
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main' style="height: 20px; font-size: medium; padding: 5px;">오전반차</div>
 		</div>
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main'>오후반차</div>
+		
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main' style="height: 20px; font-size: medium; padding: 5px;">오후반차</div>
 		</div>
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main' style="background-color: #329632;">재택근무</div>
+		
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main' style="height: 20px; font-size: medium; padding: 5px;">재택근무</div>
 		</div>
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main' style="background-color: #FF8200;">출장</div>
+		
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+			<div class='fc-event-main' style="height: 20px; font-size: medium; padding: 5px;">출장</div>
 		</div>
 		
 		<!-- Task 추가 팝업 -->
