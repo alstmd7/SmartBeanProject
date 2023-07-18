@@ -41,14 +41,26 @@ $(document).ready(function() {
 	calendar.render();
 
 	// <<<<<<<<<<<<<<< calendar >>>>>>>>>>>>>>>
+	// 내 캘린더 번호 가져오기
+	var myCalendarNo = null;
+	$.ajax({
+		url: '/GetMyCalendarNo',
+		type: 'POST',
+	}).done(function(myCal) {		
+		myCalendarNo = myCal.no;
+		console.log("My Calendar No:", myCalendarNo);
+	}).fail(function() {
+		
+	});
+	
 	var newCalendarName = "";
-
+	
 	// 캘린더 만들기
 	$("#create-calendar-btn").on("click", function() {
 		$("#create-calendar-popup").fadeIn();
 	});
 
-	// 캘린더 생성 정보 저장 및 관리 버튼 추가					 수정 : id를 만들고 -> id에 calendarNo(db에서 꺼내) , checked 속성값 있으면 선택된 애들의 아이디값만 가져와  
+	// 캘린더 생성 정보 저장 및 관리 버튼 추가
 	$("#save-newCalendar-button").on("click", function() {
 		var calendarCheckboxId = 'calendar-' + calendarNo;
 
@@ -61,6 +73,7 @@ $(document).ready(function() {
 `;
 		$("#calendar-list").append(newCalendar);
 	});
+
 
 	// 사용자의 모든 캘린더 불러오기
 	$.ajax({
@@ -78,23 +91,23 @@ $(document).ready(function() {
                     <button class="admin-calendar-btn" id="${calendarNo}")>EDIT</button>
                 </div>`
 			);
-		console.log(calendarNo);
+			console.log(calendarNo);
 		});
 	}).fail(function() {
 		console.error("fail read calendars");
 	});
 
-	var id_check = null; 
-	
+	var id_check = null;
+
 	// 캘린더 관리 팝업 열 때 calendarNo를  id_check에 가져오기
 	$(document).on("click", ".admin-calendar-btn", function() {
-	    $("#admin-newCalendar-popup").fadeIn();
-	
-	    var calendarName = $(this).prev().prev().attr('id');
-	    document.getElementById("newCalendar-popup-title").innerHTML = calendarName;
-	    
-	    id_check = $(this).attr("id"); // id_check 업데이트
-	    console.log(id_check);
+		$("#admin-newCalendar-popup").fadeIn();
+
+		var calendarName = $(this).prev().prev().attr('id');
+		document.getElementById("newCalendar-popup-title").innerHTML = calendarName;
+
+		id_check = $(this).attr("id"); // id_check 업데이트
+		console.log(id_check);
 	});
 
 	// 캘린더 관리 팝업 닫기
@@ -105,32 +118,32 @@ $(document).ready(function() {
 
 	// 캘린더 삭제 버튼
 	$("#delete-calendar-button").on("click", function() {
-	    var calendarId = id_check; // id_check 사용
-	
-	    $.ajax({
-	        url: "/DeleteCalendar",
-	        method: "POST",
-	        data: { calendarId: calendarId }
-	    })
+		var calendarId = id_check; // id_check 사용
+
+		$.ajax({
+			url: "/DeleteCalendar",
+			method: "POST",
+			data: { calendarId: calendarId }
+		})
 		location.href = "calendar";
 	});
 
-	
+
 	// 캘린더 이름 수정하기 버튼
 	$("#update-calendar-button").on("click", function() {
-	    var calendarId = id_check; // id_check 사용
-	    var newCalendarName = $("#new-calendar-name-input").val();
+		var calendarId = id_check; // id_check 사용
+		var newCalendarName = $("#new-calendar-name-input").val();
 
 		let obj = {
-			"calendarId" : calendarId,
-			"newCalendarName" : newCalendarName
+			"calendarId": calendarId,
+			"newCalendarName": newCalendarName
 		}
-	
-	    $.ajax({
-	        url: "/UpdateCalendar",
-	        method: "POST",
-	        data: obj
-	    })
+
+		$.ajax({
+			url: "/UpdateCalendar",
+			method: "POST",
+			data: obj
+		})
 
 		location.href = "calendar";
 	});
@@ -313,46 +326,57 @@ $(document).ready(function() {
 			events.push(obj);
 		}
 	});
-	
+
 	// 이벤트 등록
 	var taskTitle = null;
-	
+
 	// task_title 가져오기 
 	$(".fc-event-main").mousedown(function() {
-	    taskTitle = $(this).parent().data('task_title');
-	    console.log(taskTitle);
+		taskTitle = $(this).parent().data('task_title');
+		console.log(taskTitle);
 	});
-	
+
 	// 날짜 불러오고 이벤트 팝업 시작일에 날짜 지정 
 	$(document).on('mouseup', 'td.fc-day', function(e) {
-	    startDate = $(e.target).closest('td.fc-day').data('date');
-	    $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
+		startDate = $(e.target).closest('td.fc-day').data('date');
+		$("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
 		// console.log(startDate);
+	});
+
+	// 선택된 옵션의 값을 콘솔에 표시하는 이벤트
+	$("#calendars").on("change", function() {
+		var selectedOptions = $(this).find("option:selected");
+		selectedOptions.each(function() {
+			var selectedCalNo = $(this).val();
+			var selectedCalName = $(this).text();
+			console.log("Selected calendar No:", selectedCalNo);
+			console.log("Selected calendar Name:", selectedCalName);
+		});
 	});
 
 	// 얘는 업데이트가 되야할거
 	/* var calendarNumbers = $("#calendars").val();
 	
-	    for (var i = 0; i < calendarNumbers.length; i++) {
-	        let obj = {
-	            calendar_no: calendarNumbers[i],
-	            task_no: taskTitle, 
-	            name: task-title,
-	            email: // 사용자 로그값 
-	            title: event-title,
-	            content: 
-	            start: startDate,
-	            end: 
-	            all_day: 
-	        };
+		for (var i = 0; i < calendarNumbers.length; i++) {
+			let obj = {
+				calendar_no: calendarNumbers[i],
+				task_no: taskTitle, 
+				name: task-title,
+				email: // 사용자 로그값 
+				title: event-title,
+				content: 
+				start: startDate,
+				end: 
+				all_day: 
+			};
 
-	    $.ajax({
-	        url: "/EventCreate",
-	        method: "POST",
-	        data: obj,
-	    });
+		$.ajax({
+			url: "/EventCreate",
+			method: "POST",
+			data: obj,
+		});
 	
-	    location.href = "calendar"; */
+		location.href = "calendar"; */
 
 	// 캘린더에 등록된 이벤트 수정
 	$('#calendar').on('click', '.fc-daygrid-event', function() {
@@ -369,7 +393,7 @@ $(document).ready(function() {
 		var eventDescriptionInput = $('#event-description');
 
 		eventPopup.fadeIn();
-		
+
 		$('#task-title').val(taskTitle);
 
 		// 이벤트 타이틀 입력
@@ -390,9 +414,9 @@ $(document).ready(function() {
 		closeButton.off('click').on('click', function() {
 			eventPopup.fadeOut();
 		});
-		
+
 		saveEventButton.off('click').on('click', function() {
-			
+
 		});
 
 	});

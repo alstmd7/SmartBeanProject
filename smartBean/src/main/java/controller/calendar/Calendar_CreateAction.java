@@ -24,16 +24,8 @@ public class Calendar_CreateAction extends HttpServlet {
 	// DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
-//		Map map = request.getParameterMap();
-//		Object[] keyset = map.keySet().toArray();
-//		for(Object key : keyset) {
-//			System.out.println(">> " + ((String) key));
-//		}
 		
 		String calendarName = request.getParameter("calendarName");
-//		System.out.println("calendarName : " + calendarName);
-//		System.out.println("email : " + email);
 		
         CalendarDao dao = CalendarDao.getInstance();
         UserDao userDao = UserDao.getInstance();

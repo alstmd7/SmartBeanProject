@@ -128,10 +128,9 @@
 
 					for (CalendarVo calendar : calendars) {
 					%>
-					<option value="<%=calendar.getNo()%>"><%=calendar.getName()%></option>
-					<%
-					}
-					%>
+					
+				  <option value="<%=calendar.getNo()%>"> <%=calendar.getName()%></option>
+					<%}%>
 			</select>
 				<p>상세내용</p> <textarea id="event-description"></textarea> <br>
 

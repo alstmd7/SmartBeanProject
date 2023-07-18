@@ -69,7 +69,6 @@ public class JoinFormAction extends HttpServlet {
 					calendar_no = calendarList.get(i).getNo();
 				}
 			}
-			System.out.println(calendar_no);
 			
 			// 기본 캘린더 공유 추가
 			ShareDao shareDao = ShareDao.getInstance();
