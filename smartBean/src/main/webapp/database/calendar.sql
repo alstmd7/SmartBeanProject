@@ -10,9 +10,9 @@ INSERT INTO calendar (`code`, email, `name`) VALUES (1, "qortmdals120@gmail.com"
 
 SELECT * FROM calendar;
 SELECT * FROM calendar WHERE email="qortmdals120@gmail.com";
+SELECT * FROM calendar WHERE p_code=7;
 
 UPDATE calendar SET `name`='NEW캘린더1' WHERE no=2;
-
 UPDATE calendar SET `email`='new@gmail.com' WHERE no=2;
 
 

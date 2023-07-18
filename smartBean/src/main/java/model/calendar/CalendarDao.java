@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.user.UserVo;
 import util.DBManager;
 
 public class CalendarDao {
@@ -71,8 +72,9 @@ public class CalendarDao {
 				int no = rs.getInt("no");
 				int code = rs.getInt("code");
 				String name = rs.getString("name");
+				int p_code = rs.getInt("p_code");
 
-				CalendarVo calendar = new CalendarVo(no, code, email, name);
+				CalendarVo calendar = new CalendarVo(no, code, email, name, p_code);
 				calendarList.add(calendar);
 			}
 
@@ -186,14 +188,29 @@ public class CalendarDao {
 			conn = DBManager.getConnection();
 
 			if (conn != null) {
-				String sql = "INSERT INTO calendar (code, email, `name`) VALUES (?, ?, ?)";
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, calendarDto.getCode());
-				pstmt.setString(2, calendarDto.getEmail());
-				pstmt.setString(3, calendarDto.getName());
+				
+				if(calendarDto.getP_code() == 0) {
+					String sql = "INSERT INTO calendar (code, email, `name`) VALUES (?, ?, ?)";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, calendarDto.getCode());
+					pstmt.setString(2, calendarDto.getEmail());
+					pstmt.setString(3, calendarDto.getName());
 
-				int rowCount = pstmt.executeUpdate();
-				result = rowCount > 0;
+					int rowCount = pstmt.executeUpdate();
+					result = rowCount > 0;
+				} else {
+					String sql = "INSERT INTO calendar (code, email, `name`, p_code) VALUES (?, ?, ?, ?)";
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setInt(1, calendarDto.getCode());
+					pstmt.setString(2, calendarDto.getEmail());
+					pstmt.setString(3, calendarDto.getName());
+					pstmt.setInt(4, calendarDto.getP_code());
+
+					int rowCount = pstmt.executeUpdate();
+					result = rowCount > 0;
+				}
+
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -234,7 +251,6 @@ public class CalendarDao {
 
 		try {
 			conn = DBManager.getConnection();
-
 			String sql = "DELETE FROM calendar WHERE no = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, no);

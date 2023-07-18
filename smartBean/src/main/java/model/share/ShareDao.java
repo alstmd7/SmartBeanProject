@@ -54,6 +54,8 @@ public class ShareDao {
 
     public boolean addSharedCalendar(String email, int calendarNo) {
         conn = DBManager.getConnection();
+        
+        boolean check = true;
         if (conn != null) {
         	System.out.println("Connection is null"); // 추가한 코드
             String sql = "INSERT INTO share_calendar (email, `no`) VALUES (?, ?)";
@@ -62,16 +64,17 @@ public class ShareDao {
                 pstmt.setString(1, email);
                 pstmt.setInt(2, calendarNo);
                 pstmt.executeUpdate();
-                return true; // 성공적으로 실행되었음을 반환
             } catch (SQLException e) {
                 e.printStackTrace();
-                return false; // 예외 발생시 실패했음을 반환
+                check = false; // 예외 발생시 실패했음을 반환
             } finally {
                 DBManager.close(conn, pstmt);
             }
         } else {
-            return false; // DB 접속 실패시 실패했음을 반환
+            check = false; // DB 접속 실패시 실패했음을 반환
         }
+        
+        return check;
     }
 
 }

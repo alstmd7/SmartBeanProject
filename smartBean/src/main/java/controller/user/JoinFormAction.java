@@ -2,6 +2,7 @@ package controller.user;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,15 +53,28 @@ public class JoinFormAction extends HttpServlet {
 		boolean result = userDao.createUser(user);		
 		
 		if(result) {
+			// p_code를 가진 유저의 기본 캘린더 생성
 			UserVo joinUser = userDao.getUserByEmail(email);
-			CalendarRequestDto calendarRequestDto = new CalendarRequestDto(joinUser.getCode(), email, name);
+			int code_user = joinUser.getCode();
+			CalendarRequestDto calendarRequestDto = new CalendarRequestDto(code_user, email, name, code_user);
 			CalendarDao calendarDao = CalendarDao.getInstance();
-			calendarDao.createCalendar(calendarRequestDto);
+			boolean calendar_result = calendarDao.createCalendar(calendarRequestDto);
 			
+			// 유저의 code값과 같은 p_code를 가진 calendar_no값 반환
+			int calendar_no = 0;
+			ArrayList<CalendarVo> calendarList = calendarDao.getAllCalendars(email);
+			for (int i = 0; i < calendarList.size(); i++) {
+				int p_code = calendarList.get(i).getP_code();
+				if (p_code == code_user) {
+					calendar_no = calendarList.get(i).getNo();
+				}
+			}
+			System.out.println(calendar_no);
+			
+			// 기본 캘린더 공유 추가
 			ShareDao shareDao = ShareDao.getInstance();
-			shareDao.addSharedCalendar(email, joinUser.getCode());
-			
-			request.removeAttribute("dupl");
+			shareDao.addSharedCalendar(email, calendar_no);
+		
 			request.setAttribute("message", "회원가입이 완료되었습니다. 로그인 후 이용해주세요.");
 			
 			request.getRequestDispatcher("alert").forward(request, response);

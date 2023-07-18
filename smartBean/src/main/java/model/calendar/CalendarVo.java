@@ -6,9 +6,18 @@ public class CalendarVo {
     private int code;
     private String email;
     private String name;
-    private String owner;
+    private int p_code;
     
-    public CalendarVo(int no, int code, String email, String name) {
+    public CalendarVo(int no, int code, String email, String name, int p_code) {
+		super();
+		this.no = no;
+		this.code = code;
+		this.email = email;
+		this.name = name;
+		this.p_code = p_code;
+	}
+
+	public CalendarVo(int no, int code, String email, String name) {
         this.no = no;
         this.code = code;
         this.email = email;
@@ -35,27 +44,19 @@ public class CalendarVo {
         return email;
     }
     
-    public void setEmail(String email) {
-        this.email = email;
+    public String getName() {
+        return name;
     }
     
     public String getOwner() {
     	return email;
     }
     
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
+    public int getP_code() {
+		return p_code;
+	}
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
+	@Override
     public String toString() {
         return String.format("No: %d\nCode: %d\nEmail: %s\nName: %s", this.no, this.code, this.email, this.name);
     }

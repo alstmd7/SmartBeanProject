@@ -5,8 +5,17 @@ public class CalendarRequestDto {
     private int code;
     private String email;
     private String name;
+    private int p_code;
 
-    public CalendarRequestDto(int code, String email, String name) {
+    public CalendarRequestDto(int code, String email, String name, int p_code) {
+		super();
+		this.code = code;
+		this.email = email;
+		this.name = name;
+		this.p_code = p_code;
+	}
+
+	public CalendarRequestDto(int code, String email, String name) {
         this.code = code;
         this.email = email;
         this.name = name;
@@ -43,5 +52,9 @@ public class CalendarRequestDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public int getP_code() {
+        return p_code;
     }
 }
