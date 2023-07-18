@@ -33,8 +33,8 @@ public class CreateTodoFormAction extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String email = (String) request.getSession().getAttribute("log");
-		String content = request.getParameter("task");
-		String target_at = request.getParameter("date");
+		String content = request.getParameter("content_add");
+		String target_at = request.getParameter("target_at_add");
 	    
 	    TodoRequestDto todo = new TodoRequestDto(email, content, target_at);
 

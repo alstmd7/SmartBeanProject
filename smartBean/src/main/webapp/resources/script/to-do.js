@@ -3,54 +3,6 @@ $(window).on('load', function() {
 	printWeek();
 });
 
-var todoId;
-
-function select(id_check) {
-	todoId = id_check;
-	$.ajax({
-		"url": `/GetTodoAction`,
-		type: "GET",
-		data: { "todoNo": id_check },
-	}).done(function(todo) {		
-		$('#todoDate').val(todo.target_at);
-		$('#todoContent').val(todo.content);
-	}).fail(function() {
-		
-	});
-}
-
-function remove(){
-	$.ajax({
-		"url": `/DeleteTodoAction`,
-		type: "post",
-		data: { "todoNo": todoId },
-	}).done(function() {		
-		location.href='todoList';
-	}).fail(function() {
-		
-	});
-}
-
-
-function edit(){
-	let obj={
-		"no":todoId,
-		"target_at":$('#todoDate').val(),
-		"content":$('#todoContent').val()
-	};
-	
-	$.ajax({
-		"url": `/UpdateTodoAction`,
-		type: "post",
-		data: obj,
-	}).done(function() {		
-		location.href='todoList';
-	}).fail(function() {
-		
-	});
-}
-
-
 //진행률 표시
 function updateProgress(progressId) {
 	var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
@@ -73,7 +25,6 @@ function updateProgress(progressId) {
 		}
 	}
 }
-
 
 //일정표 나오기
 function printWeek() {
@@ -119,9 +70,9 @@ function printWeek() {
 		for (var i = 0; i < datesAndWeekdays.length; i++) {
 			table += "<td>"
 			var dayTd = (currentDate.getDate() - 6 + i);
-			var checkDate = currentDate.getFullYear() + "" +
-				((currentDate.getMonth() + 1) < 10 ? "0" + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1)) + "" +
-				(dayTd < 10 ? "0" + dayTd : dayTd);
+			var checkDate = currentDate.getFullYear() + "-" + 
+			((currentDate.getMonth() + 1) < 10 ? "0" + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1)) + "-" +
+			(dayTd < 10 ? "0" + dayTd : dayTd);
 
 			response.forEach(todo => {
 				var no = todo.no;
@@ -150,9 +101,9 @@ function printWeek() {
                     "<div id='list" + (i + 1) + "' class='hidden'>"+
                     "<form action='CreateTodo' method='POST' >"+
                     "<p>날짜선택</p>" +
-                    "<input type='date' id='dateInput' name='date' value=''>" +
+                    "<input type='date' id='target_at_add' name='target_at_add' value=''>" +
                     "<p>일정 추가</p>" +
-                    "<input type='text' id='text' name='task' value=''>" +
+                    "<input type='text' id='content_add' name='content_add' value=''>" +
                     "<button type='submit' id='button1' onclick='addTask()'>추가 하기</button>" +
                     "</form>"+
 		            "</div>"+
@@ -186,18 +137,18 @@ function showList(listId) {
     }
 }
 
-
+var todoId;
 //팝업 열기
 function showPopup(tdIndex, popupId, id_check) {
-	
 	todoId = id_check;
 	$.ajax({
 		"url": `/GetTodoAction`,
 		type: "GET",
 		data: { "todoNo": id_check },
-	}).done(function(todo) {		
-		$('#todoDate').val(todo.target_at);
-		$('#todoContent').val(todo.content);
+	}).done(function(todo) {
+		console.log(todo.target_at);
+		$('#dateInput').val(todo.target_at);
+		$('#editText').val(todo.content);
 	}).fail(function() {
 		
 	});
@@ -224,20 +175,12 @@ closePopupButtons.forEach(function (button) {
 	});
 });
 
-
-
-
-
-
 function addTask() {
-	var dateInput = document.getElementById('dateInput');
-	var taskInput = document.getElementById('text');
+	var target_at_add = document.getElementById('target_at_add').value();
+	var content_add = document.getElementById('content_add').value();
 
-	var date = dateInput.value;
-	var task = taskInput.value;
-
-	dateInput.value = '';
-	taskInput.value = '';
+	target_at_add.value = '';
+	target_at_add.value = '';
 }
 
 //삭제하기
@@ -270,13 +213,12 @@ function deleteTasks() {
 	/*document.getElementById('delete-btn').click()*/
 }
 
-
 //수정하기
 function editTasks() {
 	let obj={
 		"no":todoId,
-		"target_at":$('#todoDate').val(),
-		"content":$('#todoContent').val()
+		"target_at":$('#dateInput').val(),
+		"content":$('#editText').val(),
 	};
 	
 	$.ajax({

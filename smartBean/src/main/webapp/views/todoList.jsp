@@ -54,21 +54,6 @@
 				</div>
 			</div>
 		
-			<div id="pop_info_2" class="pop_wrap" style="display:none;">
-				<div class="pop_inner">
-					<button type="button" class="btn_close" >닫기222</button>
-					<p>날짜선택</p>
-					<input type="date" id="dateInput" name="date" value="">
-					<p>일정</p>
-					<input type="text" id="editText" name="task" value="">
-					
-					<div class="col-del">
-						<button type="submit" id="correction" onclick="editTasks()">수정</button>
-					<button type="submit" id="delete" form="todoNo" onclick="deleteTasks()">삭제</button>
-						</div>
-				</div>
-			</div>
-			<!--  -->
 	    </div>
 	</main>
 	
