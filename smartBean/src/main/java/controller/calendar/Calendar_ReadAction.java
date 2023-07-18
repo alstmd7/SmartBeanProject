@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+
 import model.calendar.CalendarDao;
 import model.calendar.CalendarVo;
 
@@ -40,6 +42,7 @@ public class Calendar_ReadAction extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
 
 	    CalendarDao calDao = CalendarDao.getInstance();
 
@@ -48,24 +51,14 @@ public class Calendar_ReadAction extends HttpServlet {
 
 	    // 해당 사용자의 모든 캘린더 가져오기
 	    ArrayList<CalendarVo> calendarList = calDao.getAllCalendars(email);
-
+	    
 	    // 가져온 캘린더를 JSON 형식으로 변환
-	    StringBuilder sb = new StringBuilder("[");
-	    for (CalendarVo calendar : calendarList) {
-	        sb.append("{");
-	        sb.append("\"name\":\"").append(calendar.getName()).append("\",");
-	        sb.append("\"owner\":\"").append(calendar.getOwner()).append("\"");
-	        sb.append("},");
-	    }
-	    if (sb.length() > 1) {
-	        sb.deleteCharAt(sb.length() - 1); // 마지막 콤마 제거
-	    }
-	    sb.append("]");
+	    JSONArray responseList = new JSONArray(calendarList);
+	    response.getWriter().append(responseList.toString());
 
-	    // JSON 형식의 캘린더 목록을 클라이언트에게 반환
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
-	    response.getWriter().write(sb.toString());
+	    
+
+
 	}
 
 

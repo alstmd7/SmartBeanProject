@@ -48,9 +48,6 @@ $(document).ready(function() {
 		$("#create-calendar-popup").fadeIn();
 	});
 
-
-	// 1. 캘린더 생성 과정에서 id를 만들고 -> id에 calendarNo(db에서 꺼내) , checked 속성값 있으면 선택된 애들의 아이디값만 가져오고
-	// 2. admin 팝업 진입 전 checkbox를 선택하고 admin-popup을 여는 액션이 있을 때 해당 캘린더의 no를 불러오는건 어때?
 	// 캘린더 생성 정보 저장 및 관리 버튼 추가					 수정 : id를 만들고 -> id에 calendarNo(db에서 꺼내) , checked 속성값 있으면 선택된 애들의 아이디값만 가져와  
 	$("#save-newCalendar-button").on("click", function() {
 		var calendarCheckboxId = 'calendar-' + calendarNo;
@@ -65,6 +62,10 @@ $(document).ready(function() {
 		$("#calendar-list").append(newCalendar);
 	});
 
+	function edit (calendarNo){
+		console.log(calendarNo);
+	};
+
 	// 사용자의 모든 캘린더 불러오기
 	$.ajax({
 		"url": "/Calendar_ReadAction",
@@ -73,63 +74,70 @@ $(document).ready(function() {
 		calendarList.forEach(calendar => {
 			const name = calendar.name;
 			const owner = calendar.owner;
-			const calendarNo = calendar.calendarNo; // 만약 서버에서 'calendarNo'라는 이름으로 데이터가 온다면 이런 식으로 저장합니다.
+			var calendarNo = calendar.no;
 			$("#calendar-list").append(`
                 <div class="calendar-checkbox">
                     <input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${owner}">
                     <span>${name} (${owner})</span>
-                    <button class="admin-calendar-btn">EDIT</button>
+                    <button class="admin-calendar-btn" id="${calendarNo}" onclick="edit(this.id)")>EDIT</button>
                 </div>`
 			);
+		console.log(calendarNo);
 		});
 	}).fail(function() {
 		console.error("fail read calendars");
 	});
 
-	// 캘린더 체크박스 선택하면 calendarNo 받아지는지 확인 ------------------------- 안됨 ㅠㅠㅠㅠㅠ 7/18
-	$("#calendar-list").on("click", ".calendar-checkbox", function() {
-		var calendarName = $(this).find('span').text(); // 캘린더 이름 가져오기
-
-		$.ajax({
-			type: "POST",
-			url: "/FindCalendarNo",
-			data: { name: calendarName },
-			dataType: "json",
-			success: function(response) {
-				console.log(response.calendarNo); // 콘솔에 캘린더 번호 출력
-			}
-		});
-	});
-
-
-	// 캘린더 관리 팝업 열기
+	var id_check = null; 
+	
+	// 캘린더 관리 팝업 열 때 calendarNo를  id_check에 가져오기
 	$(document).on("click", ".admin-calendar-btn", function() {
-		$("#admin-newCalendar-popup").fadeIn();
-
-		var calendarName = $(this).prev().prev().attr('id');
-		document.getElementById("newCalendar-popup-title").innerHTML = calendarName;
+	    $("#admin-newCalendar-popup").fadeIn();
+	
+	    var calendarName = $(this).prev().prev().attr('id');
+	    document.getElementById("newCalendar-popup-title").innerHTML = calendarName;
+	    
+	    id_check = $(this).attr("id"); // id_check 업데이트
+	    console.log(id_check);
 	});
 
-	// 캘린더 관리 팝업 닫기 ---> UpdateCalendar 500 에러
-	/* $(document).on("click", ".close-newCalendar-button", function(e) {
-		e.preventDefault();
-		$("#admin-newCalendar-popup").fadeOut();
-	}); */
-
-	// 해결 ! 캘린더 관리 팝업 닫기 ---> 트러블슈팅 : 동적으로 캘린더가 생성되기 때문에 이벤트를 바인딩 하려면 이벤트 위임을 사용해야함
-	// 부모 요소에 이벤트를 바인딩하고, 이벤트가 자식 요소로 전달되는 이벤트 버블링의 원리 이용
+	// 캘린더 관리 팝업 닫기
 	$(document).on("click", "#close-newCalendar-button", function(e) {
 		e.preventDefault();
 		$("#admin-newCalendar-popup").fadeOut();
 	});
 
-
-	// 캘린더 선택시 그 캘린더No(Id)를 저장
-	var calendarId;
-	$("#calendar-list").on("click", ".calendar-checkbox", function() {
-		calendarId = $(this).data("id");
+	// 캘린더 삭제 버튼
+	$("#delete-calendar-button").on("click", function() {
+	    var calendarId = id_check; // id_check 사용
+	
+	    $.ajax({
+	        url: "/DeleteCalendar",
+	        method: "POST",
+	        data: { calendarId: calendarId }
+	    })
+		location.href = "calendar";
 	});
 
+	
+	// 캘린더 이름 수정하기 버튼
+	$("#update-calendar-button").on("click", function() {
+	    var calendarId = id_check; // id_check 사용
+	    var newCalendarName = $("#new-calendar-name-input").val();
+
+		let obj = {
+			"calendarId" : calendarId,
+			"newCalendarName" : newCalendarName
+		}
+	
+	    $.ajax({
+	        url: "/UpdateCalendar",
+	        method: "POST",
+	        data: obj
+	    })
+
+		location.href = "calendar";
+	});
 
 	// 사용자 공유 기능							수정 : email getPrmeter 받아와서 배열 만들고 배열 순회하면서 그거 다 shere_Calendar 테이블에 저장
 	$("#share-button").on("click", function() {
@@ -165,42 +173,6 @@ $(document).ready(function() {
 			});
 		}
 	});
-
-
-
-	// 캘린더 삭제 버튼
-	$("#delete-calendar-button").on("click", function() {
-		var calendarId = $(".calendar-checkbox-input:checked").attr("id");
-
-		// AJAX 요청을 사용하여 서버에 삭제 요청을 보냅니다.
-		$.ajax({
-			url: "/DeleteCalendar",
-			method: "POST",
-			data: { calendarId: calendarId }
-		}).done(function(response) {
-			console.log("삭제 완료");
-		}).fail(function() {
-			console.log("삭제 실패");
-		});
-	});
-
-
-	// 캘린더 이름 수정하기 버튼
-	$("#update-calendar-button").on("click", function() {
-		var calendarId = $(".calendar-checkbox-input:checked").attr("id");
-		var newCalendarName = $("#new-calendar-name-input").val();
-
-		$.ajax({
-			url: "/UpdateCalendar",
-			method: "POST",
-			data: { calendarId: calendarId, newCalendarName: newCalendarName }
-		}).done(function(response) {
-			console.log("수정 완료");
-		}).fail(function() {
-			console.log("수정 실패");
-		});
-	});
-
 	// <<<<<<<<<<<<<<< task >>>>>>>>>>>>>>>
 	// task 추가 버튼
 	$("#add-task-button").on("click", function() {

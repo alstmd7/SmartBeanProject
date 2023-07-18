@@ -24,48 +24,24 @@ public class Calendar_UpdateAction extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	// CalendarUpdateAction
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 
-	    CalendarDao calendarDao = CalendarDao.getInstance();
-	    int calendarId;
+	    CalendarDao calDao = CalendarDao.getInstance();
+	    
+	    System.out.println(request.getParameter("calendarId"));
+	    
+	    int calendarId = Integer.parseInt(request.getParameter("calendarId"));
 	    String newCalendarName = request.getParameter("newCalendarName");
+	    
+	    boolean isSuccess = calDao.updateCalendarName(calendarId, newCalendarName); 
 
-	    String calendarIdString = request.getParameter("calendarId");
-	    if (calendarIdString != null) {
-	        calendarId = Integer.parseInt(calendarIdString);
+	    if (isSuccess) {
+	        response.getWriter().write("캘린더가 성공적으로 삭제되었습니다.");
 	    } else {
-	        response.setContentType("application/json");
-	        response.setCharacterEncoding("UTF-8");
-	        response.getWriter().write("{\"message\": \"fail\"}");
-	        return;
+	        response.getWriter().write("캘린더 삭제에 실패하였습니다.");
 	    }
-
-	    calendarDao.updateCalendarName(calendarId, newCalendarName);
-
-//	    if (result > 0) {
-//	        response.setContentType("application/json");
-//	        response.setCharacterEncoding("UTF-8");
-//	        response.getWriter().write("{\"message\": \"success\"}");
-//	    } else {
-//	        response.setContentType("application/json");
-//	        response.setCharacterEncoding("UTF-8");
-//	        response.getWriter().write("{\"message\": \"fail\"}");
-//	    }
 	}
 
 }
