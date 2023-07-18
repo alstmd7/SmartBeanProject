@@ -87,7 +87,7 @@
 
 	<servlet>
 		<servlet-name>Task_ReadAction</servlet-name>
-		<servlet-class>controller.todo.Task_ReadAction</servlet-class>
+		<servlet-class>controller.calendar.Task_ReadAction</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Task_ReadAction</servlet-name>
@@ -129,15 +129,6 @@
 	<servlet-mapping>
 		<servlet-name>getCalendarIdServlet</servlet-name>
 		<url-pattern>/getCalendarId</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>FindCalendarNo_Action</servlet-name>
-		<servlet-class>controller.calendar.FindCalendarNo_Action</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>FindCalendarNo_Action</servlet-name>
-		<url-pattern>/FindCalendarNo</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

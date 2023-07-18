@@ -70,7 +70,7 @@
 						alt="Close Icon">
 				</button>
 			</div>
-			
+
 			<form method="post" action="ShareCalendarRequest"
 				id="update-calendar-form">
 				<h2 id="newCalendar-popup-title"></h2>
@@ -100,12 +100,11 @@
 			<button id="close-event-button">닫기</button>
 			<button id="delete-event-button">삭제</button>
 			<br>
+			<input type="text" id="task-title" name="task-title">
 			<!-- 이벤트 타이틀 입력 -->
-			<input type="text" id="event-title-input" name="이벤트 타이틀"
-				placeholder="이벤트 타이틀 입력"><br> <label> <!-- <input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br> -->
-				<label for="start-date">시작일:</label> <input type="date"
-				id="start-date"> <br> <label for="end-date">종료일:</label>
-				<input type="date" id="end-date"> <br>
+			<input type="text" id="event-title-input" name="이벤트 타이틀" placeholder="이벤트 타이틀 입력"><br> <label> <!-- <input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br> -->
+			<label for="start-date">시작일:</label> <input type="date" id="start-date"> <br>
+			<label for="end-date">종료일:</label> <input type="date" id="end-date"> <br>
 				<h4>일정 추가할 캘린더 위치</h4> <select id="calendars" multiple>
 					<%
 					// 사용자의 이메일 정보를 세션에서 가져옴
@@ -144,34 +143,24 @@
 		<!-- Task 추가/관리 버튼 -->
 		<button id="add-task-button">Task 추가</button>
 
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main'
-				style="height: 20px; font-size: medium; padding: 5px;">휴가</div>
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' data-task_title='휴가'>
+			<div class='fc-event-main'>휴가</div>
 		</div>
 
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main'
-				style="height: 20px; font-size: medium; padding: 5px;">오전반차</div>
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' data-task_title='오전반차'>
+			<div class='fc-event-main'>오전반차</div>
 		</div>
 
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main'
-				style="height: 20px; font-size: medium; padding: 5px;">오후반차</div>
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' data-task_title='오후반차'>
+			<div class='fc-event-main'>오후반차</div>
 		</div>
 
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main'
-				style="height: 20px; font-size: medium; padding: 5px;">재택근무</div>
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' data-task_title='재택근무'>
+			<div class='fc-event-main'>재택근무</div>
 		</div>
 
-		<div
-			class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-			<div class='fc-event-main'
-				style="height: 20px; font-size: medium; padding: 5px;">출장</div>
+		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' data-task_title='출장'>
+			<div class='fc-event-main'>출장</div>
 		</div>
 
 		<!-- Task 추가 팝업 -->

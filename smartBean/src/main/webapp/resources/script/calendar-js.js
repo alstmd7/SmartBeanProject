@@ -62,10 +62,6 @@ $(document).ready(function() {
 		$("#calendar-list").append(newCalendar);
 	});
 
-	function edit (calendarNo){
-		console.log(calendarNo);
-	};
-
 	// 사용자의 모든 캘린더 불러오기
 	$.ajax({
 		"url": "/Calendar_ReadAction",
@@ -79,7 +75,7 @@ $(document).ready(function() {
                 <div class="calendar-checkbox">
                     <input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${owner}">
                     <span>${name} (${owner})</span>
-                    <button class="admin-calendar-btn" id="${calendarNo}" onclick="edit(this.id)")>EDIT</button>
+                    <button class="admin-calendar-btn" id="${calendarNo}")>EDIT</button>
                 </div>`
 			);
 		console.log(calendarNo);
@@ -234,7 +230,7 @@ $(document).ready(function() {
 
 
 			var newEvent = document.createElement("div");
-			newEvent.className = "fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event";
+			newEvent.className = "fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  data-task_no='1'"; // no 추가되야됨
 			newEvent.innerHTML = `
 					<div class='fc-event-main'>${name}</div>
 					<button class="admin-task-btn">Task 관리</button>
@@ -255,7 +251,7 @@ $(document).ready(function() {
 
 	}).fail(function() {
 
-	}); */
+	});  */
 
 
 	// Task 관리 팝업 닫기
@@ -296,7 +292,7 @@ $(document).ready(function() {
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
 	// 전체 일정 저장 &&& 서버에 저장된 이벤트 데이터 가져오기
 	// 1. 전체 이벤트 데이터 추출 --> 2. 추출된 데이터를 ajax로 서버에 전송하여 DB에 저장
-	$("#save-button").on("click", function() {
+	/* $("#save-button").on("click", function() {
 		var allEvent = calendar.getEvents();
 		console.log(allEvent); // 확인용
 
@@ -332,9 +328,33 @@ $(document).ready(function() {
 				console.log(error);
 			}
 		});
+	}); */ // 이거 빼야하고 /EventCreate를 드롭 이벤트에 놔야됨
+	
+	var taskTitle = null;
+	// task_title 가져오기 
+	$(".fc-event-main").mousedown(function() {
+	    taskTitle = $(this).parent().data('task_title');
+	    console.log(taskTitle);
 	});
 
-	// 캘린더에 등록된 이벤트 수정
+	// 날짜 불러오고 이벤트 팝업 시작일에 날짜 지정 
+	var startDate = null;
+	$(document).on('mouseup', 'td.fc-day', function(e) {
+	    startDate = $(e.target).closest('td.fc-day').data('date');
+ 		$("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
+	    console.log(startDate);
+	});
+
+	// 캘린더 이벤트 추가
+	/* var calendar = new FullCalendar.Calendar(calendarEl, {
+	    // 이벤트를 드롭했을 때 start 날짜
+	    eventDrop: function(info) {
+	        // event-popup의 날짜에 설정
+	        $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
+	    }
+	}); */
+
+	// 캘린더에 등록된 이벤트
 	$('#calendar').on('click', '.fc-daygrid-event', function() {
 		var eventElement = this;
 		var eventTitle = $(this).find('.fc-event-main').text();
@@ -342,13 +362,15 @@ $(document).ready(function() {
 		var eventPopup = $('#event-popup');
 		var closeButton = $('#close-event-button');
 		var deleteButton = $('#delete-event-button');
-		var saveButton = $('#save-event-button');
+		var saveEventButton = $('#save-event-button');
 		var allDayCheckbox = $('#all-day-checkbox');
 		var startDateInput = $('#start-date');
 		var endDateInput = $('#end-date');
 		var eventDescriptionInput = $('#event-description');
 
 		eventPopup.fadeIn();
+		
+		$('#task-title').val(taskTitle);
 
 		// 이벤트 타이틀 입력
 		$('#event-title-input').val(eventTitle);
@@ -367,6 +389,10 @@ $(document).ready(function() {
 
 		closeButton.off('click').on('click', function() {
 			eventPopup.fadeOut();
+		});
+		
+		saveEventButton.off('click').on('click', function() {
+			
 		});
 
 	});
