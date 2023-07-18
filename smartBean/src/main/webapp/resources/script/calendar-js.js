@@ -291,15 +291,15 @@ $(document).ready(function() {
 
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
 	// 전체 일정 저장 &&& 서버에 저장된 이벤트 데이터 가져오기
-	// 1. 전체 이벤트 데이터 추출 --> 2. 추출된 데이터를 ajax로 서버에 전송하여 DB에 저장
-	/* $("#save-button").on("click", function() {
+	// 1. 전체 이벤트 데이터 추출
+	$("#save-button").on("click", function() {
 		var allEvent = calendar.getEvents();
 		console.log(allEvent); // 확인용
 
 		var events = [];
 		for (var i = 0; i < allEvent.length; i++) {
 			var obj = {
-				calendarNo: $("#calendars option:selected").val(), // 선택한 캘린더 no를 어떻게 불러오지
+				calendarNo: $("#calendars option:selected").val(), // 캘린더 체크박스 선택값을 어떻게 불러오지
 				taskNo: null,
 				name: allEvent[i]._def.title,
 				email: '', // 세션에 저장된 로그..?
@@ -312,49 +312,49 @@ $(document).ready(function() {
 
 			events.push(obj);
 		}
-
-		var jsondata = JSON.stringify(events);
-		console.log(jsondata);
-
-		$.ajax({
-			url: '/EventCreate',
-			type: 'post',
-			data: { 'events': jsondata },
-			dataType: 'json',
-			success: function(response) {
-				console.log(response);
-			},
-			error: function(error) {
-				console.log(error);
-			}
-		});
-	}); */ // 이거 빼야하고 /EventCreate를 드롭 이벤트에 놔야됨
+	});
 	
+	// 이벤트 등록
 	var taskTitle = null;
+	
 	// task_title 가져오기 
 	$(".fc-event-main").mousedown(function() {
 	    taskTitle = $(this).parent().data('task_title');
 	    console.log(taskTitle);
 	});
-
+	
 	// 날짜 불러오고 이벤트 팝업 시작일에 날짜 지정 
-	var startDate = null;
 	$(document).on('mouseup', 'td.fc-day', function(e) {
 	    startDate = $(e.target).closest('td.fc-day').data('date');
- 		$("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
-	    console.log(startDate);
+	    $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
+		// console.log(startDate);
 	});
 
-	// 캘린더 이벤트 추가
-	/* var calendar = new FullCalendar.Calendar(calendarEl, {
-	    // 이벤트를 드롭했을 때 start 날짜
-	    eventDrop: function(info) {
-	        // event-popup의 날짜에 설정
-	        $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
-	    }
-	}); */
+	// 얘는 업데이트가 되야할거
+	/* var calendarNumbers = $("#calendars").val();
+	
+	    for (var i = 0; i < calendarNumbers.length; i++) {
+	        let obj = {
+	            calendar_no: calendarNumbers[i],
+	            task_no: taskTitle, 
+	            name: task-title,
+	            email: // 사용자 로그값 
+	            title: event-title,
+	            content: 
+	            start: startDate,
+	            end: 
+	            all_day: 
+	        };
 
-	// 캘린더에 등록된 이벤트
+	    $.ajax({
+	        url: "/EventCreate",
+	        method: "POST",
+	        data: obj,
+	    });
+	
+	    location.href = "calendar"; */
+
+	// 캘린더에 등록된 이벤트 수정
 	$('#calendar').on('click', '.fc-daygrid-event', function() {
 		var eventElement = this;
 		var eventTitle = $(this).find('.fc-event-main').text();

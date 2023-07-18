@@ -102,10 +102,11 @@
 			<br>
 			<input type="text" id="task-title" name="task-title">
 			<!-- 이벤트 타이틀 입력 -->
-			<input type="text" id="event-title-input" name="이벤트 타이틀" placeholder="이벤트 타이틀 입력"><br> <label> <!-- <input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br> -->
+			<input type="text" id="event-title-input" name="event-title" placeholder="이벤트 타이틀 입력"><br> <label> <!-- <input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br> -->
 			<label for="start-date">시작일:</label> <input type="date" id="start-date"> <br>
 			<label for="end-date">종료일:</label> <input type="date" id="end-date"> <br>
-				<h4>일정 추가할 캘린더 위치</h4> <select id="calendars" multiple>
+				<h4>일정 추가할 캘린더 위치</h4>
+				<select id="calendars" multiple>
 					<%
 					// 사용자의 이메일 정보를 세션에서 가져옴
 					String email = (String) session.getAttribute("log");
@@ -192,7 +193,7 @@
 	<!-- calendar area -->
 	<div id='calendar-container'>
 		<!-- 캘린더 전체 저장하기 버튼 -->
-		<button id="save-button">SAVE</button>
+		<!-- <button id="save-button">SAVE</button> -->
 
 		<div id='calendar'></div>
 	</div>

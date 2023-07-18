@@ -18,27 +18,9 @@ import model.user.UserVo;
 /**
  * Servlet implementation class Calendar_CreateAction
  */
-@WebServlet("/Calendar_CreateAction")
 public class Calendar_CreateAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Calendar_CreateAction() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	
 	// DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료 DB연동완료 DB 연동완료
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");

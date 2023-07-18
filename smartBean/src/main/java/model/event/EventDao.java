@@ -58,14 +58,6 @@ public class EventDao {
 	                this.pstmt.setString(6, content);
 	                this.pstmt.setString(7, start);
 	                this.pstmt.setString(8, end);
-	                this.pstmt.setInt(9, calendar_no);
-	                this.pstmt.setInt(10, task_no);
-	                this.pstmt.setString(11, name);
-	                this.pstmt.setString(12, email);
-	                this.pstmt.setString(13, title);
-	                this.pstmt.setString(14, start);
-	                this.pstmt.setString(15, end);
-	                this.pstmt.setString(16, all_day);
 
 	                this.pstmt.execute();
 

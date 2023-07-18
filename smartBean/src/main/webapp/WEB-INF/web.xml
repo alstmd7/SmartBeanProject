@@ -123,15 +123,6 @@
 	</servlet-mapping>
 
 	<servlet>
-		<servlet-name>getCalendarIdServlet</servlet-name>
-		<servlet-class>controller.calendar.GetCalendarIdServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>getCalendarIdServlet</servlet-name>
-		<url-pattern>/getCalendarId</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
 		<servlet-name>ShareCalendar_RequestAction</servlet-name>
 		<servlet-class>controller.share.ShareCalendar_RequestAction</servlet-class>
 	</servlet>
