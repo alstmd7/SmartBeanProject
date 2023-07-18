@@ -62,10 +62,6 @@ $(document).ready(function() {
 		$("#calendar-list").append(newCalendar);
 	});
 
-	function edit (calendarNo){
-		console.log(calendarNo);
-	};
-
 	// 사용자의 모든 캘린더 불러오기
 	$.ajax({
 		"url": "/Calendar_ReadAction",
@@ -79,7 +75,7 @@ $(document).ready(function() {
                 <div class="calendar-checkbox">
                     <input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${owner}">
                     <span>${name} (${owner})</span>
-                    <button class="admin-calendar-btn" id="${calendarNo}" onclick="edit(this.id)")>EDIT</button>
+                    <button class="admin-calendar-btn" id="${calendarNo}")>EDIT</button>
                 </div>`
 			);
 		console.log(calendarNo);
@@ -234,7 +230,7 @@ $(document).ready(function() {
 
 
 			var newEvent = document.createElement("div");
-			newEvent.className = "fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event";
+			newEvent.className = "fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  data-task_no='1'"; // no 추가되야됨
 			newEvent.innerHTML = `
 					<div class='fc-event-main'>${name}</div>
 					<button class="admin-task-btn">Task 관리</button>
@@ -255,7 +251,7 @@ $(document).ready(function() {
 
 	}).fail(function() {
 
-	}); */
+	});  */
 
 
 	// Task 관리 팝업 닫기
@@ -295,7 +291,7 @@ $(document).ready(function() {
 
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
 	// 전체 일정 저장 &&& 서버에 저장된 이벤트 데이터 가져오기
-	// 1. 전체 이벤트 데이터 추출 --> 2. 추출된 데이터를 ajax로 서버에 전송하여 DB에 저장
+	// 1. 전체 이벤트 데이터 추출
 	$("#save-button").on("click", function() {
 		var allEvent = calendar.getEvents();
 		console.log(allEvent); // 확인용
@@ -303,7 +299,7 @@ $(document).ready(function() {
 		var events = [];
 		for (var i = 0; i < allEvent.length; i++) {
 			var obj = {
-				calendarNo: $("#calendars option:selected").val(), // 선택한 캘린더 no를 어떻게 불러오지
+				calendarNo: $("#calendars option:selected").val(), // 캘린더 체크박스 선택값을 어떻게 불러오지
 				taskNo: null,
 				name: allEvent[i]._def.title,
 				email: '', // 세션에 저장된 로그..?
@@ -316,23 +312,47 @@ $(document).ready(function() {
 
 			events.push(obj);
 		}
-
-		var jsondata = JSON.stringify(events);
-		console.log(jsondata);
-
-		$.ajax({
-			url: '/EventCreate',
-			type: 'post',
-			data: { 'events': jsondata },
-			dataType: 'json',
-			success: function(response) {
-				console.log(response);
-			},
-			error: function(error) {
-				console.log(error);
-			}
-		});
 	});
+	
+	// 이벤트 등록
+	var taskTitle = null;
+	
+	// task_title 가져오기 
+	$(".fc-event-main").mousedown(function() {
+	    taskTitle = $(this).parent().data('task_title');
+	    console.log(taskTitle);
+	});
+	
+	// 날짜 불러오고 이벤트 팝업 시작일에 날짜 지정 
+	$(document).on('mouseup', 'td.fc-day', function(e) {
+	    startDate = $(e.target).closest('td.fc-day').data('date');
+	    $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
+		// console.log(startDate);
+	});
+
+	// 얘는 업데이트가 되야할거
+	/* var calendarNumbers = $("#calendars").val();
+	
+	    for (var i = 0; i < calendarNumbers.length; i++) {
+	        let obj = {
+	            calendar_no: calendarNumbers[i],
+	            task_no: taskTitle, 
+	            name: task-title,
+	            email: // 사용자 로그값 
+	            title: event-title,
+	            content: 
+	            start: startDate,
+	            end: 
+	            all_day: 
+	        };
+
+	    $.ajax({
+	        url: "/EventCreate",
+	        method: "POST",
+	        data: obj,
+	    });
+	
+	    location.href = "calendar"; */
 
 	// 캘린더에 등록된 이벤트 수정
 	$('#calendar').on('click', '.fc-daygrid-event', function() {
@@ -342,13 +362,15 @@ $(document).ready(function() {
 		var eventPopup = $('#event-popup');
 		var closeButton = $('#close-event-button');
 		var deleteButton = $('#delete-event-button');
-		var saveButton = $('#save-event-button');
+		var saveEventButton = $('#save-event-button');
 		var allDayCheckbox = $('#all-day-checkbox');
 		var startDateInput = $('#start-date');
 		var endDateInput = $('#end-date');
 		var eventDescriptionInput = $('#event-description');
 
 		eventPopup.fadeIn();
+		
+		$('#task-title').val(taskTitle);
 
 		// 이벤트 타이틀 입력
 		$('#event-title-input').val(eventTitle);
@@ -367,6 +389,10 @@ $(document).ready(function() {
 
 		closeButton.off('click').on('click', function() {
 			eventPopup.fadeOut();
+		});
+		
+		saveEventButton.off('click').on('click', function() {
+			
 		});
 
 	});

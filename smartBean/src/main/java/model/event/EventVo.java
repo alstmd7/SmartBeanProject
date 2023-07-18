@@ -10,10 +10,10 @@ public class EventVo {
     private String name;
 	private String email;
     private String title;
-    private String content;
+    private String content; //  null 허용 
     private String start;
     private String end; 
-    private String all_day;
+    private String all_day; // null 허용 
     
     public EventVo(int no, int calendar_no, int task_no, String name, String email, String title, String content,
     		String start, String end, String all_day) {
@@ -28,6 +28,18 @@ public class EventVo {
         this.start = start;
         this.end = end;
         this.all_day = all_day;
+    }
+    
+    public EventVo(int calendar_no, int task_no, String name, String email, String title,
+    		String start, String end) {
+        super();
+        this.calendar_no = calendar_no;
+        this.task_no = task_no;
+        this.name = name;
+        this.email = email;
+        this.title = title;
+        this.start = start;
+        this.end = end;
     }
     
     public EventVo(int no, int calendar_no, String name, String start, String end) {
