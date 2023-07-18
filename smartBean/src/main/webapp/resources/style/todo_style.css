@@ -1,4 +1,5 @@
-@font-face {
+/* 폰트적용 */
+@font-face { 
     font-family: 'LeferiPoint-WhiteObliqueA';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/LeferiPoint-WhiteObliqueA.woff') format('woff');
     font-weight: normal;
@@ -25,13 +26,7 @@ html {
 }
 
 body {
-    /* width: 960px; */
-    /*width: 90%;*/
     margin: 0px auto;
-    /* 상하좌우 0 px */
-    /* margin: 10px 5px; 상하 10px 좌우 5px */
-    /* margin-top: 0px; 위에만 0px */
-    /* margin: 0px auto; 자동으로 가운데로 맞춰준디 */
 }
 
 ul,
@@ -59,83 +54,91 @@ img {
     margin: 0px;
 }
 
-.To-do-list {
-    width: 14%;
-    height: 1000px;
-    background-color: #d73434;
-    border: 2px solid black;
-    float: left;
-    margin-right: 3%;
+/* 전체 배경색 */
+body {
+    background-color: #f1ecec;
+
 }
 
+/* 제목,사용자 이름 부분 */
+.To-do-list {
+    width: 430px;
+    height: 100px;
+    border-radius: 20px;
+    float: left;
+    margin-top: 4%;
+    margin-left: 15%;
+}
+
+/* 제목부분 */
 .To-do-list>h1 {
-    text-align: center;
     font-family: 'Lobster', cursive;
     font-size: 3rem;
-    color: #fff;
-    padding-bottom: 30%;
-    padding-top: 10%;
+    float: left;
+    padding-top: 25px;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
+/* 사용자 이름 부분 */
 .To-do-list li {
-    text-align: center;
+    padding-top: 35px;
     font-size: 2rem;
 }
 
-.To-do-list p{
-	font-size: 2.3rem
-}
-
+/* 날짜선택부분 */
 .check {
     width: 380px;
-    height: 45px;
-    margin-top: 3%;
+    height: 35px;
+    margin-top: 6%;
+    margin-left: 0%;
     display: inline-block;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 15px 20px;
+    border: 4px solid #006400;
+    border-radius: 20px;
+    padding: 5px 20px;
     background-color: #fff;
+    text-align: left
 }
 
 label,
 input {
-    font-size: 30px;
+    font-size: 25px;
 }
 
-button {
-    font-size: 30px;
-    margin-left: 50px;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #fff;
+/* 조회버튼 */
+#button {
+    width: 90px;
+    font-size: 25px;
+    margin-left: 3%;
+    border: 4px solid #006400;
+    border-radius: 20px;
+    padding: 7px;
 }
-#button{
-	margin-right: 0;
+/* 전체 버튼부분 */
+button{
+    border: 4px solid #006400;
+    border-radius: 20px; 
 }
 
-
+/* 추가하기버튼 */
 #button1,
 #button2,
 #button3,
-#button33,
 #button4,
-#button44 {
-    width: 70%;
-    margin-left: 3%;
-    font-size: 2rem;
+#button5,
+#button6,
+#button7{
+    width: 60%;
+    font-size: 1.3rem;
     margin-top: 40px;
 }
 
-#button33,
-#button44 {
-    width: 75%;
-    font-size: 1.7rem;
-}
-
+/* 팝업화면 날짜선택글씨 */
 #dateInput {
     font-size: 1.8rem;
 }
 
+/* 출력부분 */
 #output {
     font-size: 20px;
     width: 100%;
@@ -145,47 +148,48 @@ button {
 
 /*체크박스 색상변경*/
 :root {
-    accent-color: red;
+    accent-color: #006400;
 }
 
+/* 일정표부분 */
 table {
-    width: 80%;
+    margin-left: 5%;
+    width: 90%;
     border-collapse: collapse;
+    
 }
 
+/* 일정표 테두리 */
 th,
 td {
     border: 2px solid black;
-    text-align: center;
-}
-
-th {
-    background-color: #d73434;
-    height: 60px;
-    padding: 8px;
-}
-
-td {
-    height: 400px;
     background-color: #fff;
 }
 
-.Annual {
+/* 일정표 날짜표시부분 */
+th {
+    border-bottom: 4px solid #006400;
+    height: 60px;
+    padding: 8px;
+    text-align: center;
+}
+
+/* 일정표 일저표시부분 */
+td {
+    height: 600px;
+    width: 14%;
+}
+
+
+
+/* .Annual {
     background-color: darkgray;
     padding: 8px;
 }
 
 .progress {
     padding-top: 300px;
-}
-
-
-
-ol {
-    margin-top: 40px;
-    display: none;
-    /* 기본적으로 ol 요소 숨김 */
-}
+} */
 
 p {
     margin-top: 10px;
@@ -204,17 +208,17 @@ p {
     display: none;
     float: left;
     margin-top: 4px;
-
 }
 
 td>li {
-    width: 70%;
-    margin: 0px 15%;
+    margin-left: 5%;
+   text-align : left;
 }
 
 /* 스타일 조정 */
 #todo_area {
-	width: 100%
+	width: 100%;
+	margin-bottom: 500px;
 }
 
 .hidden {
@@ -222,3 +226,44 @@ td>li {
     display: none;
 }
 
+.btn_open {
+    font-weight: bold;
+    margin: 5px;
+    padding: 4px 6px;
+}
+
+/* 팝업부분 */
+.pop_wrap .pop_inner {
+	text-align: left;
+    display: inline-block;
+    background: #9daa9a;
+    width: 250px;
+    vertical-align: middle;
+    font-size: 10px;
+    border: 4px solid #006400;
+    border-radius: 20px;
+}
+
+/* 닫기버튼 */
+.btn_close {
+    margin-left: 75%;
+    /* position: absolute; */
+}
+
+/* 수정,삭제버튼 */
+.col-del {
+    margin-top: 20px;
+    margin-left: 30%;
+    width: 150px;
+    
+}
+
+/* 닫기,수정,삭제버튼 */
+.btn_close,#correction,#delete{
+    font-size: 1.7rem;
+    width: 70px;
+}
+/* 수정버튼부분 */
+#correction{
+    display: inline;
+}

@@ -1,7 +1,7 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+   
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +13,7 @@
 </head>
 
 
-<body>	
+<body>
 	<c:if test="${empty sessionScope.log }">
 		<c:redirect url="login"></c:redirect>
 	</c:if>
@@ -27,50 +27,6 @@
 		        <ul>
 		            <li>${sessionScope.name } 님</li>
 		        </ul>
-		
-		        <button type="submit" id="button1" onclick="showList(1)">To-do list 추가</button>
-		
-		        <div id="list1" class="hidden">
-		        	<form action="CreateTodo" method="POST">
-		        		<p>날짜선택</p>
-			            <input type="date" id="dateInput" name="date" value="">
-			            <p>일정 추가</p>
-			            <input type="text" id="text" name="task" value="">
-			            <button type="submit" id="button1">추가 하기</button>
-		        	</form>
-		        </div>
-		
-		        <button type="submit" id="button2" onclick="showList(2)">To-do list 삭제</button>
-
-				<div id="list2" class="hidden">
-					<p>삭제할 일정</p>					
-					<button type="submit" id="button2" form="todoNo" onclick="deleteTasks()">선택한
-						일정 삭제</button>
-
-					<form action="DeleteTodoAction" method="post">
-						<input type="text" name="todoNo" class="hidden">
-						<button type="submit" id="delete-btn" class="hidden"></button>
-					</form>
-				</div>
-
-				<button type="submit" id="button3" onclick="showList(3)">To-do list 수정</button>
-			
-				
-		        <div id="list3" class="hidden">
-		            <p>수정할 일정</p>
-		            <input type="text" id="editText" name="task" value="">
-		            <button type="submit" id="button33" onclick="editTasks()">선택한 일정 수정</button>
-		        </div>
-		
-		        <button type="submit" id="button4" onclick="showList(4)">To-do list 일정이동</button>
-		
-		        <div id="list4" class="hidden">
-		            <p>날짜선택</p>
-		            <input type="date" id="dateInput" name="date" value="">
-		            <button type="submit" id="button44" onclick="editTasks()">선택한 날짜로 이동</button>
-		        </div>
-		
-		
 		    </div>
 		
 		    <div class="check">
@@ -78,18 +34,42 @@
 		        <input type="date" id="inputDate" required>
 		    </div>
 		    <button onclick="printWeek()" id="button">조회</button>
-		    
 		    <div id="output"></div>
-		    <div>
-			    <form method="get" id="todoForm">
-			    	<input type="date" id="todoDate" name="todoDate">
-			    	<input id="todoContent" name="todoContent">
-			    	<input type="button" onclick="edit()" value="수정">
-			    	<input type="button" onclick="remove()" value="삭제">
-			    </form>
-		    </div>
+
+			<!--  -->
+			<div id="pop_info_1" class="pop_wrap" style="display:none;">
+				<div class="pop_inner">
+					<button type="button" class="btn_close">닫기</button>
+					<p>날짜선택</p>
+					<input type="date" id="dateInput" name="date" value="">
+					<p>일정</p>
+					<input type="text" id="editText" name="task" value="">
+					
+					<div class="col-del">
+					
+					<button type="button" id="correction" onclick="editTasks()">수정</button>
+					<button type="button" id="delete" form="todoNo" onclick="deleteTasks()">삭제</button>
+					
+					</div>
+				</div>
+			</div>
+		
+			<div id="pop_info_2" class="pop_wrap" style="display:none;">
+				<div class="pop_inner">
+					<button type="button" class="btn_close" >닫기222</button>
+					<p>날짜선택</p>
+					<input type="date" id="dateInput" name="date" value="">
+					<p>일정</p>
+					<input type="text" id="editText" name="task" value="">
+					
+					<div class="col-del">
+						<button type="submit" id="correction" onclick="editTasks()">수정</button>
+					<button type="submit" id="delete" form="todoNo" onclick="deleteTasks()">삭제</button>
+						</div>
+				</div>
+			</div>
+			<!--  -->
 	    </div>
-	    
 	</main>
 	
     <jsp:include page="/footer"></jsp:include>
@@ -98,4 +78,3 @@
 </body>
 
 </html>
-
