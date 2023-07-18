@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import util.DBManager;
 
@@ -17,7 +16,7 @@ public class TodoDao {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	private SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
+	private SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 
 	private TodoDao() {}
 	private static TodoDao instance = new TodoDao();
@@ -25,6 +24,36 @@ public class TodoDao {
 	public static TodoDao getInstance() {
 		
 		return instance;
+	}
+	
+	public TodoVo getTodoByNo(int no) {
+		TodoVo todo = null;
+		
+		this.conn = DBManager.getConnection();
+		
+		String sql = "SELECT * FROM todo WHERE `no`=?";
+		
+		try {
+			this.pstmt = this.conn.prepareStatement(sql);
+			this.pstmt.setInt(1, no);
+			
+			this.rs = this.pstmt.executeQuery();
+			
+			if(this.rs.next()) {
+				String email = this.rs.getString(2);
+				String content = this.rs.getString(3);
+				String target_at = sdf.format(this.rs.getDate(4));
+				String check = this.rs.getString(5);
+				
+				todo = new TodoVo(no, email, content, target_at, check);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(this.conn, this.pstmt, this.rs);
+		}
+		return todo;
 	}
 	
 	public ArrayList<TodoVo> getTodoAll(String email) {
@@ -45,9 +74,8 @@ public class TodoDao {
 					int no = this.rs.getInt(1);
 					String content = this.rs.getString(3);
 					String target_at = sdf.format(this.rs.getDate(4));
-					int target_atNum = Integer.parseInt(target_at);
 					String check = this.rs.getString(5);
-					TodoVo todo = new TodoVo(no, email, content, target_atNum, check);
+					TodoVo todo = new TodoVo(no, email, content, target_at, check);
 					list.add(todo);
 				}
 				
@@ -65,11 +93,11 @@ public class TodoDao {
 		
 		String email = todo.getEmail();
 		String content = todo.getContent();
-		int target_at = todo.getTarget_at();
+		String target_at = todo.getTarget_at();
 		
 		boolean check = false;
 		
-		if(email != null && content != null && target_at != 0) {
+		if(email != null && content != null && target_at != null) {
 			this.conn = DBManager.getConnection();
 			if(this.conn != null) {
 					String sql = "INSERT INTO todo(`email`, content, target_at) VALUES (?, ?, Date(?))";
@@ -78,7 +106,7 @@ public class TodoDao {
 						this.pstmt = this.conn.prepareStatement(sql);
 						this.pstmt.setString(1, email);
 						this.pstmt.setString(2, content);
-						this.pstmt.setInt(3, target_at);
+						this.pstmt.setString(3, target_at);
 						
 						this.pstmt.execute();
 						
@@ -99,37 +127,26 @@ public class TodoDao {
 		return check;
 	}
 	
-	public boolean updateTodo(TodoRequestDto todoDto) {
+	public void updateTodo(TodoRequestDto todoDto) {
 		
 		this.conn = DBManager.getConnection();
-		
-		boolean check = true;
-		
-		if(this.conn != null && todoDto.getContent() != null && todoDto.getCheck() != null && todoDto.getNo() != 0) {
 
-			String sql = "UPDATE todo SET content=?, target_at=DATE(?), `check`=? WHERE `no`=?";
+		String sql = "UPDATE todo SET content=?, target_at=DATE(?) WHERE `no`=?";
 
-			try {
-				this.pstmt = this.conn.prepareStatement(sql);
-				this.pstmt.setString(1, todoDto.getContent());
-				this.pstmt.setInt(2, todoDto.getTarget_at());
-				this.pstmt.setString(3, todoDto.getCheck());
-				this.pstmt.setInt(4, todoDto.getNo());
+		try {
+			this.pstmt = this.conn.prepareStatement(sql);
+			this.pstmt.setString(1, todoDto.getContent());
+			this.pstmt.setString(2, todoDto.getTarget_at());
+			this.pstmt.setInt(3, todoDto.getNo());
 
-				this.pstmt.execute();
+			this.pstmt.execute();
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				check = false;
-			} finally {
-				DBManager.close(this.conn, this.pstmt);
-			}
-
-		} else {
-			check = false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(this.conn, this.pstmt);
 		}
-		
-		return check;
+
 	}
 	
 	public boolean deleteTodoNo(int no) {

@@ -4,10 +4,10 @@ public class TodoRequestDto {
 	private int no;
 	private String email;
 	private String content;
-	private int target_at;
+	private String target_at;
 	private String check;
 	
-	public TodoRequestDto(int no, String email, String content, int target_at, String check) {
+	public TodoRequestDto(int no, String email, String content, String target_at, String check) {
 		super();
 		this.no = no;
 		this.email = email;
@@ -16,7 +16,14 @@ public class TodoRequestDto {
 		this.check = check;
 	}
 	
-	public TodoRequestDto(String email, String content, int target_at) {
+	public TodoRequestDto(int no, String content, String target_at) {
+		super();
+		this.no = no;
+		this.content = content;
+		this.target_at = target_at;
+	}
+	
+	public TodoRequestDto(String email, String content, String target_at) {
 		super();
 		this.email = email;
 		this.content = content;
@@ -32,7 +39,7 @@ public class TodoRequestDto {
 	public String getContent() {
 		return content;
 	}
-	public int getTarget_at() {
+	public String getTarget_at() {
 		return target_at;
 	}
 	public String getCheck() {

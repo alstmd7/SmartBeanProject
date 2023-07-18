@@ -3,39 +3,53 @@ $(window).on('load', function() {
 	printWeek();
 });
 
-function edit(id_check) {
+var todoId;
+
+function select(id_check) {
+	todoId = id_check;
 	$.ajax({
-			url: "/DeleteTodoAction",
-			type: "post",
-			data: { "todoNo": id_check },
-		}).done(function() {
-			alert('성공');
-		}).fail(function() {
-			alert('실패');
-		});	
+		"url": `/GetTodoAction`,
+		type: "GET",
+		data: { "todoNo": id_check },
+	}).done(function(todo) {		
+		$('#todoDate').val(todo.target_at);
+		$('#todoContent').val(todo.content);
+	}).fail(function() {
+		
+	});
 }
 
-function updateProgress(progressId) {
-var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
-var progress = document.getElementById('progress' + progressId);
-var total = checkboxes.length;
-var checkedCount = 0;
-
-for (var i = 0; i < checkboxes.length; i++) {
-    if (checkboxes[i].checked) {
-        checkedCount++;
-    }
+function remove(){
+	$.ajax({
+		"url": `/DeleteTodoAction`,
+		type: "post",
+		data: { "todoNo": todoId },
+	}).done(function() {		
+		location.href='todoList';
+	}).fail(function() {
+		
+	});
 }
 
-var percentage = (checkedCount / total) * 100;
-progress.innerHTML = '진행률: ' + (percentage.toFixed(1)*2) + '%';
+function edit(){
+	let obj={
+		"no":todoId,
+		"target_at":$('#todoDate').val(),
+		"content":$('#todoContent').val()
+	};
+	
+	$.ajax({
+		"url": `/UpdateTodoAction`,
+		type: "post",
+		data: obj,
+	}).done(function() {		
+		location.href='todoList';
+	}).fail(function() {
+		
+	});
+}
 
-if (percentage === 100) {
-    for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].disabled = true;
-    }
-}
-}
+
 
 function printWeek() {
 // LoadTodo
@@ -43,6 +57,7 @@ $.ajax({
 	"url": `/LoadTodo`,
 	"method": "GET"
 }).done(function(response) {
+	
 		var inputDate = document.getElementById("inputDate");
 
 		if (!inputDate.value) {
@@ -65,8 +80,6 @@ $.ajax({
 			var currentDate = new Date(firstDay);
 			currentDate.setDate(firstDay.getDate() + i);
 
-			
-
 			var dayOfWeek = days[currentDate.getDay()];
 			var options = { day: 'numeric' };
 			var dateStr = currentDate.toLocaleDateString('ko-KR', options);
@@ -82,26 +95,26 @@ $.ajax({
 		for (var i = 0; i < datesAndWeekdays.length; i++) {
 			table += "<td>"
 			var dayTd = (currentDate.getDate()-6 + i);
-			var checkDate = currentDate.getFullYear() + "" + 
-			((currentDate.getMonth() + 1) < 10 ? "0" + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1)) + "" +
+			var checkDate = currentDate.getFullYear() + "-" + 
+			((currentDate.getMonth() + 1) < 10 ? "0" + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1)) + "-" +
 			(dayTd < 10 ? "0" + dayTd : dayTd);
-			
+
 			response.forEach(todo => {
-			var no = todo.no;
-			var content = todo.content;
-			var check = todo.check;
-			var target_at = todo.target_at;
+			const no = todo.no;
+			const content = todo.content;
+			const check = todo.check;
+			const target_at = todo.target_at;
 
 			if (target_at == checkDate) {
 				
 				table += '<li>';
 				if (check === 0) {
-					table += "<li><input type='checkbox' name='hobby' value='h1' class='none'>";
+					table += "<li><input type='checkbox' class='checkTodo' id='" + no + "'>";
 				} else {
-					table += "<input type='checkbox' name='hobby' value='h1' class='none' >";
+					table += "<input type='checkbox' class='checkTodo' id='" + no + "'>";
 				}
 				
-				table += "<input type='checkbox' class='checkTodo' id='" + no + "'><div class='edit' onclick='edit(this.id)' id='" + no + "'> " + content + "</div></li>";
+				table += "<div onclick='select(this.id)' id='" + no + "'> " + content + "</div></li>";
 			}
 			
 			});
@@ -112,7 +125,6 @@ $.ajax({
 		table += "</tr></table>";
 
 		document.getElementById("output").innerHTML = table;
-		updateProgress();
 		
 }).fail(function() {
 

@@ -42,10 +42,9 @@ public class UpdateUserFormAction extends HttpServlet {
 		UserDao userDao = UserDao.getInstance();
 		UserVo user = userDao.getUserByEmail(email);
 		
-		System.out.println(password);
+		HttpSession session = request.getSession();
 		if(password == "") {	
 			userDao.updateUser(user, new_password);
-			HttpSession session = request.getSession();
 			session.setAttribute("name", name);
 			request.setAttribute("message", "회원정보 수정이 완료되었습니다.");
 			request.getRequestDispatcher("alert").forward(request, response);			
@@ -53,7 +52,6 @@ public class UpdateUserFormAction extends HttpServlet {
 			
 			if(password.equals(user.getPassword())) {
 				userDao.updateUser(user, new_password);
-				HttpSession session = request.getSession();
 				session.setAttribute("name", name);
 				request.setAttribute("message", "회원정보 수정이 완료되었습니다.");
 				request.getRequestDispatcher("alert").forward(request, response);

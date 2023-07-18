@@ -13,6 +13,7 @@ INSERT INTO todo(`email`, content, target_at) VALUES ("qortmdals120@gmail.com", 
 -- #4. 테이블 만들어졌는지 확인하기
 SELECT * FROM todo;
 SELECT * FROM todo WHERE email="qortmdals120@gmail.com";
+SELECT * FROM todo WHERE `no`=4;
 
 UPDATE todo SET content='NEW내용', target_at=DATE('2023-07-11'), `check`=1 WHERE `no`=1;
 

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.calendar.CalendarDao;
 import model.calendar.CalendarRequestDto;
 import model.calendar.CalendarVo;
+import model.share.ShareDao;
 import model.user.UserDao;
 import model.user.UserRequestDto;
 import model.user.UserVo;
@@ -55,6 +56,10 @@ public class JoinFormAction extends HttpServlet {
 			CalendarRequestDto calendarRequestDto = new CalendarRequestDto(joinUser.getCode(), email, name);
 			CalendarDao calendarDao = CalendarDao.getInstance();
 			calendarDao.createCalendar(calendarRequestDto);
+			
+			ShareDao shareDao = ShareDao.getInstance();
+			shareDao.addSharedCalendar(email, joinUser.getCode());
+			
 			request.removeAttribute("dupl");
 			request.setAttribute("message", "회원가입이 완료되었습니다. 로그인 후 이용해주세요.");
 			
