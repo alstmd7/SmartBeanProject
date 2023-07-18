@@ -45,9 +45,9 @@ public class Calendar_DeleteAction extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8");
 
 	    CalendarDao calDao = CalendarDao.getInstance();
-	    int calendarId = Integer.parseInt(request.getParameter("calendarId"));  // 클라이언트에서 보낸 캘린더 ID를 가져옵니다.
+	    int calendarId = Integer.parseInt(request.getParameter("calendarId"));
 
-	    boolean isSuccess = calDao.deleteCalendarByNo(calendarId);  // 이 메서드는 캘린더를 삭제하고 성공 여부를 반환하는 로직을 구현해야 합니다
+	    boolean isSuccess = calDao.deleteCalendarByNo(calendarId); 
 
 	    if (isSuccess) {
 	        response.getWriter().write("캘린더가 성공적으로 삭제되었습니다.");

@@ -9,237 +9,265 @@ import java.util.ArrayList;
 import util.DBManager;
 
 public class CalendarDao {
-    private Connection conn;
-    private PreparedStatement pstmt;
-    private ResultSet rs;
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
 
-    private CalendarDao() {
-    }
+	private CalendarDao() {
+	}
 
-    private static CalendarDao instance = new CalendarDao();
+	private static CalendarDao instance = new CalendarDao();
 
-    public static CalendarDao getInstance() {
-        return instance;
-    }
+	public static CalendarDao getInstance() {
+		return instance;
+	}
 
-    public ArrayList<CalendarVo> getAllCalendars(String email) {
-        ArrayList<CalendarVo> calendarList = new ArrayList<>();
-        conn = null;
-        pstmt = null;
-        rs = null;
+	public CalendarVo getCalendarByName(String name) {
+		CalendarVo calendar = null;
 
-        try {
-            conn = DBManager.getConnection();
+		try {
+			conn = DBManager.getConnection();
 
-            String sql = "SELECT * FROM calendar WHERE email=?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, email);
+			String sql = "SELECT * FROM calendar WHERE name = ?";
 
-            rs = pstmt.executeQuery();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
 
-            while (rs.next()) {
-                int no = rs.getInt("no");
-                int code = rs.getInt("code");
-                String name = rs.getString("name");
+			rs = pstmt.executeQuery();
 
-                CalendarVo calendar = new CalendarVo(no, code, email, name);
-                calendarList.add(calendar);
-            }
+			if (rs.next()) {
+				int no = rs.getInt("no");
+				int code = rs.getInt("code");
+				String email = rs.getString("email");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.close(conn, pstmt, rs);
-        }
+				calendar = new CalendarVo(no, code, email, name);
+			}
 
-        return calendarList;
-    }
-    
-    public ArrayList<CalendarVo> getUserCalendars(String email) {
-        ArrayList<CalendarVo> userCalendars = new ArrayList<>();
-        conn = null;
-        pstmt = null;
-        rs = null;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
 
-        try {
-            conn = DBManager.getConnection();
+		return calendar;
+	}
 
-            String sql = "SELECT * FROM calendar WHERE email=?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, email);
+	public ArrayList<CalendarVo> getAllCalendars(String email) {
+		ArrayList<CalendarVo> calendarList = new ArrayList<>();
+		conn = null;
+		pstmt = null;
+		rs = null;
 
-            rs = pstmt.executeQuery();
+		try {
+			conn = DBManager.getConnection();
 
-            while (rs.next()) {
-                int no = rs.getInt("no");
-                String name = rs.getString("name");
+			String sql = "SELECT * FROM calendar WHERE email=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
 
-                CalendarVo calendar = new CalendarVo(no, 0, email, name); 
-                userCalendars.add(calendar);
-            }
+			rs = pstmt.executeQuery();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.close(conn, pstmt, rs);
-        }
+			while (rs.next()) {
+				int no = rs.getInt("no");
+				int code = rs.getInt("code");
+				String name = rs.getString("name");
 
-        return userCalendars;
-    }
+				CalendarVo calendar = new CalendarVo(no, code, email, name);
+				calendarList.add(calendar);
+			}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
 
+		return calendarList;
+	}
 
-    public CalendarVo getCalendarByNo(int no) {
-        CalendarVo calendar = null;
+	public ArrayList<CalendarVo> getUserCalendars(String email) {
+		ArrayList<CalendarVo> userCalendars = new ArrayList<>();
+		conn = null;
+		pstmt = null;
+		rs = null;
 
-        try {
-            conn = DBManager.getConnection();
+		try {
+			conn = DBManager.getConnection();
 
-            String sql = "SELECT * FROM calendar WHERE no = ?";
+			String sql = "SELECT * FROM calendar WHERE email=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
 
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, no);
+			rs = pstmt.executeQuery();
 
-            rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int no = rs.getInt("no");
+				String name = rs.getString("name");
 
-            if (rs.next()) {
-                int code = rs.getInt("code");
-                String email = rs.getString("email");
-                String name = rs.getString("name");
+				CalendarVo calendar = new CalendarVo(no, 0, email, name);
+				userCalendars.add(calendar);
+			}
 
-                calendar = new CalendarVo(no, code, email, name);
-            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.close(conn, pstmt, rs);
-        }
+		return userCalendars;
+	}
 
-        return calendar;
-    }
-    
-    private int getUserCodeByEmail(String email) {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        int userCode = -1;
+	public CalendarVo getCalendarByNo(int no) {
+		CalendarVo calendar = null;
 
-        try {
-            conn = DBManager.getConnection();
+		try {
+			conn = DBManager.getConnection();
 
-            if (conn != null) {
-                String sql = "SELECT code FROM user WHERE email = ?";
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, email);
+			String sql = "SELECT * FROM calendar WHERE no = ?";
 
-                rs = pstmt.executeQuery();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
 
-                if (rs.next()) {
-                    userCode = rs.getInt("code");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.close(conn, pstmt, rs);
-        }
+			rs = pstmt.executeQuery();
 
-        return userCode;
-    }
+			if (rs.next()) {
+				int code = rs.getInt("code");
+				String email = rs.getString("email");
+				String name = rs.getString("name");
 
+				calendar = new CalendarVo(no, code, email, name);
+			}
 
-    public boolean createCalendar(CalendarRequestDto calendarDto) {
-    	// 이메일에 해당하는 user의 code 찾기 -> 이메일 유저가 없으면 -1 반환 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        boolean result = false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
 
-        try {
-            conn = DBManager.getConnection();
+		return calendar;
+	}
 
-            if (conn != null) {
-                String sql = "INSERT INTO calendar (code, email, `name`) VALUES (?, ?, ?)";
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(1, calendarDto.getCode());
-                pstmt.setString(2, calendarDto.getEmail());
-                pstmt.setString(3, calendarDto.getName());
+	private int getUserCodeByEmail(String email) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int userCode = -1;
 
-                int rowCount = pstmt.executeUpdate();
-                result = rowCount > 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.close(conn, pstmt);
-        }
+		try {
+			conn = DBManager.getConnection();
 
-        return result;
-    }
+			if (conn != null) {
+				String sql = "SELECT code FROM user WHERE email = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, email);
 
-	public void updateCalendarName(int no, String name) {
-        conn = null;
-        pstmt = null;
+				rs = pstmt.executeQuery();
 
-        try {
-            conn = DBManager.getConnection();
+				if (rs.next()) {
+					userCode = rs.getInt("code");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
 
-            String sql = "UPDATE calendar SET name = ? WHERE no = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            pstmt.setInt(2, no);
+		return userCode;
+	}
 
-            pstmt.executeUpdate();
+	public boolean createCalendar(CalendarRequestDto calendarDto) {
+		// 이메일에 해당하는 user의 code 찾기 -> 이메일 유저가 없으면 -1 반환
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		boolean result = false;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.close(conn, pstmt);
-        }
-    }
+		try {
+			conn = DBManager.getConnection();
 
-    public boolean deleteCalendarByNo(int no) {
-        conn = null;
-        pstmt = null;
-        boolean result = false;
+			if (conn != null) {
+				String sql = "INSERT INTO calendar (code, email, `name`) VALUES (?, ?, ?)";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, calendarDto.getCode());
+				pstmt.setString(2, calendarDto.getEmail());
+				pstmt.setString(3, calendarDto.getName());
 
-        try {
-            conn = DBManager.getConnection();
+				int rowCount = pstmt.executeUpdate();
+				result = rowCount > 0;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
 
-            String sql = "DELETE FROM calendar WHERE no = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, no);
+		return result;
+	}
 
-            int rowCount = pstmt.executeUpdate();
-            result = rowCount > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.close(conn, pstmt);
-        }
+	public boolean updateCalendarName(int no, String name) {
+		conn = null;
+		pstmt = null;
+		boolean result = false;
 
-        return result;
-    }
-    
-    public void deleteEventFromCalendar(int calendarId, int eventNo) {
-        conn = null;
-        pstmt = null;
+		try {
+			conn = DBManager.getConnection();
 
-        try {
-            conn = DBManager.getConnection();
+			String sql = "UPDATE calendar SET name = ? WHERE no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setInt(2, no);
 
-            String sql = "DELETE FROM `event` WHERE calendar_no = ? AND no = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, calendarId);
-            pstmt.setInt(2, eventNo);
+			pstmt.executeUpdate();
 
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DBManager.close(conn, pstmt);
-        }
-        
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+
+	public boolean deleteCalendarByNo(int no) {
+		conn = null;
+		pstmt = null;
+		boolean result = false;
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "DELETE FROM calendar WHERE no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+
+			int rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+
+		return result;
+	}
+
+	public void deleteEventFromCalendar(int calendarId, int eventNo) {
+		conn = null;
+		pstmt = null;
+
+		try {
+			conn = DBManager.getConnection();
+
+			String sql = "DELETE FROM `event` WHERE calendar_no = ? AND no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, calendarId);
+			pstmt.setInt(2, eventNo);
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+
+	}
 
 }

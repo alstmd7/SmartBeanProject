@@ -12,7 +12,6 @@ import model.share.ShareDao;
 /**
  * Servlet implementation class ShareCalendar_RequestAction
  */
-@WebServlet("/Calendar_RequestAction")
 public class ShareCalendar_RequestAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -43,13 +42,17 @@ public class ShareCalendar_RequestAction extends HttpServlet {
 	    int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
 
 	    ShareDao shareDao = ShareDao.getInstance();
-	    shareDao.addSharedCalendar(userEmail, calendarNo);
+	    boolean result = shareDao.addSharedCalendar(userEmail, calendarNo);
 
-	    response.setContentType("text/plain");
-	    response.getWriter().write("이메일 정보가 성공적으로 처리되었습니다.");
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+
+	    // Result based on the success of the addSharedCalendar operation
+	    if(result) {
+	        response.getWriter().write("{\"message\":\"success\"}");
+	    } else {
+	        response.getWriter().write("{\"message\":\"fail\"}");
+	    }
 	}
 
-
-
-	
 }

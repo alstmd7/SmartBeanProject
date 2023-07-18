@@ -75,7 +75,7 @@
 		<servlet-name>CreateTodoFormAction</servlet-name>
 		<url-pattern>/CreateTodo</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>LoadTodoAction</servlet-name>
 		<servlet-class>controller.todo.LoadTodoAction</servlet-class>
@@ -84,7 +84,7 @@
 		<servlet-name>LoadTodoAction</servlet-name>
 		<url-pattern>/LoadTodo</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>Task_ReadAction</servlet-name>
 		<servlet-class>controller.todo.Task_ReadAction</servlet-class>
@@ -94,7 +94,7 @@
 		<url-pattern>/Task_Read</url-pattern>
 	</servlet-mapping>
 
-				<!-- About calendar -->
+	<!-- About calendar -->
 	<servlet>
 		<servlet-name>Calendar_CreateAction</servlet-name>
 		<servlet-class>controller.calendar.Calendar_CreateAction</servlet-class>
@@ -121,16 +121,34 @@
 		<servlet-name>Calendar_UpdateAction</servlet-name>
 		<url-pattern>/UpdateCalendar</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
-	    <servlet-name>getCalendarIdServlet</servlet-name>
-	    <servlet-class>controller.calendar..GetCalendarIdServlet</servlet-class>
+		<servlet-name>getCalendarIdServlet</servlet-name>
+		<servlet-class>controller.calendar.GetCalendarIdServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	    <servlet-name>getCalendarIdServlet</servlet-name>
-	    <url-pattern>/getCalendarId</url-pattern>
+		<servlet-name>getCalendarIdServlet</servlet-name>
+		<url-pattern>/getCalendarId</url-pattern>
 	</servlet-mapping>
-	
+
+	<servlet>
+		<servlet-name>FindCalendarNo_Action</servlet-name>
+		<servlet-class>controller.calendar.FindCalendarNo_Action</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FindCalendarNo_Action</servlet-name>
+		<url-pattern>/FindCalendarNo</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ShareCalendar_RequestAction</servlet-name>
+		<servlet-class>controller.share.ShareCalendar_RequestAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShareCalendar_RequestAction</servlet-name>
+		<url-pattern>/ShareCalendarRequest</url-pattern>
+	</servlet-mapping>
+
 
 	<servlet>
 		<servlet-name>Event_RequestAction</servlet-name>
@@ -140,7 +158,7 @@
 		<servlet-name>Event_RequestAction</servlet-name>
 		<url-pattern>/EventRequest</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>Event_CreateAction</servlet-name>
 		<servlet-class>controller.calendar.Event_CreateAction</servlet-class>
@@ -161,7 +179,7 @@
 
 
 	<!-- 2. JSP 페이지 맵핑 -->
-	
+
 	<servlet>
 		<servlet-name>header</servlet-name>
 		<jsp-file>/header.jsp</jsp-file>
@@ -215,7 +233,7 @@
 		<servlet-name>deleteUserForm</servlet-name>
 		<url-pattern>/deleteUser</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>home</servlet-name>
 		<jsp-file>/views/home.jsp</jsp-file>
@@ -234,8 +252,8 @@
 		<url-pattern>/alert</url-pattern>
 	</servlet-mapping>
 
-	<servlet> <!-- calendar main  -->
-		<servlet-name>calendar</servlet-name> 
+	<servlet> <!-- calendar main -->
+		<servlet-name>calendar</servlet-name>
 		<jsp-file>/views/calendar-main.jsp</jsp-file>
 	</servlet>
 	<servlet-mapping>
