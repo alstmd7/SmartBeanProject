@@ -120,34 +120,36 @@ public class CalendarDao {
 	}
 
 	public CalendarVo getCalendarByNo(int no) {
-		CalendarVo calendar = null;
+	    CalendarVo calendar = null;
 
-		try {
-			conn = DBManager.getConnection();
+	    try {
+	        conn = DBManager.getConnection();
 
-			String sql = "SELECT * FROM calendar WHERE no = ?";
+	        String sql = "SELECT * FROM calendar WHERE no = ?";
 
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, no);
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, no);
 
-			rs = pstmt.executeQuery();
+	        rs = pstmt.executeQuery();
 
-			if (rs.next()) {
-				int code = rs.getInt("code");
-				String email = rs.getString("email");
-				String name = rs.getString("name");
+	        if (rs.next()) {
+	            int code = rs.getInt("code");
+	            String email = rs.getString("email");
+	            String name = rs.getString("name");
+	            int p_code = rs.getInt("p_code");
 
-				calendar = new CalendarVo(no, code, email, name);
-			}
+	            calendar = new CalendarVo(no, code, email, name, p_code);
+	        }
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, pstmt, rs);
-		}
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        DBManager.close(conn, pstmt, rs);
+	    }
 
-		return calendar;
+	    return calendar;
 	}
+
 
 	private int getUserCodeByEmail(String email) {
 		Connection conn = null;

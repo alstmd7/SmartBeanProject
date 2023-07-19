@@ -28,6 +28,19 @@ public class EventRequestDto {
 		this.all_day = all_day;
 	}
 	
+	// 이벤트 드랍하자마자 쓸거
+	public EventRequestDto(int calendar_no, int task_no, String name, String email, String title,
+			 String start, String end) {
+		super();
+		this.calendar_no = calendar_no;
+		this.task_no = task_no;
+		this.name = name;
+		this.email = email;
+		this.title = title;
+		this.start = start;
+		this.end = end;
+	}
+	
 	public EventRequestDto(int calendar_no, int task_no, String name, String email, String title,
 			String content, String start, String end, String all_day) {
 		super();

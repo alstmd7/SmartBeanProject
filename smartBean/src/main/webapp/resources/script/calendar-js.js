@@ -1,6 +1,5 @@
 var calendar = null;
 $(document).ready(function() {
-	
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
 
@@ -17,6 +16,9 @@ $(document).ready(function() {
 	});
 
 	calendar = new Calendar(calendarEl, {
+		eventClick: function(info) {
+			console.log("Clicked event ID: ", info.event.id);
+		},
 		headerToolbar: {
 			left: 'prev,next today',
 			center: 'title',
@@ -42,6 +44,18 @@ $(document).ready(function() {
 	calendar.render();
 
 	// <<<<<<<<<<<<<<< calendar >>>>>>>>>>>>>>>
+	// 내 캘린더 번호 가져오기
+	var myCalendarNo = null;
+	$.ajax({
+		url: '/GetMyCalendarNo',
+		type: 'POST',
+	}).done(function(myCal) {
+		myCalendarNo = myCal.no;
+		console.log("My Calendar No:", myCalendarNo);
+	}).fail(function() {
+
+	});
+
 	var newCalendarName = "";
 
 	// 캘린더 만들기
@@ -49,19 +63,23 @@ $(document).ready(function() {
 		$("#create-calendar-popup").fadeIn();
 	});
 
-	// 캘린더 생성 정보 저장 및 관리 버튼 추가					 수정 : id를 만들고 -> id에 calendarNo(db에서 꺼내) , checked 속성값 있으면 선택된 애들의 아이디값만 가져와  
+	// 캘린더 생성 정보 저장 및 관리 버튼 추가
 	$("#save-newCalendar-button").on("click", function() {
 		var calendarCheckboxId = 'calendar-' + calendarNo;
-
 		var newCalendar = document.createElement("div");
 		newCalendar.className = "calendar-checkbox";
 		newCalendar.innerHTML = ` 
     <input type="checkbox" id="${calendarCheckboxId}" class="calendar-checkbox-input" data-owner="${newCalendarOwner}"> 
     <span>${newCalendarName} (${newCalendarOwner})</span>
-    <button class="admin-calendar-btn">EDIT</button>
-`;
+    `;
+		// 기본 캘린더 외 캘린더만 관리 버튼 추가 ---> 안됨
+		if (calendarCheckboxId != myCalendarNo) {
+			newCalendar.innerHTML += '<button class="admin-calendar-btn">EDIT</button>';
+		}
+
 		$("#calendar-list").append(newCalendar);
 	});
+
 
 	// 사용자의 모든 캘린더 불러오기
 	$.ajax({
@@ -79,23 +97,23 @@ $(document).ready(function() {
                     <button class="admin-calendar-btn" id="${calendarNo}")>EDIT</button>
                 </div>`
 			);
-		console.log(calendarNo);
+			console.log(calendarNo);
 		});
 	}).fail(function() {
 		console.error("fail read calendars");
 	});
 
-	var id_check = null; 
-	
+
+	var id_check = null;
 	// 캘린더 관리 팝업 열 때 calendarNo를  id_check에 가져오기
 	$(document).on("click", ".admin-calendar-btn", function() {
-	    $("#admin-newCalendar-popup").fadeIn();
-	
-	    var calendarName = $(this).prev().prev().attr('id');
-	    document.getElementById("newCalendar-popup-title").innerHTML = calendarName;
-	    
-	    id_check = $(this).attr("id"); // id_check 업데이트
-	    console.log(id_check);
+		$("#admin-newCalendar-popup").fadeIn();
+
+		var calendarName = $(this).prev().prev().attr('id');
+		document.getElementById("newCalendar-popup-title").innerHTML = calendarName;
+
+		id_check = $(this).attr("id"); // id_check 업데이트
+		console.log(id_check);
 	});
 
 	// 캘린더 관리 팝업 닫기
@@ -106,32 +124,32 @@ $(document).ready(function() {
 
 	// 캘린더 삭제 버튼
 	$("#delete-calendar-button").on("click", function() {
-	    var calendarId = id_check; // id_check 사용
-	
-	    $.ajax({
-	        url: "/DeleteCalendar",
-	        method: "POST",
-	        data: { calendarId: calendarId }
-	    })
+		var calendarId = id_check; // id_check 사용
+
+		$.ajax({
+			url: "/DeleteCalendar",
+			method: "POST",
+			data: { calendarId: calendarId }
+		})
 		location.href = "calendar";
 	});
 
-	
+
 	// 캘린더 이름 수정하기 버튼
 	$("#update-calendar-button").on("click", function() {
-	    var calendarId = id_check; // id_check 사용
-	    var newCalendarName = $("#new-calendar-name-input").val();
+		var calendarId = id_check; // id_check 사용
+		var newCalendarName = $("#new-calendar-name-input").val();
 
 		let obj = {
-			"calendarId" : calendarId,
-			"newCalendarName" : newCalendarName
-		}
-	
-	    $.ajax({
-	        url: "/UpdateCalendar",
-	        method: "POST",
-	        data: obj
-	    })
+			"calendarId": calendarId,
+			"newCalendarName": newCalendarName
+		};
+
+		$.ajax({
+			url: "/UpdateCalendar",
+			method: "POST",
+			data: obj
+		})
 
 		location.href = "calendar";
 	});
@@ -171,6 +189,24 @@ $(document).ready(function() {
 		}
 	});
 	// <<<<<<<<<<<<<<< task >>>>>>>>>>>>>>>
+	// 모든 task 불러오기
+	$.ajax({
+		"url": "/TaskRead",
+		"method": "GET"
+	}).done(function(responseList) {
+		responseList.forEach(task => {
+			const name = task.name;
+			var taskNo = task.no;
+			$("#task-list").append(`
+                <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' data-task_title=${name}>
+			<div class='fc-event-main' id='${taskNo}'>${name}</div>`
+			);
+			// console.log(taskNo);
+		});
+	}).fail(function() {
+		console.error("fail read task");
+	});
+
 	// task 추가 버튼
 	$("#add-task-button").on("click", function() {
 		$("#add-task-popup").fadeIn();
@@ -202,58 +238,23 @@ $(document).ready(function() {
 			} else {
 				var newEvent = document.createElement("div");
 				newEvent.className = "fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event";
+				newEvent.setAttribute("data-task_title", taskName);
 				newEvent.innerHTML = `
           <div class='fc-event-main'>${taskName}</div>
-          <button class="admin-task-btn">Task 관리</button>
         `;
 				containerEl.insertBefore(newEvent, containerEl.lastChild);
 				$("#add-task-popup").fadeOut();
 				$("#newTaskTitle").val("");
 
 				// Task 관리 버튼 클릭 시 관리 팝업 표시
-				$(newEvent).find(".admin-task-btn").on("click", function() {
-					var taskName = $(this).siblings(".fc-event-main").text();
+				$(newEvent).find(".fc-event-main").on("click", function() {
+					var taskName = $(this).text();
 					$("#task-popup-title").text(taskName);
 					$("#admin-task-popup").fadeIn();
 				});
 			}
 		}
 	});
-
-	/* 사용자 TASK 불러오기 */
-	/* $.ajax({
-		"url": `/Task_Read`,
-		"method": "GET"
-	}).done(function(response) {
-		console.log(response);
-		response.forEach(task => {
-			const name = task.name;
-
-
-			var newEvent = document.createElement("div");
-			newEvent.className = "fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event  data-task_no='1'"; // no 추가되야됨
-			newEvent.innerHTML = `
-					<div class='fc-event-main'>${name}</div>
-					<button class="admin-task-btn">Task 관리</button>
-				`;
-
-			containerEl.insertBefore(newEvent, containerEl.lastChild);
-			$("#add-task-popup").fadeOut();
-			$("#newTaskTitle").val("");
-
-			// Task 관리 버튼 클릭 시 관리 팝업 표시
-			$(newEvent).find(".admin-task-btn").on("click", function() {
-				var taskName = $(this).siblings(".fc-event-main").text();
-				$("#task-popup-title").text(taskName);
-				$("#admin-task-popup").fadeIn();
-			});
-
-		});
-
-	}).fail(function() {
-
-	});  */
-
 
 	// Task 관리 팝업 닫기
 	$("#close-task-button").on("click", function() {
@@ -291,115 +292,7 @@ $(document).ready(function() {
 	});
 
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
-	// 전체 일정 저장 &&& 서버에 저장된 이벤트 데이터 가져오기
-	// 1. 전체 이벤트 데이터 추출
-	$("#save-button").on("click", function() {
-		var allEvent = calendar.getEvents();
-		console.log(allEvent); // 확인용
-
-		var events = [];
-		for (var i = 0; i < allEvent.length; i++) {
-			var obj = {
-				calendarNo: $("#calendars option:selected").val(), // 캘린더 체크박스 선택값을 어떻게 불러오지
-				taskNo: null,
-				name: allEvent[i]._def.title,
-				email: '', // 세션에 저장된 로그..?
-				title: allEvent[i]._def.title,
-				content: $("#event-description").val(),
-				start: allEvent[i]._instance.range.start.toISOString().split("T")[0], // "start":"2023-07-18T00:00:00.000Z" 파싱 
-				end: allEvent[i]._instance.range.end.toISOString().split("T")[0],
-				allday: allEvent[i]._def.allday,
-			}
-
-			events.push(obj);
-		}
-	});
-	
-	// 이벤트 등록
-	var taskTitle = null;
-	
-	// task_title 가져오기 
-	$(".fc-event-main").mousedown(function() {
-	    taskTitle = $(this).parent().data('task_title');
-	    console.log(taskTitle);
-	});
-	
-	// 날짜 불러오고 이벤트 팝업 시작일에 날짜 지정 
-	$(document).on('mouseup', 'td.fc-day', function(e) {
-	    startDate = $(e.target).closest('td.fc-day').data('date');
-	    $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
-		// console.log(startDate);
-	});
-
-	// 얘는 업데이트가 되야할거
-	/* var calendarNumbers = $("#calendars").val();
-	
-	    for (var i = 0; i < calendarNumbers.length; i++) {
-	        let obj = {
-	            calendar_no: calendarNumbers[i],
-	            task_no: taskTitle, 
-	            name: task-title,
-	            email: // 사용자 로그값 
-	            title: event-title,
-	            content: 
-	            start: startDate,
-	            end: 
-	            all_day: 
-	        };
-
-	    $.ajax({
-	        url: "/EventCreate",
-	        method: "POST",
-	        data: obj,
-	    });
-	
-	    location.href = "calendar"; */
-
-	// 캘린더에 등록된 이벤트 수정
-	$('#calendar').on('click', '.fc-daygrid-event', function() {
-		var eventElement = this;
-		var eventTitle = $(this).find('.fc-event-main').text();
-		var isPredefinedTask = $(this).hasClass('predefined-task');
-		var eventPopup = $('#event-popup');
-		var closeButton = $('#close-event-button');
-		var deleteButton = $('#delete-event-button');
-		var saveEventButton = $('#save-event-button');
-		var allDayCheckbox = $('#all-day-checkbox');
-		var startDateInput = $('#start-date');
-		var endDateInput = $('#end-date');
-		var eventDescriptionInput = $('#event-description');
-
-		eventPopup.fadeIn();
-		
-		$('#task-title').val(taskTitle);
-
-		// 이벤트 타이틀 입력
-		$('#event-title-input').val(eventTitle);
-
-		// 기존 task인 경우 이벤트 타이틀 입력 비활성화 ---> 이거 안되는듯(07/14 02:20)
-		if (isPredefinedTask) {
-			$('#event-title-input').prop('disabled', true);
-		} else {
-			$('#event-title-input').prop('disabled', false);
-		}
-
-		deleteButton.off('click').on('click', function() {
-			eventElement.remove();
-			eventPopup.fadeOut();
-		});
-
-		closeButton.off('click').on('click', function() {
-			eventPopup.fadeOut();
-		});
-		
-		saveEventButton.off('click').on('click', function() {
-			
-		});
-
-	});
-
-	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 모든 이벤트 불러와짐. 필터링 필요 수정 : 조회하려면 캘린더no랑 이벤트No가 필요한데 두개가 해당해야 이벤트 조회가 가능.
-	// share_Event에서 외래키로 받아와서 select * from share_Event where 선택한캘린더번호=?
+	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 
 	$.ajax({
 		url: "/EventRequest",
 		method: "GET",
@@ -410,6 +303,9 @@ $(document).ready(function() {
 
 			for (var i = 0; i < eventData.length; i++) {
 				var event = eventData[i];
+
+				console.log("Event No: ", event.no);
+
 				var newEvent = {
 					id: event.no,
 					title: event.title,
@@ -425,8 +321,100 @@ $(document).ready(function() {
 			console.log("Error: " + error);
 		}
 	});
-	
+
+
+	var taskTitle = null;
+	var taskNo = null;
+	var startDate = null;
+
+	// task_title, no 가져오기 
+	$(document).on('mousedown', '.fc-event-main', function() {
+		taskNo = $(this).attr('id');
+		console.log("taskNo:", taskNo);
+	});
+
+	/* $(document).on('mousedown', '#main', function(e) {
+		console.log('mousedown: ', e.target);
+	});
+
+
+	$('#main').mouseup(function(e) {
+		console.log('mouseup: ', e.target);
+	}); */
+
+
+	$(document).on('click', '.fc-event-main', function() {
+		taskNo = $(this).attr('id');
+		startDate = $(this).closest('.fc-daygrid-day').data('date');
+		taskTitle = $(this).find('.fc-event-title').text();
+
+		/* console.log("calendar_no: ", myCalendarNo);
+		console.log("taskNo: ", taskNo);
+		console.log("taskTitle: ", taskTitle);
+		console.log("startDate: ", startDate); */
+	});
+
+	$("#end-date").on("input", function() {
+		endDate = $(this).val();
+		console.log("end date:", endDate);
+	});
+
+	// 일정 추가할 캘린더의 값을 콘솔에 표시하는 이벤트
+	$("#calendars").on("change", function() {
+		var selectedOptions = $(this).find("option:selected");
+		selectedOptions.each(function() {
+			var selectedCalNo = $(this).val();
+			var selectedCalName = $(this).text();
+			console.log("Selected calendar No:", selectedCalNo);		// 확인용
+			console.log("Selected calendar Name:", selectedCalName);	// 확인용 
+		});
+	});
+
+	// 캘린더에 등록된 이벤트 수정
+	$('#calendar').on('click', '.fc-event-title-container', function() {
+		$('#event-popup').fadeIn();
+
+		let obj = {
+			"calendarNo": myCalendarNo,
+			"name": taskTitle,
+			"start": startDate
+		}
+		
+		console.log("calendarNo:", myCalendarNo);	
+		console.log("name:", taskTitle);	
+		console.log("start:", startDate);	
+
+		$.ajax({
+			url: "/EventCreate",
+			method: "POST",
+			data: obj
+		})
+
+		// $('#task-title').val(taskTitle);
+
+		// 이벤트 타이틀 입력
+		// $('#event-title-input').val(eventTitle);
+
+		// 기존 task인 경우 이벤트 타이틀 입력 비활성화 ---> 이거 안되는듯(07/14 02:20)
+		/* if (isPredefinedTask) {
+			$('#event-title-input').prop('disabled', true);
+		} else {
+			$('#event-title-input').prop('disabled', false);
+		} */
+
+		$('#delete-event-button').off('click').on('click', function() {
+			this.remove();
+			$('#event-popup').fadeOut();
+		});
+
+		$('#close-event-button').off('click').on('click', function() {
+			$('#event-popup').fadeOut();
+		});
+
+		$('#save-event-button').off('click').on('click', function() {
+
+		});
+
+	});
+
 });
-
-
-

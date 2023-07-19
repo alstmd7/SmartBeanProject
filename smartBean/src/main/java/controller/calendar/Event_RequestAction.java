@@ -37,7 +37,9 @@ public class Event_RequestAction extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");
 		EventDao eventDao = EventDao.getInstance();
-		ArrayList<EventVo> eventList = eventDao.getEventAll();
+		
+		String email = (String) request.getSession().getAttribute("log");
+		ArrayList<EventVo> eventList = eventDao.getEventAll(email);
 
 		JSONArray responseList = new JSONArray(eventList);
 		response.getWriter().append(responseList.toString());

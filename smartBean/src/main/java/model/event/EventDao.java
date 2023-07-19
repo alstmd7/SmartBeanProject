@@ -8,6 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import model.calendar.CalendarVo;
+import model.share.ShareDao;
+import model.share.ShareVo;
 import util.DBManager;
 
 public class EventDao {
@@ -33,21 +36,17 @@ public class EventDao {
 	    String name = eventDto.getName();
 	    String email = eventDto.getEmail();
 	    String title = eventDto.getTitle();
-	    String content = eventDto.getContent();
 	    String start = eventDto.getStart();
 	    String end = eventDto.getEnd();
-	    String all_day = eventDto.getAll_day();
 
 	    boolean check = true;
 
-	    if (calendar_no != 0 && task_no != 0 && name != null && email != null && title != null && content != null
-	            && start != null && end != null && all_day != null) {
+	    if (calendar_no != 0 && task_no != 0 && name != null && email != null && title != null 
+	            && start != null && end != null ) {
 	        this.conn = DBManager.getConnection();
 	        if (this.conn != null) {
-	            String sql = "INSERT INTO `event` (calendar_no, task_no, `name`, email, title, content, `start`, `end`)"
-	                    + " SELECT ?, ?, ?, ?, ?, ?, DATE(?), DATE(?)"
-	                    + " WHERE NOT EXISTS (SELECT 1 FROM `event` WHERE calendar_no = ? AND task_no = ? AND `name` = ? AND email = ? AND title = ? AND `start` = DATE(?) AND `end` = DATE(?) AND all_day = ?)";
-
+	            String sql = "INSERT INTO `event` (calendar_no, task_no, `name`, email, title, `start`, `end`) VALUES (?, ?, ?, ?, ?, DATE(?), DATE(?))";
+	                 
 	            try {
 	                this.pstmt = this.conn.prepareStatement(sql);
 	                this.pstmt.setInt(1, calendar_no);
@@ -55,9 +54,8 @@ public class EventDao {
 	                this.pstmt.setString(3, name);
 	                this.pstmt.setString(4, email);
 	                this.pstmt.setString(5, title);
-	                this.pstmt.setString(6, content);
-	                this.pstmt.setString(7, start);
-	                this.pstmt.setString(8, end);
+	                this.pstmt.setString(6, start);
+	                this.pstmt.setString(7, end);
 
 	                this.pstmt.execute();
 
@@ -78,13 +76,59 @@ public class EventDao {
 	    return check;
 	}
 
-	public ArrayList<EventVo> getEventAll() {
+	public ArrayList<EventVo> getEventAll(String email) {
+		ArrayList<EventVo> list = new ArrayList<EventVo>();
+
+		this.conn = DBManager.getConnection();
+		ShareDao shareDao = ShareDao.getInstance();
+		ArrayList<CalendarVo> shareCalendars = shareDao.getSharedCalendars(email);
+
+		if (this.conn != null) {
+			String sql = "SELECT * FROM `event`";
+
+			try {
+				this.pstmt = this.conn.prepareStatement(sql);
+				this.rs = this.pstmt.executeQuery();
+
+				while (this.rs.next()) {
+					
+					int no = this.rs.getInt(1);
+					int calendar_no = this.rs.getInt(2);
+					int task_no = this.rs.getInt(3);
+					String name = this.rs.getString(4);
+					String title = this.rs.getString(6);
+					String content = this.rs.getString(7);
+					String start = sdf.format(this.rs.getDate(8));
+					String end = sdf.format(this.rs.getDate(9));
+					String all_day = this.rs.getString(10);
+					
+					for(int i = 0; i < shareCalendars.size(); i++) {
+						if(shareCalendars.get(i).getNo() == calendar_no) {
+							EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end,
+									all_day);							
+							list.add(event);
+						}
+					}
+
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(this.conn, this.pstmt, this.rs);
+			}
+		}
+
+		return list;
+	}
+	
+	public ArrayList<EventVo> getEventMyEvent() { ///// 이거 완성하고 이벤트 가져오는 js에 서블릿 변경해
 		ArrayList<EventVo> list = new ArrayList<EventVo>();
 
 		this.conn = DBManager.getConnection();
 
 		if (this.conn != null) {
-			String sql = "SELECT * FROM `event`";
+			String sql = "SELECT * FROM `share_Event` WHERE = ?";
 
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);

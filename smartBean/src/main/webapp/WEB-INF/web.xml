@@ -127,7 +127,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Task_ReadAction</servlet-name>
-		<url-pattern>/Task_Read</url-pattern>
+		<url-pattern>/TaskRead</url-pattern>
 	</servlet-mapping>
 
 	<!-- About calendar -->
@@ -158,6 +158,15 @@
 		<url-pattern>/UpdateCalendar</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>Calendar_GetMyCalendarNo</servlet-name>
+		<servlet-class>controller.calendar.Calendar_GetMyCalendarNo</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Calendar_GetMyCalendarNo</servlet-name>
+		<url-pattern>/GetMyCalendarNo</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>ShareCalendar_RequestAction</servlet-name>
 		<servlet-class>controller.share.ShareCalendar_RequestAction</servlet-class>

@@ -10,6 +10,8 @@ import model.calendar.CalendarDao;
 import model.calendar.CalendarRequestDto;
 import model.event.EventDao;
 import model.event.EventRequestDto;
+import model.task.TaskDao;
+import model.task.TaskVo;
 import model.user.UserRequestDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,39 +45,34 @@ public class Event_CreateAction extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-	    request.setCharacterEncoding("UTF-8");
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
+			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 
-	    EventDao eventDao = EventDao.getInstance();
-	    String json = request.getParameter("events");
-	    JSONArray jsonArray = new JSONArray(json);
+		EventDao eventDao = EventDao.getInstance();
+		TaskDao taskDao = TaskDao.getInstance();
+		String email = (String) request.getSession().getAttribute("log");
+	
+		int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
+		String name = request.getParameter("name");
+		String start = request.getParameter("start");
 
-	    for (int i = 0; i < jsonArray.length(); i++) {
-	        JSONObject jsonObject = jsonArray.getJSONObject(i);
+		TaskVo taskVo = taskDao.getTaskByName(email, name);
+		if(taskVo == null) {
+			taskVo = taskDao.getTaskByName("admin", name);
+		}
+		
+		System.out.println("calendarNo : " + calendarNo + "name" + name +  "start" + start + "taskVo.getNo()" + taskVo.getNo());
+		
+		EventRequestDto event = new EventRequestDto(calendarNo, taskVo.getNo(), name, email, name, start, start);
+		boolean result = eventDao.createEvent(event);
 
-	        int calendarNo = jsonObject.getInt("calendar_no");
-	        int taskNo = jsonObject.getInt("task_no");
-	        String name = jsonObject.getString("name");
-	        String email = jsonObject.getString("email");
-	        String title = jsonObject.getString("title");
-	        String content = jsonObject.getString("content");
-	        String start = jsonObject.getString("start");
-	        String end = jsonObject.getString("end");
-	        String allDay = jsonObject.getString("all_day");
-
-	        EventRequestDto event = new EventRequestDto(0, calendarNo, taskNo, name, email, title, content, start, end, allDay);
-	        boolean result = eventDao.createEvent(event);
-
-	        if (!result) {
-	            response.getWriter().write("{\"status\": \"error\", \"message\": \"Failed to create event.\"}");
-	            return;
-	        }
-	    }
-
-	    response.getWriter().write("{\"status\": \"success\", \"message\": \"All events created successfully.\"}");
+		if (result) {
+			System.out.println("성공성공성공");
+		}else {
+			System.out.println("실패실패실패");			
+		}
 	}
-
 
 }
