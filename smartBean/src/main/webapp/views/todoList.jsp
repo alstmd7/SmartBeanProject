@@ -34,8 +34,25 @@
 		        <input type="date" id="inputDate" required>
 		    </div>
 		    <button onclick="printWeek()" id="button">조회</button>
-		    <div id="output"></div>
+		    
+		    <!--<button type="submit" id="button0" onclick="showList(1)">일정 추가</button>
+		
+		          <div id="list1" class="hidden">
+		        	<form action="CreateTodo" method="POST">
+		        		<div id="border">
+		        		<li class="schedule">날짜선택</li>
+			            <input type="date" id="target_at_add" name="target_at_add" value="">
+			            <li class="schedule">일정 추가</li>
+			            <input type="text" id="content_add" name="content_add" value="">
 
+			            </div>
+			            
+			            <button type="submit" id="button0" onclick="addTask()">추가 하기</button>
+		        	</form>
+		        </div>-->
+		    
+		    <div id="output"></div>
+			
 			<!--  -->
 			<div id="pop_info_1" class="pop_wrap" style="display:none;">
 				<div class="pop_inner">
@@ -53,7 +70,6 @@
 					</div>
 				</div>
 			</div>
-		
 	    </div>
 	</main>
 	
