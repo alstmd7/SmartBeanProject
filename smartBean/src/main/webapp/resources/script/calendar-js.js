@@ -319,39 +319,52 @@ $(document).ready(function() {
 
 	var taskTitle = null;
 	var taskNo = null;
+	var startDate = null;
 
 	// task_title, no 가져오기 
 	$(document).on('mousedown', '.fc-event-main', function() {
-	    taskTitle = $(this).text();
-	    taskNo = $(this).attr('id');
-	    console.log("taskNo:", taskNo);
-	    console.log("taskTitle:", taskTitle);
+		taskNo = $(this).attr('id');
+		console.log("taskNo:", taskNo);
 	});
-	
+
+	$(document).on('mousedown', '#main', function() {
+		taskTitle = $(this).find('#' + taskNo).text();
+		console.log("taskTitle:", taskTitle);
+	});
+
+
+	$('#main').mouseup(function() {
+		startDate = $('.fc-daygrid-day').data('date');
+		console.log("function startdate:", startDate);
+	});
+
+
 	$(document).on('mouseup', '.fc-event-main', function() {
-	    var startDate = $(this).closest('.fc-daygrid-day').data('date');
-	    $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
-	    $('#task-title').val(taskTitle);
-	    console.log(startDate);
-	
-	    let obj = {
-	        'calendar_no': myCalendarNo,
-	        'task_no': taskNo,
-	        'name': taskTitle,
-	        'start': startDate,
-	    };
-	
-	    console.log(obj);
-	
-	    $.ajax({
-	        url: "/EventCreate",
-	        method: "POST",
-	        data: obj
-	    }).done(function() {
-	        console.log("이벤트 성공");
-	    }).fail(function() {
-	        console.log("이벤트 실패");
-	    });
+		var startDate = $(this).closest('.fc-daygrid-day').data('date');
+		// var startDate = $(this).find('.fc-daygrid-day fc-day fc-day-fri fc-day-future').data('date');
+		// $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
+		// $('#task-title').val(taskTitle);
+		console.log("ttttt:", startDate);
+
+		let obj = {
+			'calendar_no': myCalendarNo,
+			'task_no': taskNo,
+			'name': taskTitle,
+			'start': startDate,
+		};
+
+		console.log(obj);
+
+		$.ajax({
+			url: "/EventCreate",
+			method: "POST",
+			data: obj
+		}).done(function() {
+			console.log("이벤트 성공");
+		}).fail(function() {
+			console.log("이벤트 실패");
+		});
+
 	});
 
 	$("#end-date").on("input", function() {
