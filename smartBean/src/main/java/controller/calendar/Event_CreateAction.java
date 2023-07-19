@@ -10,6 +10,8 @@ import model.calendar.CalendarDao;
 import model.calendar.CalendarRequestDto;
 import model.event.EventDao;
 import model.event.EventRequestDto;
+import model.task.TaskDao;
+import model.task.TaskVo;
 import model.user.UserRequestDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,15 +51,21 @@ public class Event_CreateAction extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 
 		EventDao eventDao = EventDao.getInstance();
-
+		TaskDao taskDao = TaskDao.getInstance();
 		String email = (String) request.getSession().getAttribute("log");
-
-		int calendarNo = Integer.parseInt(request.getParameter("calendar_no"));
-		int task_no = Integer.parseInt(request.getParameter("task_no"));
+	
+		int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
 		String name = request.getParameter("name");
 		String start = request.getParameter("start");
 
-		EventRequestDto event = new EventRequestDto(calendarNo, task_no, name, email, name, start, start);
+		TaskVo taskVo = taskDao.getTaskByName(email, name);
+		if(taskVo == null) {
+			taskVo = taskDao.getTaskByName("admin", name);
+		}
+		
+		System.out.println("calendarNo : " + calendarNo + "name" + name +  "start" + start + "taskVo.getNo()" + taskVo.getNo());
+		
+		EventRequestDto event = new EventRequestDto(calendarNo, taskVo.getNo(), name, email, name, start, start);
 		boolean result = eventDao.createEvent(event);
 
 		if (result) {

@@ -16,6 +16,9 @@ $(document).ready(function() {
 	});
 
 	calendar = new Calendar(calendarEl, {
+		eventClick: function(info) {
+			console.log("Clicked event ID: ", info.event.id);
+		},
 		headerToolbar: {
 			left: 'prev,next today',
 			center: 'title',
@@ -289,8 +292,7 @@ $(document).ready(function() {
 	});
 
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
-	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 모든 이벤트 불러와짐. 필터링 필요 수정 : 조회하려면 캘린더no랑 이벤트No가 필요한데 두개가 해당해야 이벤트 조회가 가능.
-	// share_Event에서 외래키로 받아와서 select * from share_Event where 선택한캘린더번호=?
+	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 
 	$.ajax({
 		url: "/EventRequest",
 		method: "GET",
@@ -301,6 +303,9 @@ $(document).ready(function() {
 
 			for (var i = 0; i < eventData.length; i++) {
 				var event = eventData[i];
+
+				console.log("Event No: ", event.no);
+
 				var newEvent = {
 					id: event.no,
 					title: event.title,
@@ -317,6 +322,7 @@ $(document).ready(function() {
 		}
 	});
 
+
 	var taskTitle = null;
 	var taskNo = null;
 	var startDate = null;
@@ -327,44 +333,25 @@ $(document).ready(function() {
 		console.log("taskNo:", taskNo);
 	});
 
-	$(document).on('mousedown', '#main', function() {
-		taskTitle = $(this).find('#' + taskNo).text();
-		console.log("taskTitle:", taskTitle);
+	/* $(document).on('mousedown', '#main', function(e) {
+		console.log('mousedown: ', e.target);
 	});
 
 
-	$('#main').mouseup(function() {
-		startDate = $('.fc-daygrid-day').data('date');
-		console.log("function startdate:", startDate);
-	});
+	$('#main').mouseup(function(e) {
+		console.log('mouseup: ', e.target);
+	}); */
 
 
-	$(document).on('mouseup', '.fc-event-main', function() {
-		var startDate = $(this).closest('.fc-daygrid-day').data('date');
-		// var startDate = $(this).find('.fc-daygrid-day fc-day fc-day-fri fc-day-future').data('date');
-		// $("#start-date").val(moment(startDate).format('YYYY-MM-DD'));
-		// $('#task-title').val(taskTitle);
-		console.log("ttttt:", startDate);
+	$(document).on('click', '.fc-event-main', function() {
+		taskNo = $(this).attr('id');
+		startDate = $(this).closest('.fc-daygrid-day').data('date');
+		taskTitle = $(this).find('.fc-event-title').text();
 
-		let obj = {
-			'calendar_no': myCalendarNo,
-			'task_no': taskNo,
-			'name': taskTitle,
-			'start': startDate,
-		};
-
-		console.log(obj);
-
-		$.ajax({
-			url: "/EventCreate",
-			method: "POST",
-			data: obj
-		}).done(function() {
-			console.log("이벤트 성공");
-		}).fail(function() {
-			console.log("이벤트 실패");
-		});
-
+		/* console.log("calendar_no: ", myCalendarNo);
+		console.log("taskNo: ", taskNo);
+		console.log("taskTitle: ", taskTitle);
+		console.log("startDate: ", startDate); */
 	});
 
 	$("#end-date").on("input", function() {
@@ -383,93 +370,48 @@ $(document).ready(function() {
 		});
 	});
 
-	// 이벤트 저장(event-description도 저장해야됨)
-	/* $("#save-event-button").on("click", function() {
-	   var calendarNumbers = $("#calendars").val();
-	
-	   for (var i = 0; i < calendarNumbers.length; i++) {
-		   let obj = {
-			   calendar_no: calendarNumbers[i],
-			   task_no: taskTitle, 
-			   name: task-title,
-			   email: // 세션에 로그인 된 값
-			   title: event-title,
-			   content: // event-description에 입력한 내용
-			   start: startDate,
-			   end: endDate,
-			   all_day: 0,
-		   };
-   	
-	   $.ajax({
-		   url: "/EventCreate",
-		   method: "POST",
-		   dataType: obj
+	// 캘린더에 등록된 이벤트 수정
+	$('#calendar').on('click', '.fc-event-title-container', function() {
+		$('#event-popup').fadeIn();
 
-	   });
-   }); */
-
-	// 얘는 업데이트가 되야할거
-	/* var calendarNumbers = $("#calendars").val();
-	
-		for (var i = 0; i < calendarNumbers.length; i++) {
-			let obj = {
-				calendar_no: calendarNumbers[i],
-				task_no: taskTitle, 
-				name: task-title,
-				email: // 사용자 로그값 
-				title: event-title,
-				content: 
-				start: startDate,
-				end: 
-				all_day: 
-			};
+		let obj = {
+			"calendarNo": myCalendarNo,
+			"name": taskTitle,
+			"start": startDate
+		}
+		
+		console.log("calendarNo:", myCalendarNo);	
+		console.log("name:", taskTitle);	
+		console.log("start:", startDate);	
 
 		$.ajax({
 			url: "/EventCreate",
 			method: "POST",
-			data: obj,
-		});
-	
-		location.href = "calendar"; */
+			data: obj
+		})
 
-	// 캘린더에 등록된 이벤트 수정
-	$('#calendar').on('click', '.fc-daygrid-event', function() {
-		var eventElement = this;
-		var eventTitle = $(this).find('.fc-event-main').text();
-		var isPredefinedTask = $(this).hasClass('predefined-task');
-		var eventPopup = $('#event-popup');
-		var closeButton = $('#close-event-button');
-		var deleteButton = $('#delete-event-button');
-		var saveEventButton = $('#save-event-button');
-		var allDayCheckbox = $('#all-day-checkbox');
-		var startDateInput = $('#start-date');
-		var endDateInput = $('#end-date');
-		var eventDescriptionInput = $('#event-description');
-
-		eventPopup.fadeIn();
-
-		$('#task-title').val(taskTitle);
+		// $('#task-title').val(taskTitle);
 
 		// 이벤트 타이틀 입력
-		$('#event-title-input').val(eventTitle);
+		// $('#event-title-input').val(eventTitle);
 
 		// 기존 task인 경우 이벤트 타이틀 입력 비활성화 ---> 이거 안되는듯(07/14 02:20)
-		if (isPredefinedTask) {
+		/* if (isPredefinedTask) {
 			$('#event-title-input').prop('disabled', true);
 		} else {
 			$('#event-title-input').prop('disabled', false);
-		}
+		} */
 
-		deleteButton.off('click').on('click', function() {
-			eventElement.remove();
-			eventPopup.fadeOut();
+		$('#delete-event-button').off('click').on('click', function() {
+			this.remove();
+			$('#event-popup').fadeOut();
 		});
 
-		closeButton.off('click').on('click', function() {
-			eventPopup.fadeOut();
+		$('#close-event-button').off('click').on('click', function() {
+			$('#event-popup').fadeOut();
 		});
 
-		saveEventButton.off('click').on('click', function() {
+		$('#save-event-button').off('click').on('click', function() {
 
 		});
 

@@ -8,6 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import model.calendar.CalendarVo;
+import model.share.ShareDao;
+import model.share.ShareVo;
 import util.DBManager;
 
 public class EventDao {
@@ -73,10 +76,12 @@ public class EventDao {
 	    return check;
 	}
 
-	public ArrayList<EventVo> getEventAll() {
+	public ArrayList<EventVo> getEventAll(String email) {
 		ArrayList<EventVo> list = new ArrayList<EventVo>();
 
 		this.conn = DBManager.getConnection();
+		ShareDao shareDao = ShareDao.getInstance();
+		ArrayList<CalendarVo> shareCalendars = shareDao.getSharedCalendars(email);
 
 		if (this.conn != null) {
 			String sql = "SELECT * FROM `event`";
@@ -86,20 +91,25 @@ public class EventDao {
 				this.rs = this.pstmt.executeQuery();
 
 				while (this.rs.next()) {
+					
 					int no = this.rs.getInt(1);
 					int calendar_no = this.rs.getInt(2);
 					int task_no = this.rs.getInt(3);
 					String name = this.rs.getString(4);
-					String email = this.rs.getString(5);
 					String title = this.rs.getString(6);
 					String content = this.rs.getString(7);
 					String start = sdf.format(this.rs.getDate(8));
 					String end = sdf.format(this.rs.getDate(9));
 					String all_day = this.rs.getString(10);
+					
+					for(int i = 0; i < shareCalendars.size(); i++) {
+						if(shareCalendars.get(i).getNo() == calendar_no) {
+							EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end,
+									all_day);							
+							list.add(event);
+						}
+					}
 
-					EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end,
-							all_day);
-					list.add(event);
 				}
 
 			} catch (SQLException e) {

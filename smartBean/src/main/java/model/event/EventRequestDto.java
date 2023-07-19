@@ -65,8 +65,6 @@ public class EventRequestDto {
 		this.end = end;
 		this.all_day = all_day;
 	}
-	
-	
 
 	public int getNo() {
 		return no;
