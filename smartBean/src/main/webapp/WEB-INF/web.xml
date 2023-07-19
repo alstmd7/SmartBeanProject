@@ -91,7 +91,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Task_ReadAction</servlet-name>
-		<url-pattern>/Task_Read</url-pattern>
+		<url-pattern>/TaskRead</url-pattern>
 	</servlet-mapping>
 
 	<!-- About calendar -->

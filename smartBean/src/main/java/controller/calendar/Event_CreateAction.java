@@ -43,39 +43,28 @@ public class Event_CreateAction extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-	    request.setCharacterEncoding("UTF-8");
-	    response.setContentType("application/json");
-	    response.setCharacterEncoding("UTF-8");
+			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 
-	    EventDao eventDao = EventDao.getInstance();
-	    String json = request.getParameter("events");
-	    JSONArray jsonArray = new JSONArray(json);
+		EventDao eventDao = EventDao.getInstance();
 
-	    for (int i = 0; i < jsonArray.length(); i++) {
-	        JSONObject jsonObject = jsonArray.getJSONObject(i);
+		String email = (String) request.getSession().getAttribute("log");
 
-	        int calendarNo = jsonObject.getInt("calendar_no");
-	        int taskNo = jsonObject.getInt("task_no");
-	        String name = jsonObject.getString("name");
-	        String email = jsonObject.getString("email");
-	        String title = jsonObject.getString("title");
-	        String content = jsonObject.getString("content");
-	        String start = jsonObject.getString("start");
-	        String end = jsonObject.getString("end");
-	        String allDay = jsonObject.getString("all_day");
+		int calendarNo = Integer.parseInt(request.getParameter("calendar_no"));
+		int task_no = Integer.parseInt(request.getParameter("task_no"));
+		String name = request.getParameter("name");
+		String start = request.getParameter("start");
 
-	        EventRequestDto event = new EventRequestDto(0, calendarNo, taskNo, name, email, title, content, start, end, allDay);
-	        boolean result = eventDao.createEvent(event);
+		EventRequestDto event = new EventRequestDto(calendarNo, task_no, name, email, name, start, start);
+		boolean result = eventDao.createEvent(event);
 
-	        if (!result) {
-	            response.getWriter().write("{\"status\": \"error\", \"message\": \"Failed to create event.\"}");
-	            return;
-	        }
-	    }
-
-	    response.getWriter().write("{\"status\": \"success\", \"message\": \"All events created successfully.\"}");
+		if (result) {
+			System.out.println("성공성공성공");
+		}else {
+			System.out.println("실패실패실패");			
+		}
 	}
-
 
 }

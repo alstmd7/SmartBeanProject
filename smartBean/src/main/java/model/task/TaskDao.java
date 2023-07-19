@@ -55,7 +55,7 @@ public class TaskDao {
 		
 		this.conn = DBManager.getConnection();
 		
-		String sql = "SELECT `name` FROM task WHERE email=?";
+		String sql = "SELECT * FROM task WHERE email=?";
 		
 		try {
 			this.pstmt = this.conn.prepareStatement(sql);

@@ -132,7 +132,8 @@
 				  <option value="<%=calendar.getNo()%>"> <%=calendar.getName()%></option>
 					<%}%>
 			</select>
-				<p>상세내용</p> <textarea id="event-description"></textarea> <br>
+				<p>상세내용</p>
+				<textarea id="event-description"></textarea> <br>
 
 				<button id="save-event-button">저장</button>
 		</div>
@@ -143,7 +144,7 @@
 		<!-- Task 추가/관리 버튼 -->
 		<button id="add-task-button">Task 추가</button>
 
-		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' data-task_title='휴가'>
+		<!-- <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event''>
 			<div class='fc-event-main'>휴가</div>
 		</div>
 
@@ -161,7 +162,9 @@
 
 		<div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event' data-task_title='출장'>
 			<div class='fc-event-main'>출장</div>
-		</div>
+		</div> -->
+		
+		<div id="task-list"></div>
 
 		<!-- Task 추가 팝업 -->
 		<form method="post" action="CreateTask" id="create-task-form">
