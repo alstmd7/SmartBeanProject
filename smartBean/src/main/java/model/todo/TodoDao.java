@@ -26,6 +26,27 @@ public class TodoDao {
 		return instance;
 	}
 	
+public void checkTodo(int check, int no) {
+		
+		this.conn = DBManager.getConnection();
+
+		String sql = "UPDATE todo SET `check`=? WHERE `no`=?";
+
+		try {
+			this.pstmt = this.conn.prepareStatement(sql);
+			this.pstmt.setInt(1, check);
+			this.pstmt.setInt(2, no);
+
+			this.pstmt.execute();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(this.conn, this.pstmt);
+		}
+
+	}
+	
 	public TodoVo getTodoByNo(int no) {
 		TodoVo todo = null;
 		

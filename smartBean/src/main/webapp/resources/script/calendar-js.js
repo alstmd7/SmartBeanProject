@@ -1,5 +1,6 @@
 var calendar = null;
 $(document).ready(function() {
+	
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
 
@@ -424,5 +425,8 @@ $(document).ready(function() {
 			console.log("Error: " + error);
 		}
 	});
-
+	
 });
+
+
+

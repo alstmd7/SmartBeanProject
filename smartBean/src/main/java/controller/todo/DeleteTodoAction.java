@@ -12,7 +12,6 @@ import model.todo.TodoDao;
 /**
  * Servlet implementation class DeleteTodoAction
  */
-@WebServlet("/DeleteTodoAction")
 public class DeleteTodoAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

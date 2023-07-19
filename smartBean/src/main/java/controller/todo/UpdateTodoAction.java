@@ -14,7 +14,6 @@ import model.todo.TodoVo;
 /**
  * Servlet implementation class UpdateTodoAction
  */
-@WebServlet("/UpdateTodoAction")
 public class UpdateTodoAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

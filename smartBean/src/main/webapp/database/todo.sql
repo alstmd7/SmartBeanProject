@@ -16,6 +16,7 @@ SELECT * FROM todo WHERE email="qortmdals120@gmail.com";
 SELECT * FROM todo WHERE `no`=4;
 
 UPDATE todo SET content='NEW내용', target_at=DATE('2023-07-11'), `check`=1 WHERE `no`=1;
+UPDATE todo SET `check`=1 WHERE `no`=18;
 
 DELETE FROM todo WHERE `no`=1;
 

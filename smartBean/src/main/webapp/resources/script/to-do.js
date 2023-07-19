@@ -4,7 +4,25 @@ $(window).on('load', function() {
 });
 
 //진행률 표시
-function updateProgress(progressId) {
+/* ***********************************수정 */
+function updateProgress(progressId, check_id) {
+	if(check_id != null){
+		var check = 0; 
+	if($('#'+check_id).is(":checked")) {
+		check = 1;
+	}
+	
+	let obj={
+		"check":check,
+		"no":check_id
+	};
+	
+	$.ajax({
+		"url": `/CheckTodo`,
+		type: "POST",
+		data: obj
+	});
+	
 	var checkboxes = document.querySelectorAll('td:nth-child(' + progressId + ') input[type="checkbox"]');
 	var progress = document.getElementById('progress' + progressId);
 	var total = checkboxes.length;
@@ -17,13 +35,9 @@ function updateProgress(progressId) {
 	}
 
 	var percentage = (checkedCount / total) * 100;
-	progress.innerHTML = '진행률: ' + percentage.toFixed(1)*2 + '%';
-
-	if (percentage === 100) {
-		for (var i = 0; i < checkboxes.length; i++) {
-			checkboxes[i].disabled = true;
-		}
+	progress.innerHTML = '진행률: ' + percentage.toFixed(1) + '%';
 	}
+	
 }
 
 //일정표 나오기
@@ -81,16 +95,14 @@ function printWeek() {
 				var target_at = todo.target_at;
 
 				if (target_at == checkDate) {
-
 					table += '<li>';
-					if (check === 0) {
-						table += "<li><input type='checkbox' name='hobby' value='h1' class='none'>";
+					/* ***********************************수정  */
+					if (check == 0) {
+						table += "<input type='checkbox' id='check" + no + "' onclick='updateProgress(" + (i + 1) + ", this.id)'>";
 					} else {
-						table += "<input type='checkbox' name='hobby' value='h1' class='none' >";
+						table += "<input type='checkbox' id='check" + no + "' onclick='updateProgress(" + (i + 1) + ", this.id)' checked>";
 					}
-					
-					table += "<input type='checkbox' name='hobby' id='todo" + no + "' value='" + no + "' onclick='updateProgress(" + (i + 1) + ")'>" +
-					 "<a href='#pop_info_1' id = '" + no + "' class='btn_open' onclick='showPopup(" + (i + 1) + ", \"pop_info_1\", this.id)'>"+content+"</a>" + "</li>";
+					table += "<a href='#pop_info_1' id = '" + no + "' class='btn_open' onclick='showPopup(" + (i + 1) + ", \"pop_info_1\", this.id)'>"+content+"</a>" + "</li>";
 				}
 
 			});
@@ -142,11 +154,10 @@ var todoId;
 function showPopup(tdIndex, popupId, id_check) {
 	todoId = id_check;
 	$.ajax({
-		"url": `/GetTodoAction`,
+		"url": `/GetTodo`,
 		type: "GET",
 		data: { "todoNo": id_check },
 	}).done(function(todo) {
-		console.log(todo.target_at);
 		$('#dateInput').val(todo.target_at);
 		$('#editText').val(todo.content);
 	}).fail(function() {
@@ -186,7 +197,7 @@ function addTask() {
 //삭제하기
 function deleteTasks() {
 	$.ajax({
-		"url": `/DeleteTodoAction`,
+		"url": `/DeleteTodo`,
 		type: "post",
 		data: { "todoNo": todoId },
 	}).done(function() {		
@@ -222,7 +233,7 @@ function editTasks() {
 	};
 	
 	$.ajax({
-		"url": `/UpdateTodoAction`,
+		"url": `/UpdateTodo`,
 		type: "post",
 		data: obj,
 	}).done(function() {		

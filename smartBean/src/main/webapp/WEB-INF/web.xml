@@ -84,6 +84,42 @@
 		<servlet-name>LoadTodoAction</servlet-name>
 		<url-pattern>/LoadTodo</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CheckTodoAction</servlet-name>
+		<servlet-class>controller.todo.CheckTodoAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CheckTodoAction</servlet-name>
+		<url-pattern>/CheckTodo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>DeleteTodoAction</servlet-name>
+		<servlet-class>controller.todo.DeleteTodoAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DeleteTodoAction</servlet-name>
+		<url-pattern>/DeleteTodo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>GetTodoAction</servlet-name>
+		<servlet-class>controller.todo.GetTodoAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GetTodoAction</servlet-name>
+		<url-pattern>/GetTodo</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UpdateTodoAction</servlet-name>
+		<servlet-class>controller.todo.UpdateTodoAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UpdateTodoAction</servlet-name>
+		<url-pattern>/UpdateTodo</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>Task_ReadAction</servlet-name>
@@ -130,7 +166,6 @@
 		<servlet-name>ShareCalendar_RequestAction</servlet-name>
 		<url-pattern>/ShareCalendarRequest</url-pattern>
 	</servlet-mapping>
-
 
 	<servlet>
 		<servlet-name>Event_RequestAction</servlet-name>
