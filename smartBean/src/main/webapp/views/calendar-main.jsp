@@ -101,7 +101,7 @@
 				<button id="close-event-button">닫기</button>
 				<button id="delete-event-button">삭제</button>
 				<br>
-				<input type="text" id="task-title" name="task-title">
+				<input type="text" id="task-title" name="task-title" readonly>
 				<!-- 이벤트 타이틀 입력 -->
 				<input type="text" id="event-title-input" name="event-title" placeholder="이벤트 타이틀 입력"><br> <label> <!-- <input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br> -->
 				<label for="start-date">시작일:</label> <input type="date" id="start-date"> <br>

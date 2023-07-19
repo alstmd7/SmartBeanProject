@@ -42,6 +42,17 @@ public class EventVo {
         this.end = end;
     }
     
+    public EventVo(String name, String title, String content,
+    		String start, String end, String all_day) {
+        super();
+        this.name = name;
+        this.title = title;
+        this.content = content;
+        this.start = start;
+        this.end = end;
+        this.all_day = all_day;
+    }
+    
     public EventVo(int no, int calendar_no, String name, String start, String end) {
     	super();
     	this.no = no;

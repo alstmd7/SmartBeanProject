@@ -22,12 +22,11 @@ public class TodoDao {
 	private static TodoDao instance = new TodoDao();
 	
 	public static TodoDao getInstance() {
-		
 		return instance;
 	}
-	
-public void checkTodo(int check, int no) {
-		
+
+	public void checkTodo(int check, int no) {
+
 		this.conn = DBManager.getConnection();
 
 		String sql = "UPDATE todo SET `check`=? WHERE `no`=?";
@@ -44,7 +43,6 @@ public void checkTodo(int check, int no) {
 		} finally {
 			DBManager.close(this.conn, this.pstmt);
 		}
-
 	}
 	
 	public TodoVo getTodoByNo(int no) {

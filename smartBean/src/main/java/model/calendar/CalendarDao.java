@@ -55,24 +55,22 @@ public class CalendarDao {
 
 	public ArrayList<CalendarVo> getAllCalendars(String email) {
 		ArrayList<CalendarVo> calendarList = new ArrayList<>();
-		conn = null;
-		pstmt = null;
-		rs = null;
+		
+		this.conn = DBManager.getConnection();
+		
+		String sql = "SELECT * FROM calendar WHERE email=?";
 
 		try {
-			conn = DBManager.getConnection();
+			this.pstmt = this.conn.prepareStatement(sql);
+			this.pstmt.setString(1, email);
 
-			String sql = "SELECT * FROM calendar WHERE email=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, email);
+			this.rs = this.pstmt.executeQuery();
 
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				int no = rs.getInt("no");
-				int code = rs.getInt("code");
-				String name = rs.getString("name");
-				int p_code = rs.getInt("p_code");
+			while (this.rs.next()) {
+				int no = this.rs.getInt("no");
+				int code = this.rs.getInt("code");
+				String name = this.rs.getString("name");
+				int p_code = this.rs.getInt("p_code");
 
 				CalendarVo calendar = new CalendarVo(no, code, email, name, p_code);
 				calendarList.add(calendar);
@@ -81,7 +79,7 @@ public class CalendarDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt, rs);
+			DBManager.close(this.conn, this.pstmt, this.rs);
 		}
 
 		return calendarList;

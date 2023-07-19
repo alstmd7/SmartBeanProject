@@ -202,6 +202,24 @@
 		<servlet-name>Event_DeleteAction</servlet-name>
 		<url-pattern>/EventDelete</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Event_getAction</servlet-name>
+		<servlet-class>controller.calendar.Event_getAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Event_getAction</servlet-name>
+		<url-pattern>/Event_get</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Event_UpdateAction</servlet-name>
+		<servlet-class>controller.calendar.Event_UpdateAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Event_UpdateAction</servlet-name>
+		<url-pattern>/Event_Update</url-pattern>
+	</servlet-mapping>
 
 
 	<!-- 2. JSP 페이지 맵핑 -->

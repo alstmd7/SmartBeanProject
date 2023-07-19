@@ -11,6 +11,8 @@ import java.util.Date;
 import model.calendar.CalendarVo;
 import model.share.ShareDao;
 import model.share.ShareVo;
+import model.shareEvent.ShareEventDao;
+import model.shareEvent.ShareEventVo;
 import util.DBManager;
 
 public class EventDao {
@@ -78,10 +80,14 @@ public class EventDao {
 
 	public ArrayList<EventVo> getEventAll(String email) {
 		ArrayList<EventVo> list = new ArrayList<EventVo>();
-
+		
 		this.conn = DBManager.getConnection();
+		
+		// 사용자가 공유중인 캘린더 가져오기
 		ShareDao shareDao = ShareDao.getInstance();
-		ArrayList<CalendarVo> shareCalendars = shareDao.getSharedCalendars(email);
+		ArrayList<Integer> shareCal = shareDao.getShareCalendarNo(email);
+
+		ShareEventDao shareEventDao = ShareEventDao.getInstance();
 
 		if (this.conn != null) {
 			String sql = "SELECT * FROM `event`";
@@ -102,12 +108,18 @@ public class EventDao {
 					String end = sdf.format(this.rs.getDate(9));
 					String all_day = this.rs.getString(10);
 					
-					for(int i = 0; i < shareCalendars.size(); i++) {
-						if(shareCalendars.get(i).getNo() == calendar_no) {
-							EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end,
-									all_day);							
-							list.add(event);
+					// 이벤트가 공유중인 캘린더 번호 가져오기
+					ArrayList<Integer> shareCalendarNo = shareEventDao.getShareCalendarNoByEventNo(no);
+					
+					for(int i = 0; i < shareCal.size(); i++) {
+						for(int j = 0; j < shareCalendarNo.size(); j++) {
+							if(shareCal.get(i) == shareCalendarNo.get(j)) {
+								EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end,
+										all_day);							
+								list.add(event);
+							}
 						}
+						
 					}
 
 				}
@@ -167,22 +179,17 @@ public class EventDao {
 
 		boolean check = true;
 
-		if (this.conn != null && eventDto.getName() != null && eventDto.getTitle() != null
-				&& eventDto.getContent() != null && eventDto.getStart() != null && eventDto.getEnd() != null
-				&& eventDto.getAll_day() != null) {
+		if (this.conn != null) {
 
-			String sql = "UPDATE `event` SET `name`=?, title=?, content=?, "
-					+ "`start`=DATE(?), `end`= DATE(?), all_day=? WHERE `no`=?";
+			String sql = "UPDATE `event` SET title=?, content=?, `start`=DATE(?), `end`= DATE(?) WHERE `no`=?";
 
 			try {
 				this.pstmt = this.conn.prepareStatement(sql);
-				this.pstmt.setString(1, eventDto.getName());
-				this.pstmt.setString(2, eventDto.getTitle());
-				this.pstmt.setString(3, eventDto.getContent());
-				this.pstmt.setString(4, eventDto.getStart());
-				this.pstmt.setString(5, eventDto.getEnd());
-				this.pstmt.setString(6, eventDto.getAll_day());
-				this.pstmt.setInt(7, eventDto.getNo());
+				this.pstmt.setString(1, eventDto.getTitle());
+				this.pstmt.setString(2, eventDto.getContent());
+				this.pstmt.setString(3, eventDto.getStart());
+				this.pstmt.setString(4, eventDto.getEnd());
+				this.pstmt.setInt(5, eventDto.getNo());
 
 				this.pstmt.execute();
 
@@ -251,7 +258,7 @@ public class EventDao {
 		return check;
 	}
 	
-	public EventVo getEventById(int eventNo) {
+	public EventVo getEventById(int no) {
 	    EventVo event = null;
 	    conn = DBManager.getConnection();
 
@@ -260,17 +267,19 @@ public class EventDao {
 
 	        try {
 	            pstmt = conn.prepareStatement(sql);
-	            pstmt.setInt(1, eventNo);
+	            pstmt.setInt(1, no);
 
 	            rs = pstmt.executeQuery();
 
 	            if (rs.next()) {
-	                int calendarId = rs.getInt("calendar_no");
+	                String name = rs.getString("name");
 	                String title = rs.getString("title");
+	                String content = rs.getString("content");
 	                String start = rs.getString("start");
 	                String end = rs.getString("end");
+	                String all_day = rs.getString("all_day");
 
-	                event = new EventVo(eventNo, calendarId, title, start, end);
+	                event = new EventVo(name, title, content, start, end, all_day);
 	            }
 
 	        } catch (SQLException e) {
@@ -282,7 +291,5 @@ public class EventDao {
 
 	    return event;
 	}
-
-	
 
 }

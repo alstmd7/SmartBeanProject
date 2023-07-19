@@ -1,5 +1,6 @@
 var calendar = null;
 $(document).ready(function() {
+
 	var Calendar = FullCalendar.Calendar;
 	var Draggable = FullCalendar.Draggable;
 
@@ -14,11 +15,36 @@ $(document).ready(function() {
 			};
 		}
 	});
-
+	
+	var eventNum = 0;
 	calendar = new Calendar(calendarEl, {
 		eventClick: function(info) {
+			eventNum = info.event.id;
+			$('#event-popup').fadeIn();
+			
+			if(eventNum != 0) {
+				$.ajax({
+					url: "/Event_get",
+					method: "GET",
+					data: {"no":eventNum}
+				}).done(function(event){
+					$('#task-title').val(event.name);
+					$('#event-title-input').val(event.title);
+					$('#start-date').val(event.start);
+					$('#end-date').val(event.end);
+					$('#event-description').val(event.content);
+				});
+				
+			} else {
+				console.log("startDate",startDate);
+				console.log("taskTitle",taskTitle);
+
+				$('#task-title').val(taskTitle);
+				$('#event-title-input').val(taskTitle);
+				$('#start-date').val(startDate);
+				$('#end-date').val(startDate);
+			}
 			console.log("Clicked event ID: ", info.event.id);
-			clickedEventId = info.event.id;
 		},
 		headerToolbar: {
 			left: 'prev,next today',
@@ -39,6 +65,7 @@ $(document).ready(function() {
 				eventElement.style.backgroundColor = '#FF8200';
 			}
 		}
+		
 	});
 
 	// 캘린더 불러오기
@@ -49,7 +76,7 @@ $(document).ready(function() {
 	var myCalendarNo = null;
 	$.ajax({
 		url: '/GetMyCalendarNo',
-		type: 'POST',
+		type: 'POST'
 	}).done(function(myCal) {
 		myCalendarNo = myCal.no;
 		console.log("My Calendar No:", myCalendarNo);
@@ -81,24 +108,32 @@ $(document).ready(function() {
 		$("#calendar-list").append(newCalendar);
 	});
 
-
 	// 사용자의 모든 캘린더 불러오기
 	$.ajax({
 		"url": "/Calendar_ReadAction",
 		"method": "POST"
 	}).done(function(calendarList) {
+		console.log(calendarList);
 		calendarList.forEach(calendar => {
 			const name = calendar.name;
-			const owner = calendar.owner;
+			const email = calendar.email;
 			var calendarNo = calendar.no;
-			$("#calendar-list").append(`
+			if(calendar.p_code != 0){
+				$("#calendar-list").append(`
                 <div class="calendar-checkbox">
-                    <input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${owner}">
-                    <span>${name} (${owner})</span>
+                    <input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${email}">
+                    <span>${name} (${email})</span>
+                </div>`
+				);
+			} else {
+				$("#calendar-list").append(`
+                <div class="calendar-checkbox">
+                    <input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${email}">
+                    <span>${name} (${email})</span>
                     <button class="admin-calendar-btn" id="${calendarNo}")>EDIT</button>
                 </div>`
-			);
-			console.log(calendarNo);
+				);
+			}
 		});
 	}).fail(function() {
 		console.error("fail read calendars");
@@ -293,45 +328,24 @@ $(document).ready(function() {
 	});
 
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
-	// 서버에서 저장된 이벤트 데이터 가져오기
+	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 
 	$.ajax({
 		url: "/EventRequest",
-		method: "GET",
-		dataType: "json",
-		success: function(response) {
-			var eventData = response;
-			console.log(response);
+		method: "GET"
+	}).done(function(response) {
+		console.log(response);
+		response.forEach(event => {
+			var newEvent = {
+				id: event.no,
+				name: event.name,
+				title: event.title,
+				start: event.start,
+				end: event.end,
+				allDay: event.all_day == "true"
+			};
 
-			for (var i = 0; i < eventData.length; i++) {
-				var event = eventData[i];
-
-				console.log("Event No: ", event.no);
-
-				var newEvent = {
-					id: event.no,
-					title: event.title,
-					start: event.start,
-					end: event.end,
-					allDay: event.all_day == "true"
-				};
-
-				calendar.addEvent(newEvent);
-			}
-		},
-		error: function(xhr, status, error) {
-			console.log("Error: " + error);
-		}
-	});
-
-	// 이벤트 등록
-	var taskTitle = null;
-	var taskNo = null;
-	var startDate = null;
-
-	// task_title, no 가져오기 
-	$(document).on('mousedown', '.fc-event-main', function() {
-		taskNo = $(this).attr('id');
-		console.log("taskNo:", taskNo);
+			calendar.addEvent(newEvent);
+		});
 	});
 
 	/* $(document).on('mousedown', '#main', function(e) {
@@ -343,17 +357,6 @@ $(document).ready(function() {
 		console.log('mouseup: ', e.target);
 	}); */
 
-
-	$(document).on('click', '.fc-event-main', function() {
-		taskNo = $(this).attr('id');
-		startDate = $(this).closest('.fc-daygrid-day').data('date');
-		taskTitle = $(this).find('.fc-event-title').text();
-
-		/* console.log("calendar_no: ", myCalendarNo);
-		console.log("taskNo: ", taskNo);
-		console.log("taskTitle: ", taskTitle);
-		console.log("startDate: ", startDate); */
-	});
 
 	$("#end-date").on("input", function() {
 		endDate = $(this).val();
@@ -370,71 +373,40 @@ $(document).ready(function() {
 			console.log("Selected calendar Name:", selectedCalName);	// 확인용 
 		});
 	});
+	
+	$('#delete-event-button').off('click').on('click', function() {
+		this.remove();
+		$('#event-popup').fadeOut();
+		$.ajax({
+			url: "/EventDelete",
+			method: "POST",
+			data: {"no":eventNum}
+		}).done(function(){
+			location.reload(true);
+		});
+		
+	});
 
-	// 캘린더에 등록된 이벤트 수정
-	$('#calendar').on('click', '.fc-daygrid-event', function() {
-		$('#event-popup').fadeIn();
-
+	$('#close-event-button').off('click').on('click', function() {
+		$('#event-popup').fadeOut();
+	});
+	
+	$('#save-event-button').on('click', function() {
 		let obj = {
-			"calendarNo": myCalendarNo,
-			"name": taskTitle,
-			"start": startDate
-		}
-
-		console.log("calendarNo:", myCalendarNo);
-		console.log("name:", taskTitle);
-		console.log("start:", startDate);
+			"no": eventNum,
+			"title": $('#event-title-input').val(),
+			"start": $('#start-date').val(),
+			"end": $('#end-date').val(),
+			"content": $('#event-description').val()
+		};
 
 		$.ajax({
-			url: "/EventCreate",
+			url: "/Event_Update",
 			method: "POST",
 			data: obj
-		})
-		
-
-		// $('#task-title').val(taskTitle);
-
-		// 이벤트 타이틀 입력
-		// $('#event-title-input').val(eventTitle);
-
-		// 기존 task인 경우 이벤트 타이틀 입력 비활성화 ---> 이거 안되는듯(07/14 02:20)
-		/* if (isPredefinedTask) {
-			$('#event-title-input').prop('disabled', true);
-		} else {
-			$('#event-title-input').prop('disabled', false);
-		} */
-
-		$('#delete-event-button').off('click').on('click', function() {
-			// AJAX 요청으로 서버에 이벤트를 삭제하라고 요청합니다.
-			$.ajax({
-				url: '/EventDelete',
-				type: 'POST',
-				data: {
-					 eventNo: clickedEventId
-				},
-				success: function(response) {
-					if (response.success) {
-						var event = calendar.getEventById(clickedEventId);
-						event.remove();
-						console.log(response.message);
-					} else {
-						console.log(response.message);
-					}
-				}
-			});
-
-			$('#event-popup').fadeOut();
-			location.href = "calendar";
+		}).done(function(){
+			location.reload(true);
 		});
-
-		$('#close-event-button').off('click').on('click', function() {
-			$('#event-popup').fadeOut();
-		});
-
-		$('#save-event-button').off('click').on('click', function() {
-
-		});
-
 	});
 
 });

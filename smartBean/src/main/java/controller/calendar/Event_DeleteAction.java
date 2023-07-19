@@ -45,24 +45,13 @@ public class Event_DeleteAction extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int eventNo = Integer.parseInt(request.getParameter("eventNo"));
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		int no = Integer.parseInt(request.getParameter("no"));
 
         EventDao eventDao = EventDao.getInstance();
-        boolean success = eventDao.deleteEvent(eventNo);
-
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        JSONObject json = new JSONObject();
-        
-        if (success) {
-            json.put("success", true);
-            json.put("message", "이벤트가 성공적으로 삭제되었습니다.");
-        } else {
-            json.put("success", false);
-            json.put("message", "이벤트 삭제 실패");
-        }
-        
-        out.print(json.toString());
+        boolean success = eventDao.deleteEvent(no);
     }
 
 }

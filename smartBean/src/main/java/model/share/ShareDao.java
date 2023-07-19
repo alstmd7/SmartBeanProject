@@ -24,9 +24,8 @@ public class ShareDao {
         return instance;
     }
 
-    public ArrayList<CalendarVo> getSharedCalendars(String email) {
-        ArrayList<CalendarVo> sharedCalendars = new ArrayList<>();
-        CalendarDao calendarDao = CalendarDao.getInstance();
+    public ArrayList<Integer> getShareCalendarNo(String email) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
 
         conn = DBManager.getConnection();
 
@@ -38,9 +37,9 @@ public class ShareDao {
                 rs = pstmt.executeQuery();
 
                 while (rs.next()) {
-                    int calendarNo = rs.getInt("no");
-                    CalendarVo calendar = calendarDao.getCalendarByNo(calendarNo);
-                    sharedCalendars.add(calendar);
+                    int no = this.rs.getInt(2);
+
+                    list.add(no);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -49,7 +48,7 @@ public class ShareDao {
             }
         }
 
-        return sharedCalendars;
+        return list;
     }
 
     public boolean addSharedCalendar(String email, int calendarNo) {

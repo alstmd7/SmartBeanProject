@@ -65,6 +65,16 @@ public class EventRequestDto {
 		this.end = end;
 		this.all_day = all_day;
 	}
+	
+	public EventRequestDto(int no, String title,
+			String content, String start, String end) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.content = content;
+		this.start = start;
+		this.end = end;
+	}
 
 	public int getNo() {
 		return no;
