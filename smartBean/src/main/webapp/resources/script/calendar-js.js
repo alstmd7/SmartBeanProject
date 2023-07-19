@@ -18,6 +18,7 @@ $(document).ready(function() {
 	calendar = new Calendar(calendarEl, {
 		eventClick: function(info) {
 			console.log("Clicked event ID: ", info.event.id);
+			clickedEventId = info.event.id;
 		},
 		headerToolbar: {
 			left: 'prev,next today',
@@ -292,7 +293,7 @@ $(document).ready(function() {
 	});
 
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
-	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 
+	// 서버에서 저장된 이벤트 데이터 가져오기
 	$.ajax({
 		url: "/EventRequest",
 		method: "GET",
@@ -322,7 +323,7 @@ $(document).ready(function() {
 		}
 	});
 
-
+	// 이벤트 등록
 	var taskTitle = null;
 	var taskNo = null;
 	var startDate = null;
@@ -371,7 +372,7 @@ $(document).ready(function() {
 	});
 
 	// 캘린더에 등록된 이벤트 수정
-	$('#calendar').on('click', '.fc-event-title-container', function() {
+	$('#calendar').on('click', '.fc-daygrid-event', function() {
 		$('#event-popup').fadeIn();
 
 		let obj = {
@@ -379,16 +380,17 @@ $(document).ready(function() {
 			"name": taskTitle,
 			"start": startDate
 		}
-		
-		console.log("calendarNo:", myCalendarNo);	
-		console.log("name:", taskTitle);	
-		console.log("start:", startDate);	
+
+		console.log("calendarNo:", myCalendarNo);
+		console.log("name:", taskTitle);
+		console.log("start:", startDate);
 
 		$.ajax({
 			url: "/EventCreate",
 			method: "POST",
 			data: obj
 		})
+		
 
 		// $('#task-title').val(taskTitle);
 
@@ -403,8 +405,26 @@ $(document).ready(function() {
 		} */
 
 		$('#delete-event-button').off('click').on('click', function() {
-			this.remove();
+			// AJAX 요청으로 서버에 이벤트를 삭제하라고 요청합니다.
+			$.ajax({
+				url: '/EventDelete',
+				type: 'POST',
+				data: {
+					 eventNo: clickedEventId
+				},
+				success: function(response) {
+					if (response.success) {
+						var event = calendar.getEventById(clickedEventId);
+						event.remove();
+						console.log(response.message);
+					} else {
+						console.log(response.message);
+					}
+				}
+			});
+
 			$('#event-popup').fadeOut();
+			location.href = "calendar";
 		});
 
 		$('#close-event-button').off('click').on('click', function() {
