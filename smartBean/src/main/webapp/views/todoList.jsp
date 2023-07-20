@@ -8,6 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="../resources/style/todo_style.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <title>To-do list</title>
 </head>

@@ -6,6 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <title>회원탈퇴</title>
 </head>

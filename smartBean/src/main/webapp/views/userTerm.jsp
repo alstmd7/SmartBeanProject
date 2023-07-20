@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="/resources/img/favicon.ico">
 <title>이용약관</title>
 </head>
 <body>

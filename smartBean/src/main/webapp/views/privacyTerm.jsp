@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" href="/resources/img/favicon.ico">
 <title>개인정보처리방침</title>
 </head>
 <body>

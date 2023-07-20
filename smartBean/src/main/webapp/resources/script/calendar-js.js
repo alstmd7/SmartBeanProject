@@ -68,7 +68,18 @@ $(document).ready(function() {
 		},
 		editable: true,
 		droppable: true,
-		displayEventTime: false,
+		eventRender: function(info) {
+			var eventTitle = info.event.title;
+			var eventElement = info.el;
+
+			if (eventTitle === '휴가') {
+				eventElement.style.backgroundColor = '#FF6A89';
+			} else if (eventTitle === '재택근무') {
+				eventElement.style.backgroundColor = '#329632';
+			} else if (eventTitle === '출장') {
+				eventElement.style.backgroundColor = '#FF8200';
+			}
+		},
 		
 		// task를 드래그해서 이벤트 생성
 		eventReceive: function(info) {
@@ -151,7 +162,7 @@ $(document).ready(function() {
 			const name = calendar.name;
 			const email = calendar.email;
 			var calendarNo = calendar.no;
-			var chkBoxCalNo = "checkEvent" + calendar.no;
+			var chkBoxCalNo = calendar.no;
 			if(calendar.p_code != 0){
 				$("#calendar-list").append(`
                 <div class="calendar-checkbox">
@@ -393,6 +404,9 @@ $(document).ready(function() {
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
 	// 서버에서 저장된 이벤트 데이터 가져오기 ---->
 	
+	
+	
+
 	/* $(document).on('mousedown', '#main', function(e) {
 		console.log('mousedown: ', e.target);
 	});

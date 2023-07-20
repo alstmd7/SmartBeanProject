@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/resources/img/favicon.ico">
     <title>로그인</title>
 </head>
 

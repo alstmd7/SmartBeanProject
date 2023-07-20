@@ -232,6 +232,15 @@
 		<servlet-name>header</servlet-name>
 		<url-pattern>/header</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>index</servlet-name>
+		<jsp-file>/index.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>index</servlet-name>
+		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>footer</servlet-name>
@@ -312,6 +321,33 @@
 	<servlet-mapping>
 		<servlet-name>todoList</servlet-name>
 		<url-pattern>/todoList</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>profile</servlet-name>
+		<jsp-file>/views/profile.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>profile</servlet-name>
+		<url-pattern>/profile</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>privacyTerm</servlet-name>
+		<jsp-file>/views/privacyTerm.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>privacyTerm</servlet-name>
+		<url-pattern>/privacyTerm</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>uesrTerm</servlet-name>
+		<jsp-file>/views/uesrTerm.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>uesrTerm</servlet-name>
+		<url-pattern>/uesrTerm</url-pattern>
 	</servlet-mapping>
 
 </web-app>
