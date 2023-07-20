@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset='utf-8' />
-
+<link rel="shortcut icon" href="/resources/img/favicon.ico">
 <title>일잘러의 업무관리 | 똑똑빈</title>
 <link
 	href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.css'
