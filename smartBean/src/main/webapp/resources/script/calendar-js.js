@@ -16,7 +16,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	// 기존에 있던 이벤트는 eventNum을 가져와야하고 else는 클릭한 위치의 날짜값과 taskName을 가져와서 value에 넣어야함 
 	var eventNum = 0;
 	calendar = new Calendar(calendarEl, {
 		eventClick: function(info) {
@@ -54,18 +53,7 @@ $(document).ready(function() {
 		},
 		editable: true,
 		droppable: true,
-		eventRender: function(info) {
-			var eventTitle = info.event.title;
-			var eventElement = info.el;
-
-			if (eventTitle === '휴가') {
-				eventElement.style.backgroundColor = '#FF6A89';
-			} else if (eventTitle === '재택근무') {
-				eventElement.style.backgroundColor = '#329632';
-			} else if (eventTitle === '출장') {
-				eventElement.style.backgroundColor = '#FF8200';
-			}
-		},
+		displayEventTime: false,
 		
 		// task를 드래그해서 이벤트 생성
 		eventReceive: function(info) {
@@ -86,11 +74,7 @@ $(document).ready(function() {
 					name: title,
 					start: startDate
 				}
-			}).done(function(response) {
-				console.log("event create ok! Response:", response);
-			}).fail(function(xhr, status, error) {
-				console.log("event create fail.. Status:", status, "Error:", error);
-			});
+			})
 		}
 	});
 
@@ -120,13 +104,13 @@ $(document).ready(function() {
 	// 캘린더 생성 정보 저장 및 관리 버튼 추가
 	$("#save-newCalendar-button").on("click", function() {
 		var calendarCheckboxId = 'calendar-' + calendarNo;
+		console.log("calendarCheckboxId : ", calendarCheckboxId);
 		var newCalendar = document.createElement("div");
 		newCalendar.className = "calendar-checkbox";
 		newCalendar.innerHTML = ` 
     <input type="checkbox" id="${calendarCheckboxId}" class="calendar-checkbox-input" data-owner="${newCalendarOwner}"> 
     <span>${newCalendarName} (${newCalendarOwner})</span>
     `;
-		// 기본 캘린더 외 캘린더만 관리 버튼 추가 ---> 안됨
 		if (calendarCheckboxId != myCalendarNo) {
 			newCalendar.innerHTML += '<button class="admin-calendar-btn">EDIT</button>';
 		}
@@ -144,17 +128,18 @@ $(document).ready(function() {
 			const name = calendar.name;
 			const email = calendar.email;
 			var calendarNo = calendar.no;
+			var chkBoxCalNo = "checkEvent" + calendar.no;
 			if(calendar.p_code != 0){
 				$("#calendar-list").append(`
                 <div class="calendar-checkbox">
-                    <input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${email}">
+                    <input type="checkbox" id="${chkBoxCalNo}" class="calendar-checkbox-input" data-owner="${email}">
                     <span>${name} (${email})</span>
                 </div>`
 				);
 			} else {
 				$("#calendar-list").append(`
                 <div class="calendar-checkbox">
-                    <input type="checkbox" id="${name}" class="calendar-checkbox-input" data-owner="${email}">
+                    <input type="checkbox" id="${chkBoxCalNo}" class="calendar-checkbox-input" data-owner="${email}">
                     <span>${name} (${email})</span>
                     <button class="admin-calendar-btn" id="${calendarNo}")>EDIT</button>
                 </div>`
@@ -375,9 +360,6 @@ $(document).ready(function() {
 	});
 	
 	
-	
-	
-
 	/* $(document).on('mousedown', '#main', function(e) {
 		console.log('mousedown: ', e.target);
 	});
