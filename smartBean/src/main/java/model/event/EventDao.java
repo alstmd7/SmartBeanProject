@@ -134,7 +134,45 @@ public class EventDao {
 		return list;
 	}
 	
-	public ArrayList<EventVo> getEventMyEvent() { ///// 이거 완성하고 이벤트 가져오는 js에 서블릿 변경해
+	
+	public ArrayList<Integer> getEventNoAll() {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		this.conn = DBManager.getConnection();
+		
+		if (this.conn != null) {
+			String sql = "SELECT * FROM `event`";
+
+			try {
+				this.pstmt = this.conn.prepareStatement(sql);
+				this.rs = this.pstmt.executeQuery();
+
+				while (this.rs.next()) {
+					
+					int no = this.rs.getInt(1);
+					/* int calendar_no = this.rs.getInt(2);
+					int task_no = this.rs.getInt(3);
+					String name = this.rs.getString(4);
+					String title = this.rs.getString(6);
+					String content = this.rs.getString(7);
+					String start = sdf.format(this.rs.getDate(8));
+					String end = sdf.format(this.rs.getDate(9));
+					String all_day = this.rs.getString(10); */
+					
+					list.add(no);
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBManager.close(this.conn, this.pstmt, this.rs);
+			}
+		}
+
+		return list;
+	}
+	
+	public ArrayList<EventVo> getEventMyEvent() { 
 		ArrayList<EventVo> list = new ArrayList<EventVo>();
 
 		this.conn = DBManager.getConnection();

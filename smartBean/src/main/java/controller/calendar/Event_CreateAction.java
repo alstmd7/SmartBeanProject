@@ -10,6 +10,7 @@ import model.calendar.CalendarDao;
 import model.calendar.CalendarRequestDto;
 import model.event.EventDao;
 import model.event.EventRequestDto;
+import model.shareEvent.ShareEventDao;
 import model.task.TaskDao;
 import model.task.TaskVo;
 import model.user.UserRequestDto;
@@ -67,12 +68,15 @@ public class Event_CreateAction extends HttpServlet {
 		
 		EventRequestDto event = new EventRequestDto(calendarNo, taskVo.getNo(), name, email, name, start, start);
 		boolean result = eventDao.createEvent(event);
-
+		
 		if (result) {
 			System.out.println("성공성공성공");
+			ShareEventDao shareEventDao = ShareEventDao.getInstance();
+			shareEventDao.CreateShareEvent(calendarNo);
 		}else {
 			System.out.println("실패실패실패");			
 		}
+		
 	}
 
 }

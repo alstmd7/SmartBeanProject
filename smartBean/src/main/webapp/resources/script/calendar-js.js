@@ -16,6 +16,7 @@ $(document).ready(function() {
 		}
 	});
 	
+	// 기존에 있던 이벤트는 eventNum을 가져와야하고 else는 클릭한 위치의 날짜값과 taskName을 가져와서 value에 넣어야함 
 	var eventNum = 0;
 	calendar = new Calendar(calendarEl, {
 		eventClick: function(info) {
@@ -64,8 +65,33 @@ $(document).ready(function() {
 			} else if (eventTitle === '출장') {
 				eventElement.style.backgroundColor = '#FF8200';
 			}
-		}
+		},
 		
+		// task를 드래그해서 이벤트 생성
+		eventReceive: function(info) {
+			var calNo = myCalendarNo;
+			var title = info.event.title;
+			var startDateObj = info.event.start;
+			var startDate = startDateObj.getFullYear() + '-'
+				+ ('0' + (startDateObj.getMonth() + 1)).slice(-2) + '-'
+				+ ('0' + startDateObj.getDate()).slice(-2);
+
+			// console.log(calNo, title, startDate);
+
+			$.ajax({
+				url: "/EventCreate",
+				method: "POST",
+				data: {
+					calendarNo: calNo,
+					name: title,
+					start: startDate
+				}
+			}).done(function(response) {
+				console.log("event create ok! Response:", response);
+			}).fail(function(xhr, status, error) {
+				console.log("event create fail.. Status:", status, "Error:", error);
+			});
+		}
 	});
 
 	// 캘린더 불러오기
@@ -347,6 +373,10 @@ $(document).ready(function() {
 			calendar.addEvent(newEvent);
 		});
 	});
+	
+	
+	
+	
 
 	/* $(document).on('mousedown', '#main', function(e) {
 		console.log('mousedown: ', e.target);

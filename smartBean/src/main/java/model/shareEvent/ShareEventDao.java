@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import model.event.EventDao;
+import model.event.EventVo;
 import util.DBManager;
 
 public class ShareEventDao {
@@ -47,5 +49,38 @@ public class ShareEventDao {
 		}
 		
 		return list;
+	}
+	
+	public void CreateShareEvent(int no) {
+		this.conn = DBManager.getConnection();
+		
+		ArrayList<EventVo> eventList = new ArrayList<EventVo>();
+		
+		EventDao eventDao = EventDao.getInstance();
+		
+		ArrayList<Integer> eventNoList = eventDao.getEventNoAll();
+		
+		int x = 0;
+		for(int i = 0; i < eventNoList.size(); i++) {
+			if(x < eventNoList.get(i)) {
+				x = eventNoList.get(i);
+			}
+		}
+		
+		String sql = "INSERT INTO event_share VALUES(?, ?);";
+
+		try {
+			this.pstmt = this.conn.prepareStatement(sql);
+			this.pstmt.setInt(1, no);
+			this.pstmt.setInt(2, x);
+
+			this.pstmt.execute();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(this.conn, this.pstmt);
+		}
+		
 	}
 }
