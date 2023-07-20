@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import model.calendar.CalendarDao;
-import model.calendar.CalendarVo;
 import util.DBManager;
 
 public class ShareDao {
