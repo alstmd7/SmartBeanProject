@@ -58,6 +58,7 @@ public class Event_CreateAction extends HttpServlet {
 		int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
 		String name = request.getParameter("name");
 		String start = request.getParameter("start");
+		String[] checkNum = request.getParameter("checkNum").split("checkEvent");
 
 		TaskVo taskVo = taskDao.getTaskByName(email, name);
 		if(taskVo == null) {
@@ -72,7 +73,10 @@ public class Event_CreateAction extends HttpServlet {
 		if (result) {
 			System.out.println("성공성공성공");
 			ShareEventDao shareEventDao = ShareEventDao.getInstance();
-			shareEventDao.CreateShareEvent(calendarNo);
+			for(int i=1; i<checkNum.length; i++) {
+				int no = Integer.parseInt(checkNum[i]);
+				shareEventDao.CreateShareEvent(no);
+			}
 		}else {
 			System.out.println("실패실패실패");			
 		}

@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.shareEvent.ShareEventVo;
+import model.todo.TodoVo;
 import util.DBManager;
 
 public class ShareDao {
@@ -72,6 +74,40 @@ public class ShareDao {
         }
         
         return check;
+    }
+    
+    public ShareEventVo SharedCheck(int calendarNo, int eventNo) {
+    	ShareEventVo shareEventVo = null;
+    	
+        conn = DBManager.getConnection();
+        
+        boolean check = true;
+        if (conn != null) {
+        	System.out.println("Connection is null"); // 추가한 코드
+            String sql = "SELECT * from event_share where calendar_no=? AND event_no=?";
+            try {
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, calendarNo);
+                pstmt.setInt(2, eventNo);
+                pstmt.executeQuery();
+                
+                if(this.rs.next()) {
+                	int calendarNum = this.rs.getInt(1);
+    				int eventNoNum = this.rs.getInt(2);
+    				
+    				shareEventVo = new ShareEventVo(calendarNum, eventNoNum);
+    			}
+            } catch (SQLException e) {
+                e.printStackTrace();
+                check = false; // 예외 발생시 실패했음을 반환
+            } finally {
+                DBManager.close(conn, pstmt);
+            }
+        } else {
+            check = false; // DB 접속 실패시 실패했음을 반환
+        }
+        
+        return shareEventVo;
     }
 
 }

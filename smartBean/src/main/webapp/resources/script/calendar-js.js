@@ -33,6 +33,20 @@ $(document).ready(function() {
 					$('#start-date').val(event.start);
 					$('#end-date').val(event.end);
 					$('#event-description').val(event.content);
+					
+					/*var checkCalBox = "";
+					$('input:checkbox[name=checkCalBox]').each(function(index) {
+						if ($(this).is(":checked") == true) {
+							checkCalBox += $(this).val();
+						}
+					})
+					console.log(checkCalBox);
+
+					$.ajax({
+						url: "/Event_Update",
+						method: "POST",
+						data: obj
+					})*/
 				});
 				
 			} else {
@@ -46,6 +60,7 @@ $(document).ready(function() {
 			}
 			console.log("Clicked event ID: ", info.event.id);
 		},
+		
 		headerToolbar: {
 			left: 'prev,next today',
 			center: 'title',
@@ -65,6 +80,14 @@ $(document).ready(function() {
 				+ ('0' + startDateObj.getDate()).slice(-2);
 
 			// console.log(calNo, title, startDate);
+			
+			var checkNum = "";
+
+			$('input:checkbox[name=chkbox]').each(function(index) {
+				if ($(this).is(":checked") == true) {
+					checkNum += $(this).val();
+				}
+			})
 
 			$.ajax({
 				url: "/EventCreate",
@@ -72,7 +95,8 @@ $(document).ready(function() {
 				data: {
 					calendarNo: calNo,
 					name: title,
-					start: startDate
+					start: startDate,
+					checkNum: checkNum
 				}
 			})
 		}
@@ -89,7 +113,6 @@ $(document).ready(function() {
 		type: 'POST'
 	}).done(function(myCal) {
 		myCalendarNo = myCal.no;
-		console.log("My Calendar No:", myCalendarNo);
 	}).fail(function() {
 
 	});
@@ -108,7 +131,7 @@ $(document).ready(function() {
 		var newCalendar = document.createElement("div");
 		newCalendar.className = "calendar-checkbox";
 		newCalendar.innerHTML = ` 
-    <input type="checkbox" id="${calendarCheckboxId}" class="calendar-checkbox-input" data-owner="${newCalendarOwner}"> 
+    <input type="checkbox" id="${calendarCheckboxId}" class="calendar-checkbox-input" data-owner="${newCalendarOwner}" onclick="selectBox()"> 
     <span>${newCalendarName} (${newCalendarOwner})</span>
     `;
 		if (calendarCheckboxId != myCalendarNo) {
@@ -132,20 +155,49 @@ $(document).ready(function() {
 			if(calendar.p_code != 0){
 				$("#calendar-list").append(`
                 <div class="calendar-checkbox">
-                    <input type="checkbox" id="${chkBoxCalNo}" class="calendar-checkbox-input" data-owner="${email}">
+                    <input type="checkbox" name="chkbox" value="${chkBoxCalNo}" class="calendar-checkbox-input" data-owner="${email}" checked>
                     <span>${name} (${email})</span>
                 </div>`
 				);
 			} else {
 				$("#calendar-list").append(`
                 <div class="calendar-checkbox">
-                    <input type="checkbox" id="${chkBoxCalNo}" class="calendar-checkbox-input" data-owner="${email}">
+                    <input type="checkbox" name="chkbox" value="${chkBoxCalNo}" class="calendar-checkbox-input" data-owner="${email}" checked>
                     <span>${name} (${email})</span>
                     <button class="admin-calendar-btn" id="${calendarNo}")>EDIT</button>
                 </div>`
 				);
 			}
 		});
+		
+		var checkNum = "";
+		
+		$('input:checkbox[name=chkbox]').each(function(index) {
+			if ($(this).is(":checked") == true) {
+				checkNum += $(this).val();
+			}
+		})
+		
+		if(checkNum != "") {
+			$.ajax({
+				url: "/EventRequest",
+				method: "GET",
+				data: {"checkNum":checkNum}
+			}).done(function(response) {
+				response.forEach(event => {
+					var newEvent = {
+						id: event.no,
+						name: event.name,
+						title: event.title,
+						start: event.start,
+						end: event.end,
+						allDay: event.all_day == "true"
+					};
+					calendar.addEvent(newEvent);
+				});
+			});
+		}
+	
 	}).fail(function() {
 		console.error("fail read calendars");
 	});
@@ -339,26 +391,7 @@ $(document).ready(function() {
 	});
 
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
-	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 
-	$.ajax({
-		url: "/EventRequest",
-		method: "GET"
-	}).done(function(response) {
-		console.log(response);
-		response.forEach(event => {
-			var newEvent = {
-				id: event.no,
-				name: event.name,
-				title: event.title,
-				start: event.start,
-				end: event.end,
-				allDay: event.all_day == "true"
-			};
-
-			calendar.addEvent(newEvent);
-		});
-	});
-	
+	// 서버에서 저장된 이벤트 데이터 가져오기 ---->
 	
 	/* $(document).on('mousedown', '#main', function(e) {
 		console.log('mousedown: ', e.target);
@@ -404,12 +437,13 @@ $(document).ready(function() {
 	});
 	
 	$('#save-event-button').on('click', function() {
+		
 		let obj = {
 			"no": eventNum,
 			"title": $('#event-title-input').val(),
 			"start": $('#start-date').val(),
 			"end": $('#end-date').val(),
-			"content": $('#event-description').val()
+			"content": $('#event-description').val(),
 		};
 
 		$.ajax({
@@ -417,8 +451,27 @@ $(document).ready(function() {
 			method: "POST",
 			data: obj
 		}).done(function(){
+			/*var checkCalBox = "";
+			$('input:checkbox[name=checkCalBox]').each(function(index) {
+				if ($(this).is(":checked") == true) {
+					checkCalBox += $(this).val();
+				}
+			})
+			console.log(checkCalBox);
+
+			$.ajax({
+				url: "/Event_Update",
+				method: "POST",
+				data: obj
+			})*/
+			
 			location.reload(true);
 		});
+		
+		
 	});
+	
+	
 
 });
+

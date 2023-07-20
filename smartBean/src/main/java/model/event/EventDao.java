@@ -78,14 +78,13 @@ public class EventDao {
 	    return check;
 	}
 
-	public ArrayList<EventVo> getEventAll(String email) {
+	public ArrayList<EventVo> getEventAll(String[] checkList) {
 		ArrayList<EventVo> list = new ArrayList<EventVo>();
 		
 		this.conn = DBManager.getConnection();
 		
 		// 사용자가 공유중인 캘린더 가져오기
 		ShareDao shareDao = ShareDao.getInstance();
-		ArrayList<Integer> shareCal = shareDao.getShareCalendarNo(email);
 
 		ShareEventDao shareEventDao = ShareEventDao.getInstance();
 
@@ -102,6 +101,7 @@ public class EventDao {
 					int calendar_no = this.rs.getInt(2);
 					int task_no = this.rs.getInt(3);
 					String name = this.rs.getString(4);
+					String email = this.rs.getString(5);
 					String title = this.rs.getString(6);
 					String content = this.rs.getString(7);
 					String start = sdf.format(this.rs.getDate(8));
@@ -111,12 +111,21 @@ public class EventDao {
 					// 이벤트가 공유중인 캘린더 번호 가져오기
 					ArrayList<Integer> shareCalendarNo = shareEventDao.getShareCalendarNoByEventNo(no);
 					
-					for(int i = 0; i < shareCal.size(); i++) {
+					for(int i = 1; i < checkList.length; i++) {
+						int checkCal = Integer.parseInt(checkList[i]); 
 						for(int j = 0; j < shareCalendarNo.size(); j++) {
-							if(shareCal.get(i) == shareCalendarNo.get(j)) {
-								EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end,
-										all_day);							
-								list.add(event);
+							if(checkCal == shareCalendarNo.get(j)) {
+								boolean check = true;
+								for(int k=0; k<list.size(); k++) {
+									if(list.get(k).getNo() == no) {
+										check = false;
+									}
+								}
+								if(check) {
+									EventVo event = new EventVo(no, calendar_no, task_no, name, email, title, content, start, end,
+											all_day);							
+									list.add(event);
+								}
 							}
 						}
 						

@@ -36,10 +36,14 @@ public class Event_RequestAction extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("application/json; charset=UTF-8");
+		
+		String[] list = request.getParameter("checkNum").split("checkEvent");
+		
+		System.out.println(list.toString());
+
 		EventDao eventDao = EventDao.getInstance();
 		
-		String email = (String) request.getSession().getAttribute("log");
-		ArrayList<EventVo> eventList = eventDao.getEventAll(email);
+		ArrayList<EventVo> eventList = eventDao.getEventAll(list);
 
 		JSONArray responseList = new JSONArray(eventList);
 		response.getWriter().append(responseList.toString());

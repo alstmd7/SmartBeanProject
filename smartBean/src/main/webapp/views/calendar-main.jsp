@@ -106,7 +106,6 @@
 				<input type="text" id="event-title-input" name="event-title" placeholder="이벤트 타이틀 입력"><br> <label> <!-- <input type="checkbox" id="all-day-checkbox" checked>하루종일</label> <br> -->
 				<label for="start-date">시작일:</label> <input type="date" id="start-date"> <br>
 				<label for="end-date">종료일:</label> <input type="date" id="end-date"> <br>
-					<select id="calendars" multiple>
     <%
     // 사용자의 이메일 정보를 세션에서 가져옴
     String email = (String) session.getAttribute("log");
@@ -117,11 +116,11 @@
     // 로그인한 사용자와 일치하는 모든 캘린더 가져오기
     ArrayList<CalendarVo> userCalendars = calendarDao.getUserCalendars(email);
 
+    ShareDao shareDao = ShareDao.getInstance();
+
     for (CalendarVo calendar : userCalendars) {
     %>
-    <option value="<%=calendar.getNo()%>"> <%=calendar.getName()%></option>
     <%}%>
-</select>
 
 					<p>상세내용</p>
 					<textarea id="event-description"></textarea> <br>

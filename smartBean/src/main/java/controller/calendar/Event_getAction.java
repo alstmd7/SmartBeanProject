@@ -20,7 +20,6 @@ import model.todo.TodoVo;
 /**
  * Servlet implementation class Event_getAction
  */
-@WebServlet("/Event_getAction")
 public class Event_getAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
