@@ -33,7 +33,7 @@ hr {
 #calendar-container {
 	position: relative;
 	z-index: 1;
-	width: 1000px;
+	width: 100%;
 }
 
 .fc .fc-scroller-liquid-absolute {
@@ -50,8 +50,9 @@ hr {
 	padding: 10px;
 	border-right: 1px solid #ccc;
 	/* background: #eee; */
-	width: 300px;
-	margin-right: 30px;
+	width: 20%;
+/* 	margin-right: 10%; */
+	margin-left: 5%;
 }
 
 .calendar-checkbox {
