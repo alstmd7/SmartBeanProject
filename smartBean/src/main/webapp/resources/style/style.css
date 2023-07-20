@@ -152,37 +152,30 @@ main .div-todoList {
 
 
 
+
 /* footer */
 footer {
+    padding-left: 30%; 
     grid-area: footer;
     background: #dcdcdc;
-    font-size: 0.8rem;
-    height: 170px;
-}
-footer>ul{
-    padding-bottom: 10px;
-    padding-top: 10px;
-}
-footer>ul>li{
-    /* 각 리스트 inline-block(줄바꿈하지 않고, 각 크기(너비,높이)는 가지게 함) */
-    display: inline-block;
-    padding: 0 2%;
-}
-footer>ul>li>a{
-    font-size: 13px;
-}
-div>p{
-    font-size: 15px;
-}
-footer>ul>li:nth-child(2){
-    /* 리스트 양 옆에 테두리로 | 표시 주기 */
-    border-left: 2px solid rgb(0, 0, 0);
-    border-right: 2px solid rgb(0, 0, 0);
+    font-size: 2rem;
+    height: 200px;
 }
 
 #policy-box, #company-info-box{
-	text-align: left;
+    /* text-align: center; */
+    text-align: left;
 }
+
+#policy-box a:nth-child(2){
+    /* 리스트 양 옆에 테두리로 | 표시 주기 */
+    border-left: 2px solid rgb(0, 0, 0);
+    border-right: 2px solid rgb(0, 0, 0);
+    padding: 0 2% ;
+}
+
+
+
 
 /* 약관 - 0704 희수 수정 */
 .div-userTerm{
@@ -477,4 +470,3 @@ footer>ul>li:nth-child(2){
 .delete-title>h2 {
 	font-size: 1.2rem;
 }
-

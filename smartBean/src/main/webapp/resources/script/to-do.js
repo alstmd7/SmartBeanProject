@@ -44,7 +44,9 @@ function printWeek() {
 		"url": `/LoadTodo`,
 		"method": "GET"
 	}).done(function (response) {
+		
 		var inputDate = document.getElementById("inputDate");
+		
 		if (!inputDate.value) {
 			var currentDate = new Date();
 			var year = currentDate.getFullYear();
@@ -87,9 +89,13 @@ function printWeek() {
 		            
 			"</th>";
 		}
+		
+		
+		
 
 		table += "</tr><tr>";
 		for (var i = 0; i < datesAndWeekdays.length; i++) {
+			checking=0;
 			table += "<td>"
 			var dayTd = (currentDate.getDate() - 6 + i);
 			var checkDate = currentDate.getFullYear() + "-" + 
@@ -109,11 +115,16 @@ function printWeek() {
 						table += "<input type='checkbox' id='check" + no + "' onclick='updateProgress(" + (i + 1) + ", this.id)' checked>";
 					}
 					table += "<a href='#pop_info_1' id = '" + no + "' class='btn_open' onclick='showPopup(" + (i + 1) + ", \"pop_info_1\", this.id)'>"+content+"</a>" + "</li>";
+					checking ++;
 				}
 			});
-			table += "<li class = 'add-button'><br><span id='progress" + (i + 1) + "'>진행률: 0%</span></li>"+"</td>";
+			
+			//일정이 있어야 진행률을 표시
+			if(checking>=1){
+			table += "<li class = 'add-button'><br><span id='progress" + (i + 1) + "'>진행률: 0%</span></li>";
+			}
 		}
-		table += "</tr></table>";
+		table +=  "</td>"+"</tr></table>";
 		document.getElementById("output").innerHTML = table;
 		updateProgress();
 
@@ -122,6 +133,8 @@ function printWeek() {
 	});
 
 }
+
+
 
 // 추가버튼 나오기,닫기
 function showList(listId) {
