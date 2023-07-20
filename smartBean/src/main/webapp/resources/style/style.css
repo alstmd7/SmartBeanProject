@@ -178,12 +178,18 @@ text-align: center;
 	color: #006400;
 }
 
+
 /* footer */
 footer {
 	grid-area: footer;
 	background: #dcdcdc;
 	font-size: 0.8rem;
 	height: 170px;
+    padding-left: 30%; 
+    grid-area: footer;
+    background: #dcdcdc;
+    font-size: 2rem;
+    height: 200px;
 }
 
 footer>ul {
@@ -211,8 +217,16 @@ footer>ul>li:nth-child(2) {
 	border-right: 2px solid rgb(0, 0, 0);
 }
 
-#policy-box, #company-info-box {
-	text-align: left;
+#policy-box, #company-info-box{
+    /* text-align: center; */
+    text-align: left;
+}
+
+#policy-box a:nth-child(2){
+    /* 리스트 양 옆에 테두리로 | 표시 주기 */
+    border-left: 2px solid rgb(0, 0, 0);
+    border-right: 2px solid rgb(0, 0, 0);
+    padding: 0 2% ;
 }
 
 /* 약관 - 0704 희수 수정 */
