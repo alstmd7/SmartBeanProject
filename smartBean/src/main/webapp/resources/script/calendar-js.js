@@ -354,7 +354,15 @@ $(document).ready(function() {
 	});
 
 	// <<<<<<<<<<<<<<< event >>>>>>>>>>>>>>>
-	// 서버에서 저장된 이벤트 데이터 가져오기 ----> 
+	// 서버에서 저장된 이벤트 데이터 가져오기 ---->
+	var chk_arr = [];
+	$('.calendar-checkbox-input').on('click', function(){
+		$('.calendar-checkbox-input').each(function(){
+			var chk = $(this).val();
+			chk_arr.push(chk);
+		})
+	})
+	 
 	$.ajax({
 		url: "/EventRequest",
 		method: "GET"
@@ -373,10 +381,6 @@ $(document).ready(function() {
 			calendar.addEvent(newEvent);
 		});
 	});
-	
-	
-	
-	
 
 	/* $(document).on('mousedown', '#main', function(e) {
 		console.log('mousedown: ', e.target);
