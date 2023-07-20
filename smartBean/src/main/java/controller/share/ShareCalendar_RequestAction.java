@@ -38,7 +38,7 @@ public class ShareCalendar_RequestAction extends HttpServlet {
 	    request.setCharacterEncoding("UTF-8");
 	    response.setCharacterEncoding("UTF-8");
 
-	    String email = (String) request.getSession().getAttribute("email");
+	    String email = request.getParameter("email");
 	    int calendarNo = Integer.parseInt(request.getParameter("calendarNo"));
 
 	    ShareDao shareDao = ShareDao.getInstance();

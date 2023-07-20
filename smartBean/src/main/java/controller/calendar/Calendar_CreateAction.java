@@ -2,6 +2,7 @@ package controller.calendar;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.calendar.CalendarDao;
 import model.calendar.CalendarRequestDto;
+import model.calendar.CalendarVo;
+import model.share.ShareDao;
 import model.user.UserDao;
 import model.user.UserVo;
 
@@ -40,18 +43,23 @@ public class Calendar_CreateAction extends HttpServlet {
 		PrintWriter out = response.getWriter();
         
 		boolean result = dao.createCalendar(calendarDto);
-		String url = "calendar";
 		
 		if (result) {
-			out.println("<script> alert('새로운 캘린더 생성이 완료되었습니다.'); </script>");
+			ShareDao shareDao = ShareDao.getInstance();
+			ArrayList<CalendarVo> calendarList = dao.getAllCalendars(email);
+			int max = calendarList.get(0).getNo();
+			for(int i=0; i<calendarList.size(); i++) {
+				if(calendarList.get(i).getNo() > max) {
+					max = calendarList.get(i).getNo();
+				}
+			}
+			shareDao.addSharedCalendar(email, max);
+			
 		} else {
 			out.println("<script> alert('새로운 캘린더 생성이 실패하였습니다.'); </script>");
 		}
 		
-		out.print("<script>location.href='"+url+"';</script>");
-		
-		out.close();
-		
+		response.sendRedirect("calendar");
 	}
 	
 }

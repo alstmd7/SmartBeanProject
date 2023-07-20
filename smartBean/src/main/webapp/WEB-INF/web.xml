@@ -220,6 +220,15 @@
 		<servlet-name>Event_UpdateAction</servlet-name>
 		<url-pattern>/Event_Update</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Calendar_ReadAction</servlet-name>
+		<servlet-class>controller.calendar.Calendar_ReadAction</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Calendar_ReadAction</servlet-name>
+		<url-pattern>/Calendar_Read</url-pattern>
+	</servlet-mapping>
 
 
 	<!-- 2. JSP 페이지 맵핑 -->

@@ -72,7 +72,7 @@
 					</button>
 				</div>
 	
-				<form method="post" action="ShareCalendarRequest"
+				<form method="post"
 					id="update-calendar-form">
 					<h2 id="newCalendar-popup-title"></h2>
 					<!--  <button id="close-newCalendar-button">닫기</button> -->

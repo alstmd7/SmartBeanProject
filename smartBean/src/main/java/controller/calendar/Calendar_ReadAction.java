@@ -17,7 +17,6 @@ import model.calendar.CalendarVo;
 /**
  * Servlet implementation class Calendar_ReadAction
  */
-@WebServlet("/Calendar_ReadAction")
 public class Calendar_ReadAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -50,13 +49,11 @@ public class Calendar_ReadAction extends HttpServlet {
 	    String email = (String) request.getSession().getAttribute("log");
 
 	    // 해당 사용자의 모든 캘린더 가져오기
-	    ArrayList<CalendarVo> calendarList = calDao.getAllCalendars(email);
+	    ArrayList<CalendarVo> calendarList = calDao.getSharedCalendars(email);
 	    
 	    // 가져온 캘린더를 JSON 형식으로 변환
 	    JSONArray responseList = new JSONArray(calendarList);
 	    response.getWriter().append(responseList.toString());
-
-	    
 
 
 	}

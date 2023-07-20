@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.share.ShareDao;
 import model.user.UserVo;
 import util.DBManager;
 
@@ -51,6 +52,45 @@ public class CalendarDao {
 		}
 
 		return calendar;
+	}
+	
+	public ArrayList<CalendarVo> getSharedCalendars(String email) {
+		ArrayList<CalendarVo> calendarList = new ArrayList<>();
+		
+		ShareDao shareDao = ShareDao.getInstance();
+		ArrayList<Integer> listCal = shareDao.getShareCalendarNo(email);
+		
+		this.conn = DBManager.getConnection();
+		
+		String sql = "SELECT * FROM calendar";
+
+		try {
+			this.pstmt = this.conn.prepareStatement(sql);
+
+			this.rs = this.pstmt.executeQuery();
+
+			while (this.rs.next()) {
+
+				int no = this.rs.getInt("no");
+				int code = this.rs.getInt("code");
+				String name = this.rs.getString("name");
+				int p_code = this.rs.getInt("p_code");
+				
+				for(int i=0; i<listCal.size(); i++) {
+					if(listCal.get(i) == no) {
+						CalendarVo calendar = new CalendarVo(no, code, email, name, p_code);
+						calendarList.add(calendar);
+					}
+				}				
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(this.conn, this.pstmt, this.rs);
+		}
+
+		return calendarList;
 	}
 
 	public ArrayList<CalendarVo> getAllCalendars(String email) {

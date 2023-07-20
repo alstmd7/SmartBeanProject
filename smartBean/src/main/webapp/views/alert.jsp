@@ -49,5 +49,12 @@
 		</script>
 	</c:if>
 	
+	<c:if test="${requestScope.message == '캘린더 삭제 권한이 없습니다.'}">
+		<script>
+			alert("${requestScope.message}");
+			location.href="calendar";
+		</script>
+	</c:if>
+	
 </body>
 </html>

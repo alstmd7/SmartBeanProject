@@ -150,11 +150,12 @@ $(document).ready(function() {
 		}
 
 		$("#calendar-list").append(newCalendar);
+		location.href = "calendar";
 	});
 
 	// 사용자의 모든 캘린더 불러오기
 	$.ajax({
-		"url": "/Calendar_ReadAction",
+		"url": "/Calendar_Read",
 		"method": "POST"
 	}).done(function(calendarList) {
 		console.log(calendarList);
@@ -162,7 +163,7 @@ $(document).ready(function() {
 			const name = calendar.name;
 			const email = calendar.email;
 			var calendarNo = calendar.no;
-			var chkBoxCalNo = calendar.no;
+			var chkBoxCalNo = "checkEvent" + calendar.no;
 			if(calendar.p_code != 0){
 				$("#calendar-list").append(`
                 <div class="calendar-checkbox">
@@ -223,7 +224,6 @@ $(document).ready(function() {
 		document.getElementById("newCalendar-popup-title").innerHTML = calendarName;
 
 		id_check = $(this).attr("id"); // id_check 업데이트
-		console.log(id_check);
 	});
 
 	// 캘린더 관리 팝업 닫기
@@ -263,9 +263,10 @@ $(document).ready(function() {
 
 		location.href = "calendar";
 	});
-
+	
 	// 사용자 공유 기능							수정 : email getPrmeter 받아와서 배열 만들고 배열 순회하면서 그거 다 shere_Calendar 테이블에 저장
 	$("#share-button").on("click", function() {
+		var calendarId = id_check; // id_check 사용
 		var userEmail = $("#user-share-input").val();
 
 		if (userEmail.trim() !== "") {
@@ -355,6 +356,7 @@ $(document).ready(function() {
 				containerEl.insertBefore(newEvent, containerEl.lastChild);
 				$("#add-task-popup").fadeOut();
 				$("#newTaskTitle").val("");
+				location.href = "calendar";
 
 				// Task 관리 버튼 클릭 시 관리 팝업 표시
 				$(newEvent).find(".fc-event-main").on("click", function() {

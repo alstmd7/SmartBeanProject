@@ -19,7 +19,6 @@ import model.user.UserVo;
 /**
  * Servlet implementation class Calendar_DeleteAction
  */
-@WebServlet("/Calendar_DeleteAction")
 public class Calendar_DeleteAction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -46,13 +45,10 @@ public class Calendar_DeleteAction extends HttpServlet {
 
 	    CalendarDao calDao = CalendarDao.getInstance();
 	    int calendarId = Integer.parseInt(request.getParameter("calendarId"));
-
-	    boolean isSuccess = calDao.deleteCalendarByNo(calendarId); 
-
-	    if (isSuccess) {
-	        response.getWriter().write("캘린더가 성공적으로 삭제되었습니다.");
-	    } else {
-	        response.getWriter().write("캘린더 삭제에 실패하였습니다.");
+	    String email = (String) request.getSession().getAttribute("log");
+	    
+	    if(calDao.getCalendarByNo(calendarId).getEmail().equals(email)) {
+	    	calDao.deleteCalendarByNo(calendarId);
 	    }
 	}
 
