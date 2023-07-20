@@ -12,10 +12,11 @@ button {
 	border: none;
 }
 
-main{
+main {
 	flex-direction: initial !important;
 }
-hr{
+
+hr {
 	margin: 20px 0px;
 }
 
@@ -46,11 +47,11 @@ hr{
 
 /* external-events 스타일 */
 #external-events {
-    padding: 10px;
-    border-right: 1px solid #ccc;
-    /* background: #eee; */
-    width: 300px;
-    margin-right: 30px;
+	padding: 10px;
+	border-right: 1px solid #ccc;
+	/* background: #eee; */
+	width: 300px;
+	margin-right: 30px;
 }
 
 .calendar-checkbox {
@@ -74,7 +75,8 @@ hr{
 	margin-bottom: 20px;
 }
 
-.admin-calendar-btn, #delete-calendar-button, #share-button, #update-calendar-button, #save-task-button {
+.admin-calendar-btn, #delete-calendar-button, #share-button,
+	#update-calendar-button, #save-task-button {
 	border-radius: 20px;
 	border: 2px solid #006400;
 	background: #fff;
@@ -82,10 +84,10 @@ hr{
 	/* font-size: initial; */
 }
 
-#save-task-button{
+#save-task-button {
 	height: 40px;
-    margin-left: 10px;
-    width: 80px;
+	margin-left: 10px;
+	width: 80px;
 }
 
 .admin-calendar-btn {
@@ -96,6 +98,7 @@ hr{
 #delete-calendar-button, #share-button, #update-calendar-button {
 	width: 80px;
 	height: 25px;
+	margin-top: 5px;
 }
 
 .calendar-checkbox {
@@ -108,14 +111,14 @@ hr{
 }
 
 .close-icon {
-	width: 20px;
-	height: 20px;
-	margin-right: 5px;
+	width: 30px;
+	height: 30px;
+	margin-right: -17px;
 }
 
 .button-container {
-    display: flex;
-    justify-content: end;
+	display: flex;
+	justify-content: end;
 }
 
 .button-container button {
@@ -138,18 +141,16 @@ hr{
 	/* margin-bottom: 10px; */
 }
 
-
 #event-popup {
 	position: fixed;
 	z-index: 99;
-	top: 50%;
-	left: 15%;
+	top: 360px;
+	left: 844px; /* 변경된 위치 */
 	transform: translate(-50%, -50%);
 	padding: 20px;
 	background: #fff;
-	border: 3px solid #006400;
-	/* 	width: 200px;
-	height: 330px; */
+	border: 1px solid #bebebe;
+	border-radius: 10px;
 	text-align: left;
 }
 
@@ -157,11 +158,12 @@ hr{
 	position: fixed;
 	z-index: 99;
 	top: 360px;
-    left: 484px;
+	left: 484px;
 	transform: translate(-50%, -50%);
 	padding: 20px;
 	background: #fff;
-	border: 3px solid #006400;
+	border: 1px solid #bebebe;
+	border-radius: 10px;
 	text-align: left;
 }
 
@@ -169,7 +171,7 @@ hr{
 	position: fixed;
 	z-index: 99;
 	top: 360px;
-    left: 484px;
+	left: 484px;
 	transform: translate(-50%, -50%);
 	padding: 20px;
 	background: #fff;
@@ -186,17 +188,27 @@ hr{
 	height: 120px;
 }
 
-/* 일정 저장 버튼 */
-#save-button {
-	position: absolute;
-	right: 0;
-	border-radius: 20px;
+#user-share-input, #new-calendar-name-input, #task-name-input {
 	height: 30px;
-	width: 80px;
-	background: #323232;
-	color: white;
+	width: 300px;
+	outline: none;
 	border: none;
-	font-weight: 600;
+	border-bottom: 1px solid #bebebe;
+	margin-right: 10px;
+}
+
+#task-title, #event-title-input, #start-date, #end-date{
+	outline: none;
+    border: none;
+    border-bottom: 1px solid #bebebe;
+    width: 135px;
+    height: 40px;
+    margin-bottom: 10px;
+}
+
+#calendars{
+	border: 1px solid #bebebe;
+	width: 135px;
 }
 
 /* lib css 수정 */

@@ -18,7 +18,7 @@
 		<!-- 로그인 래퍼 -->
 		    <div class="login-wrapper">
 		        <!-- 제목 -->
-		        <h2>Smart bin</h2>
+		        <h2>Smart bean</h2>
 		       
 		        <!-- 로그인 폼 -->
 				<form method="post" action="Login">
@@ -39,7 +39,6 @@
 				<!-- 비밀번호 찾기 링크 -->
 		        <div class="findPassword">
 		        	<a href="join">회원가입</a>
-		            <a href="">비밀번호를 잊으셨나요?</a>
 		        </div>
 		    </div>
 	    </div>

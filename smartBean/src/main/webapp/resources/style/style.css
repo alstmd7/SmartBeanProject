@@ -1,240 +1,267 @@
 @charset "UTF-8";
 
 @font-face {
-    font-family: 'Pretendard-Regular';
-    font-style: normal;
-    font-weight: 400;
-    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+	font-family: 'Pretendard-Regular';
+	font-style: normal;
+	font-weight: 400;
+	src:
+		url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+		format('woff');
 }
 
 /* default */
 html {
-    height: 100%;
+	height: 100%;
 }
-  
+
 body {
-    display: grid;
-    grid-template:
-      "header header header" 100px
-      ". main ." auto
-      "footer footer footer" 100px;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    text-align: center;
+	display: grid;
+	grid-template: "header header header" 100px ". main ." auto
+		"footer footer footer" 100px;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	text-align: center;
 }
-  
+
 h1 {
-    font-family: 'Pretendard-Regular', sans-serif;
-    font-weight: 700;
-    font-size: 30px;
+	font-family: 'Pretendard-Regular', sans-serif;
+	font-weight: 700;
+	font-size: 30px;
 }
-  
+
 p {
-    font-family: 'Pretendard-Regular', sans-serif;
-    font-weight: 400;
-    font-size: 18px;
+	font-family: 'Pretendard-Regular', sans-serif;
+	font-weight: 400;
+	font-size: 18px;
 }
-  
+
 a {
-    font-family: 'Pretendard-Regular', sans-serif;
-    font-weight: 400;
-    font-size: 16px;
-    text-decoration: none;
-    color: rgb(29, 29, 29);
+	font-family: 'Pretendard-Regular', sans-serif;
+	font-weight: 400;
+	font-size: 16px;
+	text-decoration: none;
+	color: rgb(29, 29, 29);
 }
 
 input::placeholder {
-  color: gray;
-  font-style: italic;
+	color: gray;
+	font-style: italic;
 }
-
 
 /* header */
 header {
-    grid-area: header;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    justify-content: space-between;
+	grid-area: header;
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	justify-content: space-between;
 }
 
-header img{
+header img {
 	width: 85px;
-    height: 80px;
-    margin: 10px;
+	height: 80px;
+	margin: 10px;
 }
 
 header .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 10%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 10%;
 }
 
 header .title {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 header .sub-title {
-    margin-right: 10px;
+	margin-right: 10px;
 }
 
 header .main-title {
-    font-size: 30px;
-    font-weight: 500;
+	font-size: 30px;
+	font-weight: 500;
 }
-
 
 /* main */
 main {
-    grid-area: main;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+grid-area: main;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
 }
 
-main .div-calendar, main .div-todoList {
-    font-family: 'Kalam', cursive;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 60%;
-    height: 100px;
-    margin-bottom: 30px;
-    border-radius: 40px 80px / 80px 40px;
+.card-container {
+display: flex;
+gap: 100px;
 }
 
-/* 폰트 안묵는다~! */
-@import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
-main .div-calendar a, main .div-todoList a{
-    font-family: 'Kalam', cursive;
+.calendar-card, .todo-card {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 500px;
+height: 700px;
+border: 1px solid #bebebe;
+border-radius: 50px;
 }
-  
-main .div-calendar {
-    background-color: #FFDEE9;
+
+.card-content {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+padding: 40px;
+flex-grow: 1;
 }
-  
-main .div-todoList {
-    background-color: #DEFFD2;
+
+.div-calendar, .div-todoList {
+align-items: center;
+gap: 10px;
 }
-  
+
+.image-wrapper {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 300px;
+height: 300px;
+}
+
+.image-wrapper img {
+max-width: 100%;
+max-height: 100%;
+}
+
+.card-title{
+	font-size: xx-large;
+    font-weight: bolder;
+    color: #006400;
+}
+
+.calendar-card h2, .todo-card h2, .calendar-card h3, .todo-card h3 {
+text-align: center;
+}
+
 .login-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 20px;
 }
-  
+
 .login-nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    padding: 0;
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	padding: 0;
 }
-  
+
 .login-nav li {
-    margin: 0 10px;
-    list-style: none;
+	margin: 0 10px;
+	list-style: none;
 }
-  
+
 .login-nav li:first-child {
-    margin-right: 50px;
+	margin-right: 50px;
 }
-  
+
 .login-nav li:last-child {
-    margin-left: 50px;
+	margin-left: 50px;
 }
 
-
+.hovering .logout-btn:hover {
+	color: #006400;
+}
 
 /* footer */
 footer {
-    grid-area: footer;
-    background: #dcdcdc;
-    font-size: 0.8rem;
-    height: 170px;
-}
-footer>ul{
-    padding-bottom: 10px;
-    padding-top: 10px;
-}
-footer>ul>li{
-    /* 각 리스트 inline-block(줄바꿈하지 않고, 각 크기(너비,높이)는 가지게 함) */
-    display: inline-block;
-    padding: 0 2%;
-}
-footer>ul>li>a{
-    font-size: 13px;
-}
-div>p{
-    font-size: 15px;
-}
-footer>ul>li:nth-child(2){
-    /* 리스트 양 옆에 테두리로 | 표시 주기 */
-    border-left: 2px solid rgb(0, 0, 0);
-    border-right: 2px solid rgb(0, 0, 0);
+	grid-area: footer;
+	background: #dcdcdc;
+	font-size: 0.8rem;
+	height: 170px;
 }
 
-#policy-box, #company-info-box{
+footer>ul {
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+footer>ul>li {
+	/* 각 리스트 inline-block(줄바꿈하지 않고, 각 크기(너비,높이)는 가지게 함) */
+	display: inline-block;
+	padding: 0 2%;
+}
+
+footer>ul>li>a {
+	font-size: 13px;
+}
+
+div>p {
+	font-size: 15px;
+}
+
+footer>ul>li:nth-child(2) {
+	/* 리스트 양 옆에 테두리로 | 표시 주기 */
+	border-left: 2px solid rgb(0, 0, 0);
+	border-right: 2px solid rgb(0, 0, 0);
+}
+
+#policy-box, #company-info-box {
 	text-align: left;
 }
 
 /* 약관 - 0704 희수 수정 */
-.div-userTerm{
-    padding: 40px;
-    text-align: left;
+.div-userTerm {
+	padding: 40px;
+	text-align: left;
 }
 
-.text_title h2{
-    font-size: 1.5rem;
+.text_title h2 {
+	font-size: 1.5rem;
 }
 
-.text_content p{
-    font-size: 0.8rem;
+.text_content p {
+	font-size: 0.8rem;
 }
-  
+
 /* 미디어 쿼리 */
-@media (min-width: 768px) {
-    body {
-      grid-template:
-        "header header header" 100px
-        "main main main" auto
-        "footer footer footer" 100px;
-    }
+@media ( min-width : 768px) {
+	body {
+		grid-template: "header header header" 100px "main main main" auto
+			"footer footer footer" 100px;
+	}
 }
 
-@media (max-width: 768px) {
-    main .div-calendar, main .div-todoList {
-      width: 90%;
-    }
+@media ( max-width : 768px) {
+	main .div-calendar, main .div-todoList {
+		width: 90%;
+	}
 }
 
 /* 로그아웃 버튼 */
 #logo-space {
-	display:flex;	
+	display: flex;
 }
 
 .logout-btn {
-    padding: 12px 20px;
-    background-color: white;
-    color: black;
-    text-decoration: none;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 14px;
+	padding: 12px 20px;
+	background-color: white;
+	color: black;
+	text-decoration: none;
+	border: none;
+	border-radius: 25px;
+	cursor: pointer;
+	font-size: 14px;
 }
 
 .logout-btn:hover {
-  color: #566cf3;
+	color: #566cf3;
 }
-
-
 
 .login-wrapper {
 	width: 400px;
@@ -244,9 +271,9 @@ footer>ul>li:nth-child(2){
 	border: 2px solid #006400;
 	border-radius: 6px;
 	background-color: #fff;
-	display:flex;
+	display: flex;
 	flex-direction: column;
-    justify-content: space-between;
+	justify-content: space-between;
 }
 
 .login-wrapper>h2 {
@@ -266,11 +293,11 @@ footer>ul>li:nth-child(2){
 	width: 100%;
 	height: 48px;
 	padding: 0 10px;
-	box-sizing: border-box;
+/* 	box-sizing: border-box; */
 	margin: 8px 0;
-	border: 1px solid #006400;
-	border-radius: 6px;
-	background-color: #006400;
+		outline: none;
+    border: none;
+    border-bottom: 1px solid #bebebe;
 	font-size: 14px;
 }
 
@@ -280,12 +307,12 @@ footer>ul>li:nth-child(2){
 
 #submit-btn {
 	width: 100%;
-    height: 48px;
-    padding: 0 10px;
-    margin-top: 20px;
-    box-sizing: border-box;
-    border: 1px solid #006400;
-    border-radius: 6px;
+	height: 48px;
+	padding: 0 10px;
+	margin-top: 20px;
+	box-sizing: border-box;
+	border: 1px solid #006400;
+	border-radius: 6px;
 	color: #fff;
 	font-size: 16px;
 	background-color: #006400;
@@ -293,11 +320,11 @@ footer>ul>li:nth-child(2){
 }
 
 #login-form>button {
-    font-size: 30px;
-    margin-left: 50px;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #fff;
+	font-size: 30px;
+	margin-left: 50px;
+	border-radius: 10px;
+	padding: 10px;
+	background-color: #fff;
 }
 
 .findPassword {
@@ -314,27 +341,26 @@ footer>ul>li:nth-child(2){
 .error {
 	color: #ff003e;
 	display: none;
-    font-size: 12px;
+	font-size: 12px;
 }
 
 .member-form>span {
 	text-align: left;
-    padding-left: 69px;
+	padding-left: 69px;
 }
 
 /* home, updateUserForm, join.jsp */
-
 .home-btn {
 	width: 100%;
-    height: 48px;
-    margin-top: 40px;
-    box-sizing: border-box;
-    border: 1px solid #006400;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 16px;
-    background-color: #006400;
-    cursor: pointer;
+	height: 48px;
+	margin-top: 40px;
+	box-sizing: border-box;
+	border: 1px solid #006400;
+	border-radius: 6px;
+	color: #fff;
+	font-size: 16px;
+	background-color: #006400;
+	cursor: pointer;
 }
 
 .edit-member {
@@ -373,18 +399,18 @@ footer>ul>li:nth-child(2){
 
 .member-form>div>label {
 	width: 90px;
-    line-height: 48px;
-    font-size: 13px;
-    text-align: left;
+	line-height: 48px;
+	font-size: 13px;
+	text-align: left;
 }
 
 .member-form>div>input {
 	width: 100%;
 	height: 48px;
 	padding: 0 10px;
-	box-sizing: border-box;
-	border: 1px solid #006400;
-	border-radius: 6px;
+	outline: none;
+    border: none;
+    border-bottom: 1px solid #bebebe;
 	font-size: 14px;
 }
 
@@ -405,11 +431,11 @@ footer>ul>li:nth-child(2){
 
 #deleteUser-btn {
 	width: 100%;
-    height: 48px;
-    margin-top: 16px;
-    box-sizing: border-box;	
-    border: 1px solid #006400;
-    border-radius: 6px;
+	height: 48px;
+	margin-top: 16px;
+	box-sizing: border-box;
+	border: 1px solid #006400;
+	border-radius: 6px;
 	color: #fff;
 	font-size: 16px;
 	background-color: #006400;
@@ -418,31 +444,31 @@ footer>ul>li:nth-child(2){
 
 #join-btn {
 	width: 100%;
-    height: 48px;
-    padding: 0 10px;
-    margin-top: 20px;
-    box-sizing: border-box;
-    border: 1px solid #006400;
-    border-radius: 6px;
-    color: #fff;
-    font-size: 16px;
-    background-color: #006400;
-    cursor: pointer;
+	height: 48px;
+	padding: 0 10px;
+	margin-top: 20px;
+	box-sizing: border-box;
+	border: 1px solid #006400;
+	border-radius: 6px;
+	color: #fff;
+	font-size: 16px;
+	background-color: #006400;
+	cursor: pointer;
 }
 
 /* 회원탈퇴 페이지 */
 .delete-box {
 	width: 700px;
-	padding: 20px;	
+	padding: 20px;
 	border: 2px solid #006400;
 	border-radius: 40px;
 }
 
 .input-box>label {
 	width: 90px;
-    line-height: 48px;
-    font-size: 13px;
-    text-align: left;
+	line-height: 48px;
+	font-size: 13px;
+	text-align: left;
 }
 
 .input-box {
@@ -464,11 +490,11 @@ footer>ul>li:nth-child(2){
 
 .delete-btn {
 	width: 40%;
-    height: 48px;
-    margin-top: 16px;
-    box-sizing: border-box;	
-    border: 1px solid #006400;
-    border-radius: 15px;
+	height: 48px;
+	margin-top: 16px;
+	box-sizing: border-box;
+	border: 1px solid #006400;
+	border-radius: 15px;
 	color: #fff;
 	font-size: 16px;
 	background-color: lightgray;
@@ -477,4 +503,3 @@ footer>ul>li:nth-child(2){
 .delete-title>h2 {
 	font-size: 1.2rem;
 }
-
