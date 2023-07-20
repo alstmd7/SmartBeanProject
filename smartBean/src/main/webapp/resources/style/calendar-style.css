@@ -49,9 +49,8 @@ hr {
 #external-events {
 	padding: 10px;
 	border-right: 1px solid #ccc;
-	/* background: #eee; */
+	height: 100%;
 	width: 20%;
-/* 	margin-right: 10%; */
 	margin-left: 5%;
 }
 
@@ -61,28 +60,38 @@ hr {
 }
 
 .calendar-checkbox>span {
-	font-size: initial;
 	margin-right: 9px;
 }
 
 #create-calendar-btn, #add-task-button {
 	width: 170px;
-	height: 30px;
-	border-radius: 20px;
-	border: none;
-	background: #006400;
-	color: #fff;
-	font-size: initial;
-	margin-bottom: 20px;
+    height: 30px;
+    border-radius: 3px;
+    border: none;
+    background: #2c3e50;
+    color: #fff;
+    font-size: initial;
+    margin-bottom: 20px;
+}
+
+#create-calendar-form{
+	padding: 10px;
+}
+
+#newCalendar-owner-input, #create-calendar-popup{
+	outline: none;
+    border: none;
+    border-bottom: 1px solid #bebebe;
+    margin-bottom: 15px;
 }
 
 .admin-calendar-btn, #delete-calendar-button, #share-button,
-	#update-calendar-button, #save-task-button {
-	border-radius: 20px;
-	border: 2px solid #006400;
-	background: #fff;
-	color: black;
-	/* font-size: initial; */
+	#update-calendar-button, #save-task-button, #save-newCalendar-button {
+	border-radius: 3px;
+    border: 1px solid #A0A0A0;
+    background: #A0A0A0;
+    color: #fff;
+    font-size: small;
 }
 
 #save-task-button {
@@ -207,9 +216,22 @@ hr {
     margin-bottom: 10px;
 }
 
+#delete-event-button, #close-event-button, #save-event-button{
+	border-radius: 3px;
+    border: 1px solid #A0A0A0;
+    background: #A0A0A0;
+    color: #fff;
+    margin-left: 5px;
+}
+
 #calendars{
 	border: 1px solid #bebebe;
 	width: 135px;
+}
+
+#newCalendar-popup-title{
+	color: #fff;
+	font-size: 0.2rem;
 }
 
 /* lib css 수정 */
