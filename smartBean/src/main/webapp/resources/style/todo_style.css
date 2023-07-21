@@ -16,10 +16,6 @@ header {
 
 * {
     font-family: 'Pretendard-Regular', sans-serif;
-    margin: 0px;
-    /* 전체의 값은 0으로 맞춰줌 */
-    padding: 0px;
-    /* 전체의 값을 0으로 맞춰줌 */
     text-align: left
 }
 
