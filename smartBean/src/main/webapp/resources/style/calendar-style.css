@@ -48,10 +48,10 @@ hr {
 /* external-events 스타일 */
 #external-events {
 	padding: 10px;
-	border-right: 1px solid #ccc;
 	height: 100%;
 	width: 20%;
 	margin-left: 5%;
+	margin-top: 100px;
 }
 
 .calendar-checkbox {
