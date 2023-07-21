@@ -191,10 +191,11 @@ text-align: center;
 /* footer */
 footer {
 	grid-area: footer;
-	background: #dcdcdc;
+	background: #fff;
 	font-size: 0.8rem;
     padding: 30px; 
     height: 120px;
+    border-top: 0.5px solid #d2d2d2; 
 }
 
 footer strong{
