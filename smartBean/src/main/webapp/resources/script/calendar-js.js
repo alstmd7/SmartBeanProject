@@ -68,6 +68,7 @@ $(document).ready(function() {
 		},
 		editable: true,
 		droppable: true,
+		displayEventTime: false,
 		eventRender: function(info) {
 			var eventTitle = info.event.title;
 			var eventElement = info.el;
@@ -150,7 +151,7 @@ $(document).ready(function() {
 		}
 
 		$("#calendar-list").append(newCalendar);
-		location.href = "calendar";
+		location.reload(true);
 	});
 
 	// 사용자의 모든 캘린더 불러오기
@@ -264,7 +265,7 @@ $(document).ready(function() {
 		location.href = "calendar";
 	});
 	
-	// 사용자 공유 기능							수정 : email getPrmeter 받아와서 배열 만들고 배열 순회하면서 그거 다 shere_Calendar 테이블에 저장
+	// 사용자 공유 기능							
 	$("#share-button").on("click", function() {
 		var calendarId = id_check; // id_check 사용
 		var userEmail = $("#user-share-input").val();
@@ -490,4 +491,3 @@ $(document).ready(function() {
 	
 
 });
-

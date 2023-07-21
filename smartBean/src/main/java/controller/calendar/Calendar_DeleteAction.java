@@ -49,7 +49,13 @@ public class Calendar_DeleteAction extends HttpServlet {
 	    
 	    if(calDao.getCalendarByNo(calendarId).getEmail().equals(email)) {
 	    	calDao.deleteCalendarByNo(calendarId);
+	    	response.sendRedirect("calendar");
+	    } else {
+	    	request.setAttribute("message", "캘린더 삭제 권한이 없습니다.");
+			request.getRequestDispatcher("alert").forward(request, response);
 	    }
+	    
+	    
 	}
 
 
