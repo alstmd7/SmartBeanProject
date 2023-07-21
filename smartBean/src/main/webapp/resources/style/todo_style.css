@@ -73,7 +73,6 @@ img {
     font-family: 'Lobster', cursive;
     font-size: 3rem;
     float: left;
-    padding-top: 25px;
     padding-left: 10%;
     padding-right: 10%;
 }
@@ -177,7 +176,7 @@ th {
     
 border-top: none;
 border-bottom: 4px solid #006400;
-padding: 8px;
+padding-bottom: 8px;
 text-align: center;
     
 }
@@ -185,7 +184,7 @@ text-align: center;
 /* 일정표 일정표시부분 */
 td {
     border-top: none;
-    height: 450px;
+    height: 670px;
     width: 14%;
 }
 
@@ -246,7 +245,7 @@ td>li {
 form li,
 #target_at_add,
 #content_add {
-    margin-top: 12px;
+   
 }
 
 .btn_open {
@@ -313,4 +312,8 @@ form li,
 
 .align-top { 
      vertical-align: top;
+     }
+     
+     form>p{
+     margin: 5px 0px;
      }
