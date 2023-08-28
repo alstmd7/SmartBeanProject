@@ -26,17 +26,12 @@
 1. 팀장 [백승민](Mailto:qortmdals120@gmail.com) ([Github](http://github.com/alstmd7))
   - 회원 관리
     - 회원가입
-      - 유효성 검사
-      - 이메일 중복 확인
     - 회원탈퇴
-      - 회원 정보 삭제
     - 회원수정
       - 닉네임 변경
       - 비밀번호 변경
     - 로그인
-      - 세션 정보 저장
     - 로그아웃
-      - 세션 정보 제거
 2. 서기 [한희수](Mailto:juntu09@gmail.com) ([Github](https://github.com/hee-duck/sallye))
   - 캘린더 기능
     - 캘린더 생성
