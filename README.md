@@ -32,7 +32,7 @@
       - 비밀번호 변경
     - 로그인
     - 로그아웃
-2. 서기 [한희수][이메일](mailto:juntu09@gmail.com) ([GitHub](https://github.com/hee-duck))
+2. 서기 [한희수](mailto:juntu09@gmail.com) ([GitHub](https://github.com/hee-duck))
   - 캘린더 기능
     - 캘린더 생성
     - 캘린더 공유
