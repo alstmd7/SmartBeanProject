@@ -11,6 +11,7 @@
 - CSS
 - MySQL
 - Apache Tomcat 9
+- FullCalendar library
 
 [//]: # (- [이미지태그]&#40;이미지주소&#41;)
 
